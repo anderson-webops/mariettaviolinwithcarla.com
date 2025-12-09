@@ -1,2 +1,2 @@
-export const appName = 'Vitesse for Nuxt 4'
-export const appDescription = 'Vitesse for Nuxt 4'
+export const appName = "Marietta Violin with Carla";
+export const appDescription = "Private violin lessons in Marietta, GA with a warm, patient studio for students and families.";

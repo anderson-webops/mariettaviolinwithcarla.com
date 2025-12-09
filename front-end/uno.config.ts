@@ -1,38 +1,35 @@
-import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local'
 import {
-  defineConfig,
-  presetAttributify,
-  presetIcons,
-  presetTypography,
-  presetWebFonts,
-  presetWind4,
-  transformerDirectives,
-  transformerVariantGroup,
-} from 'unocss'
+	defineConfig,
+	presetAttributify,
+	presetIcons,
+	presetTypography,
+	presetWind4,
+	transformerDirectives,
+	transformerVariantGroup
+} from "unocss";
 
 export default defineConfig({
-  shortcuts: [
-    ['btn', 'px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
-    ['icon-btn', 'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600'],
-  ],
-  presets: [
-    presetWind4(),
-    presetAttributify(),
-    presetIcons({
-      scale: 1.2,
-    }),
-    presetTypography(),
-    presetWebFonts({
-      fonts: {
-        sans: 'DM Sans',
-        serif: 'DM Serif Display',
-        mono: 'DM Mono',
-      },
-      processors: createLocalFontProcessor(),
-    }),
-  ],
-  transformers: [
-    transformerDirectives(),
-    transformerVariantGroup(),
-  ],
-})
+	shortcuts: [
+		["btn", "px-4 py-1 rounded inline-block bg-amber-700 text-white cursor-pointer hover:bg-amber-800 disabled:cursor-default disabled:bg-amber-300 disabled:opacity-60"],
+		["icon-btn", "inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-amber-700"]
+	],
+	theme: {
+		fontFamily: {
+			sans: '"Inter","Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif',
+			serif: '"Georgia","Garamond","Times New Roman",serif',
+			mono: '"DM Mono","SFMono-Regular",ui-monospace,monospace'
+		},
+		colors: {
+			brand: "#b45309"
+		}
+	},
+	presets: [
+		presetWind4(),
+		presetAttributify(),
+		presetIcons({
+			scale: 1.2
+		}),
+		presetTypography()
+	],
+	transformers: [transformerDirectives(), transformerVariantGroup()]
+});

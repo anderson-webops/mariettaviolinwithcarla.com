@@ -3,7 +3,7 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"build": "rm -rf dist && nuxt generate && mkdir -p dist && cp -r .output/public/. dist/",
+		"build": "rm -rf dist && nuxt generate && rm -rf dist && mkdir -p dist && rsync -a .output/public/ dist/",
 		"dev:pwa": "VITE_PLUGIN_PWA=true nuxt dev",
 		"dev": "nuxt dev",
 		"generate": "nuxt generate",

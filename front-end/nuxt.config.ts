@@ -1,15 +1,18 @@
-import { pwa } from './app/config/pwa'
-import { appDescription } from './app/constants/index'
+import process from "node:process";
+import { pwa } from "./app/config/pwa";
+import { appDescription } from "./app/constants/index";
+
+const enablePwa = process.env.ENABLE_PWA === "true";
 
 export default defineNuxtConfig({
   modules: [
-    '@vueuse/nuxt',
-    '@unocss/nuxt',
-    '@pinia/nuxt',
-    '@nuxtjs/color-mode',
-    '@vite-pwa/nuxt',
-    '@nuxt/eslint',
-  ],
+    "@vueuse/nuxt",
+    "@unocss/nuxt",
+    "@pinia/nuxt",
+    "@nuxtjs/color-mode",
+    enablePwa && "@vite-pwa/nuxt",
+    "@nuxt/eslint"
+  ].filter(Boolean),
 
   devtools: {
     enabled: true,
@@ -73,5 +76,5 @@ export default defineNuxtConfig({
     },
   },
 
-  pwa,
+  pwa: enablePwa ? pwa : { disabled: true },
 })

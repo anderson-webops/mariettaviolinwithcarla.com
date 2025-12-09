@@ -5,6 +5,8 @@ import { appDescription, appName } from '../constants/index'
 const scope = '/'
 
 export const pwa: ModuleOptions = {
+  // Disable service worker generation until needed; avoids build failures in restricted environments.
+  disabled: true,
   registerType: 'autoUpdate',
   scope,
   base: scope,
