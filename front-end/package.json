@@ -1,0 +1,53 @@
+{
+	"name": "front-end",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "rm -rf dist && nuxt generate && mkdir -p dist && cp -r .output/public/. dist/",
+		"dev:pwa": "VITE_PLUGIN_PWA=true nuxt dev",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"prepare": "nuxt prepare",
+		"preview": "nuxt preview",
+		"start": "node .output/server/index.mjs",
+		"start:generate": "npx serve dist",
+		"lint": "eslint .",
+		"lint-fix": "eslint . --fix",
+		"typecheck": "nuxt typecheck",
+		"up": "taze major -I"
+	},
+	"dependencies": {
+		"@vueuse/core": "^14.0.0",
+		"pinia": "^3.0.3",
+		"vue": "^3.5.22"
+	},
+	"devDependencies": {
+		"@antfu/eslint-config": "^6.5.1",
+		"@iconify-json/carbon": "^1.2.14",
+		"@iconify-json/twemoji": "^1.2.4",
+		"@nuxt/devtools": "^3.0.0-beta.2",
+		"@nuxt/eslint": "^1.9.0",
+		"@nuxtjs/color-mode": "^3.5.2",
+		"@pinia/nuxt": "^0.11.2",
+		"@unocss/eslint-config": "^66.5.4",
+		"@unocss/nuxt": "^66.5.4",
+		"@vite-pwa/nuxt": "^1.0.7",
+		"@vueuse/nuxt": "^14.0.0",
+		"eslint": "^9.38.0",
+		"eslint-plugin-format": "^1.0.2",
+		"nuxt": "^4.2.0",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.49.0",
+		"unocss": "^66.5.4",
+		"unplugin": "^2.3.10",
+		"vite": "^7.1.12",
+		"vue-tsc": "^3.1.2"
+	},
+	"overrides": {
+		"@nuxt/devtools": "^3.0.0-beta.2",
+		"@nuxt/kit": "^4.2.0",
+		"nuxt": "^4.2.0",
+		"unplugin": "^2.3.10",
+		"vite": "^7.1.12"
+	}
+}

@@ -1,0 +1,40 @@
+// front-end/tsconfig.json
+{
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"target": "ESNext",
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"allowImportingTsExtensions": true,
+		"jsx": "preserve",
+		"resolveJsonModule": true,
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./app/*"],
+			"@/*": ["./app/*"]
+		},
+		"types": ["@types/node"]
+	},
+	"vueCompilerOptions": {
+		"plugins": []
+	},
+	"include": [
+		"app/**/*.ts",
+		"app/**/*.tsx",
+		"app/**/*.vue",
+		"server/**/*.ts",
+		"nuxt.config.ts",
+		"uno.config.ts",
+		".nuxt/types.d.ts",
+		".nuxt/typed-router.d.ts"
+	],
+	"exclude": [
+		"dist",
+		"node_modules"
+	],
+	"references": [
+		{ "path": "./.nuxt/tsconfig.json" },
+		{ "path": "./server/tsconfig.json" }
+	]
+}
