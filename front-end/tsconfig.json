@@ -20,14 +20,12 @@
     "plugins": []
   },
 	"references": [
-		{ "path": "./.nuxt/tsconfig.json" },
-		{ "path": "./server/tsconfig.json" }
+		{ "path": "./.nuxt/tsconfig.json" }
 	],
 	"include": [
 		"app/**/*.ts",
 		"app/**/*.tsx",
 		"app/**/*.vue",
-		"server/**/*.ts",
 		"nuxt.config.ts",
 		"uno.config.ts",
 		".nuxt/types.d.ts",
