@@ -1,6 +1,6 @@
 [build]
-publish = "front-end/.output/public"
-command = "pnpm -C front-end build"
+publish = "front-end/dist"
+command = "npm run -w front-end build"
 
 [build.environment]
 NODE_VERSION = "20"
