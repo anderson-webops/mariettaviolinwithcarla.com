@@ -1,26 +1,28 @@
 <script setup lang="ts">
-const route = useRoute<'hi-id'>()
-const user = useUserStore()
-const name = route.params.id
+const route = useRoute<"hi-id">();
+const user = useUserStore();
+const name = route.params.id;
 
 watchEffect(() => {
-  user.setNewName(route.params.id as string)
-})
+  user.setNewName(route.params.id as string);
+});
 
 definePageMeta({
-  layout: 'home',
-})
+  layout: "home",
+});
 </script>
 
 <template>
   <div>
-    <div i-twemoji:waving-hand text-4xl inline-block animate-shake-x animate-duration-5000 />
-    <h3 text-2xl font-500>
-      Hi,
-    </h3>
-    <div text-xl>
-      {{ name }}!
-    </div>
+    <div
+      i-twemoji:waving-hand
+      text-4xl
+      inline-block
+      animate-shake-x
+      animate-duration-5000
+    />
+    <h3 text-2xl font-500>Hi,</h3>
+    <div text-xl>{{ name }}!</div>
 
     <template v-if="user.otherNames.length">
       <div text-sm my-4>
@@ -38,12 +40,7 @@ definePageMeta({
     <Counter />
 
     <div>
-      <NuxtLink
-        class="text-sm btn m-3"
-        to="/"
-      >
-        Back
-      </NuxtLink>
+      <NuxtLink class="text-sm btn m-3" to="/"> Back </NuxtLink>
     </div>
   </div>
 </template>

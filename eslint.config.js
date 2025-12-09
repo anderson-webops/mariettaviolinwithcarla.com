@@ -1,12 +1,11 @@
 // ./eslint.config.js -- monorepo root
 import antfu from "@antfu/eslint-config";
 
-
 export default antfu({
 	root: true, // the one and only "root"
 	env: { browser: true, node: true, es2021: true },
 	stylistic: { indent: "tab", quotes: "double", semi: true, linebreak: "unix" },
-	
+
 	/* this section is passed straight to eslint-plugin-prettier */
 	formatters: {
 		prettier: {
@@ -17,7 +16,7 @@ export default antfu({
 			endOfLine: "lf"
 		}
 	},
-	
+
 	ignores: ["**/*.d.ts"], // ignore all generated declaration files
 	rules: {
 		"no-console": "off",

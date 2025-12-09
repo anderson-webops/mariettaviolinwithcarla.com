@@ -1,10 +1,9 @@
 <script setup lang="ts">
-const name = ref('')
+const name = ref("");
 
-const router = useRouter()
+const router = useRouter();
 function go() {
-  if (name.value)
-    router.push(`/hi/${encodeURIComponent(name.value)}`)
+  if (name.value) router.push(`/hi/${encodeURIComponent(name.value)}`);
 }
 </script>
 
@@ -16,20 +15,17 @@ function go() {
       placeholder="What's your name?"
       type="text"
       autocomplete="off"
-      p="x-4 y-2" m="t-5" w="250px"
-      text="center" bg="transparent"
+      p="x-4 y-2"
+      m="t-5"
+      w="250px"
+      text="center"
+      bg="transparent"
       border="~ rounded gray-200 dark:gray-700"
       outline="none active:none"
       @keydown.enter="go"
-    >
+    />
     <div>
-      <button
-        text-sm btn m-3
-        :disabled="!name"
-        @click="go"
-      >
-        GO
-      </button>
+      <button text-sm btn m-3 :disabled="!name" @click="go">GO</button>
     </div>
   </div>
 </template>

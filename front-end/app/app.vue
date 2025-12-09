@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { appName } from '~/constants'
-import { appDescription } from '~/constants'
+import { appDescription, appName } from "~/constants";
 
 useHead({
-	title: appName,
-	meta: [
-		{ name: "description", content: appDescription },
-		{ property: "og:title", content: appName },
-		{ property: "og:description", content: appDescription }
-	]
-})
+  title: appName,
+  meta: [
+    { name: "description", content: appDescription },
+    { property: "og:title", content: appName },
+    { property: "og:description", content: appDescription },
+  ],
+});
 </script>
 
 <template>
