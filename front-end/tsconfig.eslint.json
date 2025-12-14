@@ -1,0 +1,17 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": true
+	},
+	"references": [],
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
+		"test/**/*.ts",
+		"nuxt.config.ts",
+		"uno.config.ts",
+		".nuxt/types.d.ts",
+		".nuxt/typed-router.d.ts"
+	]
+}

@@ -1,80 +1,83 @@
 import process from "node:process";
-import { pwa } from "./app/config/pwa";
-import { appDescription } from "./app/constants/index";
+import { defineNuxtConfig } from "nuxt/config";
+import { pwa } from "~/config/pwa.ts";
+import { appDescription } from "~/constants";
 
-const enablePwa = process.env.ENABLE_PWA === "true";
+const enablePwa: boolean = process.env.ENABLE_PWA === "true";
 
 export default defineNuxtConfig({
-  modules: [
-    "@vueuse/nuxt",
-    "@unocss/nuxt",
-    "@pinia/nuxt",
-    "@nuxtjs/color-mode",
-    enablePwa && "@vite-pwa/nuxt",
-    "@nuxt/eslint"
-  ].filter(Boolean),
+	modules: [
+		"@vueuse/nuxt",
+		"@unocss/nuxt",
+		"@pinia/nuxt",
+		"@nuxtjs/color-mode",
+		enablePwa && "@vite-pwa/nuxt",
+		"@nuxt/eslint"
+	].filter(Boolean),
 
-  devtools: {
-    enabled: true,
-  },
+	srcDir: "src",
 
-  app: {
-    head: {
-      viewport: 'width=device-width,initial-scale=1',
-      link: [
-        { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
-        { rel: 'icon', type: 'image/svg+xml', href: '/nuxt.svg' },
-        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-      ],
-      meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: appDescription },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
-        { name: 'theme-color', media: '(prefers-color-scheme: light)', content: 'white' },
-        { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#222222' },
-      ],
-    },
-  },
+	devtools: {
+		enabled: true
+	},
 
-  colorMode: {
-    classSuffix: '',
-  },
+	app: {
+		head: {
+			viewport: "width=device-width,initial-scale=1",
+			link: [
+				{ rel: "icon", href: "/favicon.ico", sizes: "any" },
+				{ rel: "icon", type: "image/svg+xml", href: "/nuxt.svg" },
+				{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" }
+			],
+			meta: [
+				{ name: "viewport", content: "width=device-width, initial-scale=1" },
+				{ name: "description", content: appDescription },
+				{ name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+				{ name: "theme-color", media: "(prefers-color-scheme: light)", content: "white" },
+				{ name: "theme-color", media: "(prefers-color-scheme: dark)", content: "#222222" }
+			]
+		}
+	},
 
-  future: {
-    compatibilityVersion: 4,
-  },
+	colorMode: {
+		classSuffix: ""
+	},
 
-  experimental: {
-    // when using generate, payload js assets included in sw precache manifest
-    // but missing on offline, disabling extraction it until fixed
-    payloadExtraction: false,
-    renderJsonPayloads: true,
-    typedPages: true,
-  },
+	future: {
+		compatibilityVersion: 4
+	},
 
-  compatibilityDate: '2024-08-14',
+	experimental: {
+		// when using generate, payload js assets included in sw precache manifest
+		// but missing on offline, disabling extraction it until fixed
+		payloadExtraction: false,
+		renderJsonPayloads: true,
+		typedPages: true
+	},
 
-  nitro: {
-    esbuild: {
-      options: {
-        target: 'esnext',
-      },
-    },
-    prerender: {
-      crawlLinks: false,
-      routes: ['/'],
-      ignore: ['/hi'],
-    },
-  },
+	compatibilityDate: "2024-08-14",
 
-  eslint: {
-    config: {
-      standalone: false,
-      nuxt: {
-        sortConfigKeys: true,
-      },
-    },
-  },
+	nitro: {
+		esbuild: {
+			options: {
+				target: "esnext"
+			}
+		},
+		prerender: {
+			crawlLinks: false,
+			routes: ["/"],
+			ignore: ["/hi"]
+		}
+	},
 
-  pwa: enablePwa ? pwa : { disabled: true },
-})
+	eslint: {
+		config: {
+			standalone: false,
+			nuxt: {
+				sortConfigKeys: true
+			}
+		}
+	},
+
+	pwa: enablePwa ? pwa : { disabled: true }
+});

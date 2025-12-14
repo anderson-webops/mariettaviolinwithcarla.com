@@ -1,31 +1,30 @@
 // front-end/tsconfig.json
 {
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "target": "ESNext",
-    "jsx": "preserve",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "baseUrl": ".",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "paths": {
-      "~/*": ["./app/*"],
-      "@/*": ["./app/*"]
-    },
-    "resolveJsonModule": true,
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"target": "ESNext",
+		"jsx": "preserve",
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"baseUrl": ".",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"paths": {
+			"~/*": ["./src/*"],
+			"@/*": ["./src/*"]
+		},
+		"resolveJsonModule": true,
 		"types": ["@types/node"],
-    "allowImportingTsExtensions": true
-  },
-  "vueCompilerOptions": {
-    "plugins": []
-  },
-	"references": [
-		{ "path": "./.nuxt/tsconfig.json" }
-	],
+		"allowImportingTsExtensions": true
+	},
+	"vueCompilerOptions": {
+		"plugins": []
+	},
+	"references": [{ "path": "./.nuxt/tsconfig.json" }],
 	"include": [
-		"app/**/*.ts",
-		"app/**/*.tsx",
-		"app/**/*.vue",
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
+		"test/**/*.ts",
 		"nuxt.config.ts",
 		"uno.config.ts",
 		".nuxt/types.d.ts",

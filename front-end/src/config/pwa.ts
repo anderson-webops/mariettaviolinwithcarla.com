@@ -1,8 +1,8 @@
 import type { ModuleOptions } from "@vite-pwa/nuxt";
 import process from "node:process";
-import { appDescription, appName } from "../constants/index";
+import { appDescription, appName } from "~/constants";
 
-const scope = '/'
+const scope = "/";
 
 export const pwa: ModuleOptions = {
 	// Keep enabled; minify off to avoid terser failures in CI/npm builds.
