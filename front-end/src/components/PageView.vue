@@ -1,8 +1,8 @@
 <script setup lang="ts">
-type PageviewResponse = {
+interface PageviewResponse {
 	pageview: number;
 	startAt: string | number | Date;
-};
+}
 
 const { data } = await useFetch<PageviewResponse>("/api/pageview");
 

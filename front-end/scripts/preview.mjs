@@ -1,6 +1,7 @@
-import { existsSync } from "node:fs";
 import { spawn, spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { resolve } from "node:path";
+import process from "node:process";
 
 const args = process.argv.slice(2);
 
@@ -40,7 +41,6 @@ const serve = spawn("npx", ["serve", outputDir, "-l", port, "-n"], {
 	}
 });
 
-serve.on("exit", code => {
-	// eslint-disable-next-line no-process-exit
+serve.on("exit", (code) => {
 	process.exit(code ?? 0);
 });

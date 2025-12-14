@@ -1,5 +1,5 @@
 <script setup lang="ts">
-//noinspection ES6PreferShortImport
+// noinspection ES6PreferShortImport
 import { appDescription, appName } from "../../front-end/src/constants";
 
 useHead({
@@ -20,6 +20,7 @@ useHead({
 </template>
 
 <style>
+/*noinspection ALL*/
 html,
 body,
 #__nuxt {
@@ -28,6 +29,7 @@ body,
 	padding: 0;
 }
 
+/*noinspection ALL*/
 html.dark {
 	color-scheme: dark;
 }

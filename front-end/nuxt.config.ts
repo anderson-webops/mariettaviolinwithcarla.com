@@ -1,11 +1,11 @@
 // noinspection ES6PreferShortImport
 
-import path from "node:path";
-import process from "node:process";
-import { fileURLToPath } from "node:url";
 import type { ModuleOptions as ColorModeOptions } from "@nuxtjs/color-mode";
 import type { ModuleOptions as PwaModuleOptions } from "@vite-pwa/nuxt";
 import type { NuxtConfig } from "nuxt/schema";
+import path from "node:path";
+import process from "node:process";
+import { fileURLToPath } from "node:url";
 import { defineNuxtConfig } from "nuxt/config";
 import { pwa } from "./src/config/pwa";
 import { appDescription } from "./src/constants";
