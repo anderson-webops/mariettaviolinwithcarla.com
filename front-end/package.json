@@ -15,6 +15,7 @@
 		"lint": "eslint .",
 		"lint-fix": "eslint . --fix",
 		"typecheck": "nuxt typecheck",
+		"test:e2e": "cypress open",
 		"test:unit": "node --test --import tsx test/*.test.ts",
 		"up": "taze major -I"
 	},
@@ -34,8 +35,9 @@
 		"@unocss/eslint-config": "^66.5.10",
 		"@unocss/nuxt": "^66.5.10",
 		"@vite-pwa/nuxt": "^1.1.0",
+		"@vitejs/plugin-vue": "^6.0.3",
 		"@vueuse/nuxt": "^14.1.0",
-		"cypress": "^13.17.0",
+		"cypress": "^15.7.1",
 		"eslint": "^9.39.2",
 		"eslint-plugin-format": "^1.1.0",
 		"nuxt": "^4.2.2",

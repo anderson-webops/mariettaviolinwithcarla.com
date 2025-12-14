@@ -9,9 +9,13 @@
 		"src/**/*.tsx",
 		"src/**/*.vue",
 		"test/**/*.ts",
+		"cypress/**/*.ts",
+		"cypress.config.ts",
+		"vite.config.mts",
 		"nuxt.config.ts",
 		"uno.config.ts",
-		".nuxt/types.d.ts",
+		".nuxt/nuxt.d.ts",
+		".nuxt/imports.d.ts",
 		".nuxt/typed-router.d.ts"
 	]
 }
