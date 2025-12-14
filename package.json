@@ -21,7 +21,7 @@
 		"lint": "npm run -w front-end lint && npm run -w back-end lint",
 		"lint-fix": "npm run -w front-end lint-fix && npm run -w back-end lint-fix",
 		"typecheck": "npm run -w front-end typecheck && npm run -w back-end typecheck",
-		"clean": "sudo rm -rf node_modules dist package-lock.json **/node_modules **/dist **/package-lock.json **/.nuxt",
+		"clean": "sudo rm -rf node_modules dist package-lock.json **/node_modules **/dist **/package-lock.json **/.nuxt **/.output",
 		"up": "taze major -I && npm run -w front-end up && npm run -w back-end up"
 	},
 	"devDependencies": {
