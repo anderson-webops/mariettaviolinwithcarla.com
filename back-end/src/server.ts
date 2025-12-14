@@ -25,8 +25,8 @@ async function main() {
 
 	// 2) sessions BEFORE any route that needs req.session
 	///   COOKIES   ///
-	const isProd = env.NODE_ENV === "production";
-	const isCrossSite = !!env.CROSS_SITE;
+	const isProd: boolean = env.NODE_ENV === "production";
+	const isCrossSite: boolean = !!env.CROSS_SITE;
 	type CookieSessionOpts = Parameters<typeof cookieSession>[0];
 
 	const cookieOptions: CookieSessionOpts = {
@@ -115,7 +115,7 @@ async function main() {
 		res.json({ adminID: s?.adminID ?? null, tutorID: s?.tutorID ?? null, userID: s?.userID ?? null });
 	});
 
-	const PORT = env.PORT || 3009;
+	const PORT: number = env.PORT || 3009;
 	app.listen(PORT, () => console.log(`Server listening on port ${PORT}!`));
 }
 

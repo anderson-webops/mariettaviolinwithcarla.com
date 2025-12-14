@@ -1,5 +1,6 @@
+<!--suppress ES6PreferShortImport -->
 <script setup lang="ts">
-import { appDescription, appName } from "~/constants";
+import { appDescription, appName } from "../../front-end/src/constants";
 
 useHead({
 	title: appName,

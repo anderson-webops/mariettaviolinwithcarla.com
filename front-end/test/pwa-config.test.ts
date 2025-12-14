@@ -1,7 +1,9 @@
+// noinspection ES6PreferShortImport
+
 import assert from "node:assert/strict";
 import test from "node:test";
-import { pwa } from "~/config/pwa.ts";
-import { appDescription, appName } from "~/constants";
+import { pwa } from "../../front-end/src/config/pwa.ts";
+import { appDescription, appName } from "../../front-end/src/constants";
 
 test("pwa manifest uses app metadata and scope", () => {
 	assert.equal(pwa.scope, "/");

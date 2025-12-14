@@ -1,11 +1,24 @@
+// noinspection ES6PreferShortImport
+
+import path from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 import { defineNuxtConfig } from "nuxt/config";
-import { pwa } from "~/config/pwa.ts";
-import { appDescription } from "~/constants";
+import { pwa } from "./src/config/pwa";
+import { appDescription } from "./src/constants";
 
 const enablePwa: boolean = process.env.ENABLE_PWA === "true";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export default defineNuxtConfig({
+	resolve: {
+		alias: {
+			"~": `${path.resolve(__dirname, "src")}/`,
+			"@": `${path.resolve(__dirname, "src")}/`
+		}
+	},
+
 	modules: [
 		"@vueuse/nuxt",
 		"@unocss/nuxt",
