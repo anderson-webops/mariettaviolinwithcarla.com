@@ -1,5 +1,5 @@
-<!--suppress ES6PreferShortImport -->
 <script setup lang="ts">
+//noinspection ES6PreferShortImport
 import { appDescription, appName } from "../../front-end/src/constants";
 
 useHead({

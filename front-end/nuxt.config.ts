@@ -3,6 +3,9 @@
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import type { ModuleOptions as ColorModeOptions } from "@nuxtjs/color-mode";
+import type { ModuleOptions as PwaModuleOptions } from "@vite-pwa/nuxt";
+import type { NuxtConfig } from "nuxt/schema";
 import { defineNuxtConfig } from "nuxt/config";
 import { pwa } from "./src/config/pwa";
 import { appDescription } from "./src/constants";
@@ -11,12 +14,15 @@ const enablePwa: boolean = process.env.ENABLE_PWA === "true";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+type ExtendedNuxtConfig = NuxtConfig & {
+	colorMode?: Partial<ColorModeOptions>;
+	pwa?: PwaModuleOptions | false;
+};
+
 export default defineNuxtConfig({
-	resolve: {
-		alias: {
-			"~": `${path.resolve(__dirname, "src")}/`,
-			"@": `${path.resolve(__dirname, "src")}/`
-		}
+	alias: {
+		"~": `${path.resolve(__dirname, "src")}/`,
+		"@": `${path.resolve(__dirname, "src")}/`
 	},
 
 	modules: [
@@ -92,5 +98,5 @@ export default defineNuxtConfig({
 		}
 	},
 
-	pwa: enablePwa ? pwa : { disabled: true }
-});
+	pwa: { ...pwa, disable: !enablePwa }
+} as ExtendedNuxtConfig) as ExtendedNuxtConfig;

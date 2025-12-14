@@ -1,14 +1,19 @@
 // noinspection ES6PreferShortImport
 
-import type { ModuleOptions } from "@vite-pwa/nuxt";
+import type { ModuleOptions as PwaModuleOptions } from "@vite-pwa/nuxt";
 import process from "node:process";
 import { appDescription, appName } from "../constants";
 
 const scope = "/";
 
-export const pwa: ModuleOptions = {
+type StrictPwaOptions = PwaModuleOptions & {
+	manifest: Exclude<PwaModuleOptions["manifest"], false | undefined>;
+	workbox: Exclude<PwaModuleOptions["workbox"], false | undefined>;
+};
+
+export const pwa: StrictPwaOptions = {
 	// Keep enabled; minify off to avoid terser failures in CI/npm builds.
-	disabled: false,
+	disable: false,
 	minify: false,
 	registerType: "autoUpdate",
 	scope,

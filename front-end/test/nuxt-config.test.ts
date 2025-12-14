@@ -9,5 +9,5 @@ test("nuxt config points to src/ and disables pwa unless enabled", async () => {
 		config.modules?.sort(),
 		["@nuxt/eslint", "@nuxtjs/color-mode", "@pinia/nuxt", "@unocss/nuxt", "@vueuse/nuxt"].sort()
 	);
-	assert.equal((config.pwa as { disabled?: boolean }).disabled, true);
+	assert.equal((config.pwa as { disable?: boolean }).disable, true);
 });

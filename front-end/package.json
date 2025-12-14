@@ -8,13 +8,13 @@
 		"dev": "nuxt dev",
 		"generate": "nuxt generate",
 		"prepare": "nuxt prepare",
-		"preview": "nuxt preview",
+		"preview": "node ./scripts/preview.mjs",
 		"start": "node .output/server/index.mjs",
 		"start:generate": "npx serve dist",
 		"lint": "eslint .",
 		"lint-fix": "eslint . --fix",
 		"typecheck": "nuxt typecheck",
-		"test:unit": "node --test --import tsx test/**/*.test.ts",
+		"test:unit": "node --test --import tsx test/*.test.ts",
 		"up": "taze major -I"
 	},
 	"dependencies": {

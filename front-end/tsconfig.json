@@ -10,7 +10,10 @@
 		"moduleResolution": "Bundler",
 		"paths": {
 			"~/*": ["./src/*"],
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"#imports": ["./.nuxt/imports"],
+			"#build": ["./.nuxt"],
+			"#build/*": ["./.nuxt/*"]
 		},
 		"resolveJsonModule": true,
 		"types": ["@types/node"],
@@ -19,15 +22,16 @@
 	"vueCompilerOptions": {
 		"plugins": []
 	},
-	"references": [{ "path": "./.nuxt/tsconfig.json" }],
 	"include": [
 		"src/**/*.ts",
 		"src/**/*.tsx",
 		"src/**/*.vue",
 		"test/**/*.ts",
+		"types/**/*.d.ts",
 		"nuxt.config.ts",
 		"uno.config.ts",
-		".nuxt/types.d.ts",
+		".nuxt/nuxt.d.ts",
+		".nuxt/imports.d.ts",
 		".nuxt/typed-router.d.ts"
 	],
 	"exclude": ["dist", "node_modules"]

@@ -1,5 +1,10 @@
 <script setup lang="ts">
-const { data } = await useFetch("/api/pageview");
+type PageviewResponse = {
+	pageview: number;
+	startAt: string | number | Date;
+};
+
+const { data } = await useFetch<PageviewResponse>("/api/pageview");
 
 const time = useTimeAgo(() => data.value?.startAt || 0);
 </script>
