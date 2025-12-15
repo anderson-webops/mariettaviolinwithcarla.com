@@ -46,7 +46,7 @@
 		"typescript-eslint": "^8.49.0",
 		"unocss": "^66.5.10",
 		"unplugin": "^2.3.11",
-		"vite": "^7.2.7",
+		"vite": "^7.3.0",
 		"vue-tsc": "^3.1.8"
 	},
 	"overrides": {
