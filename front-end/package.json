@@ -24,6 +24,18 @@
 		"pinia": "^3.0.4",
 		"vue": "^3.5.25"
 	},
+	"optionalDependencies": {
+		"@esbuild/linux-arm64": "0.25.12",
+		"@esbuild/linux-x64": "0.25.12",
+		"@oxc-minify/binding-linux-arm64-gnu": "0.102.0",
+		"@oxc-minify/binding-linux-x64-gnu": "0.102.0",
+		"@oxc-parser/binding-linux-arm64-gnu": "0.102.0",
+		"@oxc-parser/binding-linux-x64-gnu": "0.102.0",
+		"@oxc-transform/binding-linux-arm64-gnu": "0.102.0",
+		"@oxc-transform/binding-linux-x64-gnu": "0.102.0",
+		"@rollup/rollup-linux-arm64-gnu": "4.53.4",
+		"@rollup/rollup-linux-x64-gnu": "4.53.4"
+	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^6.7.1",
 		"@iconify-json/carbon": "^1.2.15",
@@ -48,18 +60,6 @@
 		"unplugin": "^2.3.11",
 		"vite": "^7.3.0",
 		"vue-tsc": "^3.1.8"
-	},
-	"optionalDependencies": {
-		"@esbuild/linux-arm64": "0.25.12",
-		"@esbuild/linux-x64": "0.25.12",
-		"@oxc-minify/binding-linux-arm64-gnu": "0.102.0",
-		"@oxc-minify/binding-linux-x64-gnu": "0.102.0",
-		"@oxc-parser/binding-linux-arm64-gnu": "0.102.0",
-		"@oxc-parser/binding-linux-x64-gnu": "0.102.0",
-		"@oxc-transform/binding-linux-arm64-gnu": "0.102.0",
-		"@oxc-transform/binding-linux-x64-gnu": "0.102.0",
-		"@rollup/rollup-linux-arm64-gnu": "4.53.4",
-		"@rollup/rollup-linux-x64-gnu": "4.53.4"
 	},
 	"overrides": {
 		"@nuxt/devtools": "^3.1.1",
