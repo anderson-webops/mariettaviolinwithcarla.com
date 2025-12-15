@@ -43,7 +43,7 @@
 		"nuxt": "^4.2.2",
 		"terser": "^5.44.1",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.49.0",
+		"typescript-eslint": "^8.50.0",
 		"unocss": "^66.5.10",
 		"unplugin": "^2.3.11",
 		"vite": "^7.3.0",
@@ -54,6 +54,6 @@
 		"@nuxt/kit": "^4.2.2",
 		"nuxt": "^4.2.2",
 		"unplugin": "^2.3.11",
-		"vite": "^7.2.7"
+		"vite": "^7.3.0"
 	}
 }
