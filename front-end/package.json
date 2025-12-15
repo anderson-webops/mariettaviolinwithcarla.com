@@ -50,6 +50,7 @@
 		"vue-tsc": "^3.1.8"
 	},
 	"optionalDependencies": {
+		"@rollup/rollup-linux-arm64-gnu": "4.53.4",
 		"@oxc-parser/binding-linux-arm64-gnu": "0.102.0",
 		"@oxc-transform/binding-linux-arm64-gnu": "0.102.0",
 		"@oxc-minify/binding-linux-arm64-gnu": "0.102.0"
