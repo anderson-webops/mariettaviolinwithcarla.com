@@ -40,6 +40,9 @@
 		"readline-sync": "^1.4.10",
 		"zod": "^4.2.0"
 	},
+	"optionalDependencies": {
+		"@esbuild/linux-arm64": "0.27.1"
+	},
 	"devDependencies": {
 		"@eslint/compat": "^2.0.0",
 		"@types/body-parser": "^1.19.6",
