@@ -49,6 +49,9 @@
 		"vite": "^7.3.0",
 		"vue-tsc": "^3.1.8"
 	},
+	"optionalDependencies": {
+		"@oxc-parser/binding-linux-arm64-gnu": "0.102.0"
+	},
 	"overrides": {
 		"@nuxt/devtools": "^3.1.1",
 		"@nuxt/kit": "^4.2.2",
