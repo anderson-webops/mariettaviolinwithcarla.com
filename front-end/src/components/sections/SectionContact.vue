@@ -4,7 +4,8 @@ import { computed } from "vue";
 import { useSiteStore } from "~/stores/site";
 
 const site = useSiteStore();
-const { contact, trial, contactForm } = storeToRefs(site);
+const { contact, trial } = storeToRefs(site);
+// const { contact, trial, contactForm } = storeToRefs(site);
 
 const trialMailto = computed(() => {
 	return `mailto:${contact.value.email}?subject=${encodeURIComponent(trial.value.primarySubject)}`;
@@ -39,7 +40,7 @@ const trialMailto = computed(() => {
 			</div>
 		</div>
 
-		<form
+		<!--		<form
 			class="space-y-4 rounded-2xl bg-white/90 p-5 shadow-md shadow-amber-100/60 ring-1 ring-amber-100/60 dark:bg-slate-900/70 dark:ring-amber-900/40"
 			name="lesson-request"
 			method="POST"
@@ -94,6 +95,6 @@ const trialMailto = computed(() => {
 					{{ trial.secondaryLabel }} {{ contact.phoneDisplay }}
 				</a>
 			</div>
-		</form>
+		</form> -->
 	</section>
 </template>
