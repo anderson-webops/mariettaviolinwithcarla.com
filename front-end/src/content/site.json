@@ -1,0 +1,166 @@
+{
+	"site": {
+		"name": "Marietta Violin with Carla",
+		"description": "Private violin lessons in Marietta, GA with a warm, patient studio for students and families.",
+		"label": "Violin studio"
+	},
+	"settings": {
+		"colorModeDefault": "light",
+		"_colorModeDefaultHint": "Use \"system\" to follow the visitor's OS theme; keep \"light\" or set \"dark\" to force a mode."
+	},
+	"contact": {
+		"email": "mariettaviolinwithcarlalowe@gmail.com",
+		"phoneDisplay": "770-568-0161",
+		"phoneHref": "tel:+17705680161"
+	},
+	"hero": {
+		"_location": "Near Wheeler High — ",
+		"location": "2207 Clearwater Dr, Marietta, GA 30067",
+		"headline": "Violin lessons with Carla — warm, encouraging, and tailored to every student.",
+		"body": "Whether you're picking up the violin for the first time or preparing for an audition, Carla's studio pairs clear fundamentals with musicality and performance confidence.",
+		"primaryCta": {
+			"label": "Schedule a lesson",
+			"emailSubject": "Lesson inquiry"
+		},
+		"secondaryCta": {
+			"label": "Call or text"
+		},
+		"tags": [
+			{
+				"label": "Beginner to advanced",
+				"tone": "amber"
+			},
+			{
+				"label": "In-person + online",
+				"tone": "emerald"
+			},
+			{
+				"label": "Studio recitals",
+				"tone": "slate"
+			}
+		],
+		"highlights": [
+			{
+				"title": "Patient, musical teaching",
+				"copy": "Carla blends Suzuki foundations with creative repertoire so students build confident tone, intonation, and musicianship at every age.",
+				"icon": "i-carbon-music"
+			},
+			{
+				"title": "Clear weekly practice plans",
+				"copy": "Each lesson ends with a written plan and audio clips for home practice. Parents get simple notes to keep progress steady.",
+				"icon": "i-carbon-notebook"
+			},
+			{
+				"title": "Perform with ease",
+				"copy": "Studio classes and twice-yearly recitals help students feel comfortable performing, auditioning, and leading in orchestra.",
+				"icon": "i-carbon-star-review"
+			}
+		]
+	},
+	"lessons": {
+		"cards": [
+			{
+				"name": "30-minute weekly",
+				"description": "Perfect for new players and young students. Gentle pace, lots of games, and posture-focused fundamentals.",
+				"format": "In-person or online"
+			},
+			{
+				"name": "45-minute weekly",
+				"description": "For growing students who want room for scales, etudes, and recital prep with meaningful feedback.",
+				"format": "In-person or online"
+			},
+			{
+				"name": "60-minute coaching",
+				"description": "Audition and ensemble prep, chair challenges, All-State, or polishing solo repertoire with detailed guidance.",
+				"format": "In-person or online"
+			}
+		]
+	},
+	"studio": {
+		"notes": [
+			{
+				"label": "Where",
+				"value": "Near Wheeler High — 2207 Clearwater Dr, Marietta, GA 30067. Cozy home studio with quiet, dedicated practice space.",
+				"icon": "i-carbon-location"
+			},
+			{
+				"label": "How we meet",
+				"value": "In-person or Zoom. Clean copies of music, recordings, and practice notes provided after each lesson.",
+				"icon": "i-carbon-calendar"
+			},
+			{
+				"label": "Who I teach",
+				"value": "Beginners (age 6+), middle/high school orchestra students, and motivated adult learners.",
+				"icon": "i-carbon-user-multiple"
+			}
+		]
+	},
+	"students": {
+		"eyebrow": "Current students",
+		"title": "What to expect each week",
+		"support": [
+			"Weekly lesson notes emailed to students and parents",
+			"Two studio recitals each year with pianist provided",
+			"Studio classes for sight-reading and ensemble skills",
+			"Audition prep for chamber groups, youth orchestra, and All-State",
+			"Digital practice journal templates available on request"
+		],
+		"ctaCard": {
+			"eyebrow": "Need something?",
+			"title": "Parent & student quick help",
+			"body": "Email Carla if you need a fresh practice plan, recordings, or to reschedule.",
+			"emailSubject": "Practice plan request",
+			"primaryLabel": "Request notes",
+			"secondaryLabel": "Text Carla"
+		}
+	},
+	"trial": {
+		"eyebrow": "Ready to begin?",
+		"title": "Set up a trial lesson",
+		"body": "Tell me a bit about the student, experience level, and times that work best. We'll set a relaxed trial lesson and send you a simple practice outline afterward.",
+		"primaryLabel": "Email Carla",
+		"primarySubject": "Trial lesson request",
+		"secondaryLabel": "Call or text"
+	},
+	"contactForm": {
+		"title": "Send a lesson request",
+		"body": "Share a few details and I'll reply with scheduling options and a simple next step.",
+		"submitLabel": "Send message",
+		"fields": [
+			{
+				"name": "name",
+				"label": "Your name",
+				"type": "text",
+				"required": true
+			},
+			{
+				"name": "email",
+				"label": "Email",
+				"type": "email",
+				"required": true
+			},
+			{
+				"name": "studentName",
+				"label": "Student name",
+				"type": "text",
+				"required": false
+			},
+			{
+				"name": "experience",
+				"label": "Experience level or goals",
+				"type": "text",
+				"required": false
+			},
+			{
+				"name": "message",
+				"label": "Anything else you'd like to share",
+				"type": "textarea",
+				"required": true
+			}
+		]
+	},
+	"footer": {
+		"eyebrow": "Carla's violin studio",
+		"body": "Serving families in Marietta & East Cobb — in-person and online."
+	}
+}

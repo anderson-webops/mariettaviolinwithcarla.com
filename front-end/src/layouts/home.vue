@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useSiteStore } from "~/stores/site";
+import DarkToggle from "~/components/DarkToggle.vue";
+import Footer from "~/components/Footer.vue";
+
+const site = useSiteStore();
+const { site: siteInfo, contact, hero } = storeToRefs(site);
+
+const primaryCtaHref = computed(() => {
+	return `mailto:${contact.value.email}?subject=${encodeURIComponent(hero.value.primaryCta.emailSubject)}`;
+});
+</script>
+
 <template>
 	<div
 		class="min-h-screen bg-gradient-to-br from-amber-50 via-white to-emerald-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-50"
@@ -19,31 +34,31 @@
 					<span aria-label="Violin emoji" role="img">🎻</span>
 				</div>
 				<div class="leading-tight">
-					<p class="text-[11px] uppercase tracking-[0.3em] text-amber-700 font-semibold">Violin studio</p>
-					<p class="text-lg font-semibold text-slate-900 dark:text-white">Marietta Violin with Carla</p>
+					<p class="text-[11px] uppercase tracking-[0.3em] text-amber-700 font-semibold">{{ siteInfo.label }}</p>
+					<p class="text-lg font-semibold text-slate-900 dark:text-white">{{ siteInfo.name }}</p>
 				</div>
 			</div>
 
 			<nav class="hidden items-center gap-6 text-sm font-medium text-slate-700 dark:text-slate-200 md:flex">
-				<a class="hover:text-amber-700" href="#lessons">Lessons</a>
-				<a class="hover:text-amber-700" href="#studio">Studio</a>
-				<a class="hover:text-amber-700" href="#students">Students</a>
-				<a class="hover:text-amber-700" href="#contact">Contact</a>
+				<NuxtLink class="hover:text-amber-700" to="/#lessons">Lessons</NuxtLink>
+				<NuxtLink class="hover:text-amber-700" to="/#studio">Studio</NuxtLink>
+				<NuxtLink class="hover:text-amber-700" to="/#students">Students</NuxtLink>
+				<NuxtLink class="hover:text-amber-700" to="/#contact">Contact</NuxtLink>
 			</nav>
 
 			<div class="flex items-center gap-3 text-sm">
 				<a
 					class="inline-flex items-center gap-2 rounded-full bg-amber-700 px-4 py-2 font-semibold text-white shadow-lg shadow-amber-500/40 transition hover:-translate-y-0.5 hover:shadow-amber-600/50"
-					href="mailto:lessons@mariettaviolin.com"
+					:href="primaryCtaHref"
 				>
-					Schedule a lesson
+					{{ hero.primaryCta.label }}
 					<span class="i-carbon-arrow-right text-base" />
 				</a>
 				<a
 					class="hidden text-amber-800 underline-offset-4 hover:underline dark:text-amber-200 sm:inline-flex"
-					href="tel:+17705551717"
+					:href="contact.phoneHref"
 				>
-					Call: (770) 555-1717
+					Call: {{ contact.phoneDisplay }}
 				</a>
 				<div class="ml-2">
 					<DarkToggle />

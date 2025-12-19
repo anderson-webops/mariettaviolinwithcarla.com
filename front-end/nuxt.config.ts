@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { defineNuxtConfig } from "nuxt/config";
 import { pwa } from "./src/config/pwa";
 import { appDescription } from "./src/constants";
+import siteContent from "./src/content/site.json";
 
 const enablePwa: boolean = process.env.ENABLE_PWA === "true";
 
@@ -18,6 +19,11 @@ type ExtendedNuxtConfig = NuxtConfig & {
 	colorMode?: Partial<ColorModeOptions>;
 	pwa?: PwaModuleOptions | false;
 };
+
+type ColorModePreference = "light" | "dark" | "system";
+const contentColorPreference =
+	(siteContent as { settings?: { colorModeDefault?: ColorModePreference } }).settings?.colorModeDefault ?? "light";
+const colorModeFallback = contentColorPreference === "system" ? "light" : contentColorPreference;
 
 export default defineNuxtConfig({
 	alias: {
@@ -59,6 +65,8 @@ export default defineNuxtConfig({
 	},
 
 	colorMode: {
+		preference: contentColorPreference,
+		fallback: colorModeFallback,
 		classSuffix: ""
 	},
 
@@ -76,7 +84,7 @@ export default defineNuxtConfig({
 
 	compatibilityDate: "2024-08-14",
 
-	nitro: {
+		nitro: {
 		esbuild: {
 			options: {
 				target: "esnext"
@@ -85,7 +93,7 @@ export default defineNuxtConfig({
 		prerender: {
 			crawlLinks: false,
 			routes: ["/"],
-			ignore: ["/hi"]
+			ignore: []
 		}
 	},
 

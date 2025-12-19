@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // noinspection ES6PreferShortImport
-import { appDescription, appName } from "../../front-end/src/constants";
+import { appDescription, appName } from "@/constants";
 
 useHead({
 	title: appName,

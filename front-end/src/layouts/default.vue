@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useSiteStore } from "~/stores/site";
+import DarkToggle from "~/components/DarkToggle.vue";
+import Footer from "~/components/Footer.vue";
+
+const site = useSiteStore();
+const { site: siteInfo, contact } = storeToRefs(site);
+
+const emailHref = computed(() => `mailto:${contact.value.email}`);
+</script>
+
 <template>
 	<div
 		class="min-h-screen bg-gradient-to-br from-amber-50 via-white to-emerald-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-50"
@@ -10,14 +23,14 @@
 					<span aria-label="Violin emoji" role="img">🎻</span>
 				</div>
 				<div class="leading-tight">
-					<p class="text-[11px] uppercase tracking-[0.3em] text-amber-700 font-semibold">Violin studio</p>
-					<p class="text-base font-semibold text-slate-900 dark:text-white">Marietta Violin with Carla</p>
+					<p class="text-[11px] uppercase tracking-[0.3em] text-amber-700 font-semibold">{{ siteInfo.label }}</p>
+					<p class="text-base font-semibold text-slate-900 dark:text-white">{{ siteInfo.name }}</p>
 				</div>
 			</div>
 			<div class="flex items-center gap-2 text-sm">
 				<a
 					class="hidden text-amber-800 underline-offset-4 hover:underline dark:text-amber-200 sm:inline-flex"
-					href="mailto:lessons@mariettaviolin.com"
+					:href="emailHref"
 				>
 					Email Carla
 				</a>
