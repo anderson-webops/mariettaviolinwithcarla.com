@@ -13,8 +13,8 @@ import siteContent from "./src/content/site.json";
 
 const enablePwa: boolean = process.env.ENABLE_PWA === "true" || process.env.VITE_PLUGIN_PWA === "true";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const srcPath = path.resolve(__dirname, "src");
+const __dirname: string = path.dirname(fileURLToPath(import.meta.url));
+const srcPath: string = path.resolve(__dirname, "src");
 const srcAlias = `${srcPath}/`;
 const manifestLinks = enablePwa ? [{ rel: "manifest", href: "/manifest.webmanifest" }] : [];
 
