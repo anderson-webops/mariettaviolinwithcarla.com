@@ -28,11 +28,13 @@ const primaryCtaHref = computed(() => {
 
 		<header class="relative z-10 container mx-auto flex items-center justify-between gap-6 px-6 py-6">
 			<div class="flex items-center gap-3">
-				<div
-					class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-2xl shadow-md shadow-amber-200/80 dark:bg-amber-900/40"
-				>
-					<span aria-label="Violin emoji" role="img">🎻</span>
-				</div>
+				<a href="/"
+					><div
+						class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-2xl shadow-md shadow-amber-200/80 dark:bg-amber-900/40"
+					>
+						<span aria-label="Violin emoji" role="img">🎻</span>
+					</div>
+				</a>
 				<div class="leading-tight">
 					<p class="text-[11px] uppercase tracking-[0.3em] text-amber-700 font-semibold">
 						{{ siteInfo.label }}
