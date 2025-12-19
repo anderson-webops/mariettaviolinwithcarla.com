@@ -1,15 +1,27 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useSiteStore } from "~/stores/site";
 
 const site = useSiteStore();
-const { contact, trial } = storeToRefs(site);
-// const { contact, trial, contactForm } = storeToRefs(site);
+const { contact, trial, contactForm } = storeToRefs(site);
 
 const trialMailto = computed(() => {
 	return `mailto:${contact.value.email}?subject=${encodeURIComponent(trial.value.primarySubject)}`;
 });
+
+const formStatus = ref<"idle" | "sending" | "success">("idle");
+const hasSubmitted = ref(false);
+
+function handleSubmit() {
+	hasSubmitted.value = true;
+	formStatus.value = "sending";
+}
+
+function handleIframeLoad() {
+	if (!hasSubmitted.value) return;
+	formStatus.value = "success";
+}
 </script>
 
 <template>
@@ -40,21 +52,23 @@ const trialMailto = computed(() => {
 			</div>
 		</div>
 
-		<!--		<form
-			class="space-y-4 rounded-2xl bg-white/90 p-5 shadow-md shadow-amber-100/60 ring-1 ring-amber-100/60 dark:bg-slate-900/70 dark:ring-amber-900/40"
-			name="lesson-request"
-			method="POST"
-			data-netlify="true"
-			data-netlify-honeypot="bot-field"
-		>
-			<input type="hidden" name="form-name" value="lesson-request" />
-			<p class="sr-only">
-				<label>
-					Don’t fill this out if you're human:
-					<input name="bot-field" />
-				</label>
-			</p>
+		<iframe
+			name="getform-iframe"
+			title="Getform submission target"
+			class="hidden"
+			aria-hidden="true"
+			tabindex="-1"
+			@load="handleIframeLoad"
+		/>
 
+		<form
+			class="space-y-4 rounded-2xl bg-white/90 p-5 shadow-md shadow-amber-100/60 ring-1 ring-amber-100/60 dark:bg-slate-900/70 dark:ring-amber-900/40"
+			method="POST"
+			:action="contactForm.action"
+			target="getform-iframe"
+			:aria-busy="formStatus === 'sending'"
+			@submit="handleSubmit"
+		>
 			<div class="space-y-1">
 				<p class="text-sm font-semibold text-slate-900 dark:text-white">{{ contactForm.title }}</p>
 				<p class="text-xs text-slate-700 dark:text-slate-200">{{ contactForm.body }}</p>
@@ -83,7 +97,8 @@ const trialMailto = computed(() => {
 			<div class="flex flex-wrap gap-3">
 				<button
 					type="submit"
-					class="inline-flex items-center gap-2 rounded-full bg-amber-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-500/50 transition hover:-translate-y-0.5 hover:shadow-amber-600/60"
+					class="inline-flex items-center gap-2 rounded-full bg-amber-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-500/50 transition hover:-translate-y-0.5 hover:shadow-amber-600/60 disabled:cursor-wait disabled:opacity-70"
+					:disabled="formStatus === 'sending'"
 				>
 					{{ contactForm.submitLabel }}
 					<span class="i-carbon-email text-base" />
@@ -95,6 +110,9 @@ const trialMailto = computed(() => {
 					{{ trial.secondaryLabel }} {{ contact.phoneDisplay }}
 				</a>
 			</div>
-		</form> -->
+			<p v-if="formStatus === 'success'" class="text-xs font-semibold text-emerald-700">
+				Thanks! Your message has been sent.
+			</p>
+		</form>
 	</section>
 </template>

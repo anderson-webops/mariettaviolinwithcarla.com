@@ -75,6 +75,7 @@ interface ContactFormField {
 }
 
 interface ContactFormContent {
+	action: string;
 	title: string;
 	body: string;
 	submitLabel: string;

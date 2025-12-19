@@ -11,9 +11,12 @@ import { pwa } from "./src/config/pwa";
 import { appDescription } from "./src/constants";
 import siteContent from "./src/content/site.json";
 
-const enablePwa: boolean = process.env.ENABLE_PWA === "true";
+const enablePwa: boolean = process.env.ENABLE_PWA === "true" || process.env.VITE_PLUGIN_PWA === "true";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const srcPath = path.resolve(__dirname, "src");
+const srcAlias = `${srcPath}/`;
+const manifestLinks = enablePwa ? [{ rel: "manifest", href: "/manifest.webmanifest" }] : [];
 
 type ExtendedNuxtConfig = NuxtConfig & {
 	colorMode?: Partial<ColorModeOptions>;
@@ -27,18 +30,11 @@ const colorModeFallback = contentColorPreference === "system" ? "light" : conten
 
 export default defineNuxtConfig({
 	alias: {
-		"~": `${path.resolve(__dirname, "src")}/`,
-		"@": `${path.resolve(__dirname, "src")}/`
+		"~": srcAlias,
+		"@": srcAlias
 	},
 
-	modules: [
-		"@vueuse/nuxt",
-		"@unocss/nuxt",
-		"@pinia/nuxt",
-		"@nuxtjs/color-mode",
-		enablePwa && "@vite-pwa/nuxt",
-		"@nuxt/eslint"
-	].filter(Boolean),
+	modules: ["@vueuse/nuxt", "@unocss/nuxt", "@pinia/nuxt", "@nuxtjs/color-mode", "@vite-pwa/nuxt", "@nuxt/eslint"],
 
 	srcDir: "src",
 
@@ -52,7 +48,8 @@ export default defineNuxtConfig({
 			link: [
 				{ rel: "icon", href: "/favicon.ico", sizes: "any" },
 				{ rel: "icon", type: "image/svg+xml", href: "/nuxt.svg" },
-				{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" }
+				{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+				...manifestLinks
 			],
 			meta: [
 				{ name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -106,5 +103,13 @@ export default defineNuxtConfig({
 		}
 	},
 
-	pwa: { ...pwa, disable: !enablePwa }
+	pwa: { ...pwa, disable: !enablePwa },
+	vite: {
+		resolve: {
+			alias: {
+				"~": srcPath,
+				"@": srcPath
+			}
+		}
+	}
 } as ExtendedNuxtConfig) as ExtendedNuxtConfig;

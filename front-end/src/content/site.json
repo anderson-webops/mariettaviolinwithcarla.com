@@ -123,6 +123,7 @@
 		"secondaryLabel": "Call or text"
 	},
 	"contactForm": {
+		"action": "https://getform.io/f/awnvqylb",
 		"title": "Send a lesson request",
 		"body": "Share a few details and I'll reply with scheduling options and a simple next step.",
 		"submitLabel": "Send message",
@@ -138,18 +139,6 @@
 				"label": "Email",
 				"type": "email",
 				"required": true
-			},
-			{
-				"name": "studentName",
-				"label": "Student name",
-				"type": "text",
-				"required": false
-			},
-			{
-				"name": "experience",
-				"label": "Experience level or goals",
-				"type": "text",
-				"required": false
 			},
 			{
 				"name": "message",

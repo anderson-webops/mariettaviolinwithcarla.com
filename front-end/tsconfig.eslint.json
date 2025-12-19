@@ -11,7 +11,6 @@
 		"test/**/*.ts",
 		"cypress/**/*.ts",
 		"cypress.config.ts",
-		"vite.config.mts",
 		"nuxt.config.ts",
 		"uno.config.ts",
 		".nuxt/nuxt.d.ts",

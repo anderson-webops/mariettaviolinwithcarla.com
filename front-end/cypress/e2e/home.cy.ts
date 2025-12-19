@@ -1,15 +1,6 @@
 import site from "../../src/content/site.json";
 
-const {
-	hero,
-	contact,
-	lessons,
-	studio,
-	students,
-	trial,
-	footer,
-	contactForm: { submitLabel }
-} = site;
+const { hero, contact, lessons, studio, students, trial, footer, contactForm } = site;
 
 describe("Homepage", () => {
 	it("shows the hero headline and primary contact actions", () => {
@@ -52,7 +43,18 @@ describe("Homepage", () => {
 			.should("be.visible")
 			.within(() => {
 				cy.contains(trial.primaryLabel).should("have.attr", "href").and("contain", contact.email);
-				cy.contains(submitLabel).should("be.visible");
+				cy.get("form")
+					.should("have.attr", "action", contactForm.action)
+					.within(() => {
+						contactForm.fields.forEach((field) => {
+							const selector =
+								field.type === "textarea"
+									? `textarea[name="${field.name}"]`
+									: `input[name="${field.name}"]`;
+							cy.get(selector).should("exist");
+						});
+						cy.contains("button", contactForm.submitLabel).should("be.visible");
+					});
 				cy.contains(trial.secondaryLabel).should("have.attr", "href").and("eq", contact.phoneHref);
 			});
 
