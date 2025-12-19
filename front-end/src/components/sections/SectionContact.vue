@@ -38,30 +38,6 @@ function handleIframeLoad() {
 			<p class="text-sm text-slate-700 dark:text-slate-200">
 				{{ trial.body }}
 			</p>
-			<!--			<br />
-			<div class="flex flex-col gap-3 items-start">
-				<a
-					class="inline-flex items-center gap-2 rounded-full bg-amber-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-500/50 transition hover:-translate-y-0.5 hover:shadow-amber-600/60"
-					:href="trialMailto"
-				>
-					{{ trial.primaryLabel }}
-					<span class="i-carbon-email text-base" />
-				</a>
-				<a
-					class="inline-flex items-center gap-2 rounded-full border border-amber-200 px-5 py-3 text-sm font-semibold text-amber-800 transition hover:-translate-y-0.5 hover:border-amber-400 dark:border-amber-900/60 dark:text-amber-200"
-					:href="smsHref"
-				>
-					{{ contact.textLabel }} {{ contact.phoneDisplay }}
-					<span class="i-carbon-chat text-base" />
-				</a>
-				<a
-					class="inline-flex items-center gap-2 rounded-full border border-amber-200 px-5 py-3 text-sm font-semibold text-amber-800 transition hover:-translate-y-0.5 hover:border-amber-400 dark:border-amber-900/60 dark:text-amber-200"
-					:href="contact.phoneHref"
-				>
-					{{ contact.callLabel }} {{ contact.phoneDisplay }}
-					<span class="i-carbon-phone text-base" />
-				</a>
-			</div> -->
 		</div>
 
 		<iframe

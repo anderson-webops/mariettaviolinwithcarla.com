@@ -44,6 +44,7 @@ const primaryCtaHref = computed(() => {
 			</div>
 
 			<nav class="hidden items-center gap-6 text-sm font-medium text-slate-700 dark:text-slate-200 md:flex">
+				<NuxtLink class="hover:text-amber-700" to="/#about">About</NuxtLink>
 				<NuxtLink class="hover:text-amber-700" to="/#lessons">Lessons</NuxtLink>
 				<NuxtLink class="hover:text-amber-700" to="/#students">Students</NuxtLink>
 				<NuxtLink class="hover:text-amber-700" to="/#contact">Contact</NuxtLink>

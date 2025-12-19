@@ -21,9 +21,12 @@ const tagToneClasses: Record<string, string> = {
 
 <template>
 	<section
+		id="about"
 		class="rounded-3xl bg-white/85 p-8 shadow-xl shadow-amber-200/60 ring-1 ring-amber-100/60 backdrop-blur-sm dark:bg-slate-900/70 dark:ring-amber-900/30"
 	>
-		<div class="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-stretch">
+		<div
+			class="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-stretch md:[&>div:only-child]:col-span-2 md:[&>div:only-child]:max-w-2xl md:[&>div:only-child]:justify-self-center md:[&>div:only-child]:min-h-[22rem]"
+		>
 			<div class="flex h-full flex-col">
 				<div class="flex-[0.5]" aria-hidden="true" />
 				<div class="space-y-5">
@@ -74,6 +77,7 @@ const tagToneClasses: Record<string, string> = {
 				</div>
 			</div>
 
+			<!--
 			<div
 				class="grid gap-4 rounded-2xl bg-gradient-to-br from-white to-amber-50/80 p-6 shadow-inner ring-1 ring-amber-100/70 dark:from-slate-800 dark:to-slate-900 dark:ring-amber-900/40"
 			>
@@ -97,6 +101,7 @@ const tagToneClasses: Record<string, string> = {
 					</div>
 				</div>
 			</div>
+			-->
 		</div>
 	</section>
 </template>
