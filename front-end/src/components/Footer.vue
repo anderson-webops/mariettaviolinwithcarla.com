@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useSiteStore } from "~/stores/site";
 import DarkToggle from "~/components/DarkToggle.vue";
+import { useSiteStore } from "~/stores/site";
 
 const site = useSiteStore();
 const { footer, contact } = storeToRefs(site);
@@ -26,7 +26,9 @@ const { footer, contact } = storeToRefs(site);
 					:href="`mailto:${contact.email}`"
 					>{{ contact.email }}</a
 				>
-				<a class="text-slate-700 underline-offset-4 hover:underline dark:text-slate-200" :href="contact.phoneHref"
+				<a
+					class="text-slate-700 underline-offset-4 hover:underline dark:text-slate-200"
+					:href="contact.phoneHref"
 					>{{ contact.phoneDisplay }}</a
 				>
 				<DarkToggle />

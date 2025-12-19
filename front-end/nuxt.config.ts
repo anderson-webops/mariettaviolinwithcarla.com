@@ -84,7 +84,7 @@ export default defineNuxtConfig({
 
 	compatibilityDate: "2024-08-14",
 
-		nitro: {
+	nitro: {
 		esbuild: {
 			options: {
 				target: "esnext"

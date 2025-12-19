@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { storeToRefs } from "pinia";
-import { useSiteStore } from "~/stores/site";
+import { computed } from "vue";
 import DarkToggle from "~/components/DarkToggle.vue";
 import Footer from "~/components/Footer.vue";
+import { useSiteStore } from "~/stores/site";
 
 const site = useSiteStore();
 const { site: siteInfo, contact } = storeToRefs(site);
@@ -23,8 +23,12 @@ const emailHref = computed(() => `mailto:${contact.value.email}`);
 					<span aria-label="Violin emoji" role="img">🎻</span>
 				</div>
 				<div class="leading-tight">
-					<p class="text-[11px] uppercase tracking-[0.3em] text-amber-700 font-semibold">{{ siteInfo.label }}</p>
-					<p class="text-base font-semibold text-slate-900 dark:text-white">{{ siteInfo.name }}</p>
+					<p class="text-[11px] uppercase tracking-[0.3em] text-amber-700 font-semibold">
+						{{ siteInfo.label }}
+					</p>
+					<p class="text-base font-semibold text-slate-900 dark:text-white">
+						{{ siteInfo.name }}
+					</p>
 				</div>
 			</div>
 			<div class="flex items-center gap-2 text-sm">

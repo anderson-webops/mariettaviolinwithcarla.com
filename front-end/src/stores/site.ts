@@ -1,5 +1,5 @@
-import { computed } from "vue";
 import { defineStore } from "pinia";
+import { computed } from "vue";
 import siteContent from "@/content/site.json";
 
 type ColorModePreference = "light" | "dark" | "system";
