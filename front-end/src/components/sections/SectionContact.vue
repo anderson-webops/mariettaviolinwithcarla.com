@@ -9,6 +9,7 @@ const { contact, trial, contactForm } = storeToRefs(site);
 const trialMailto = computed(() => {
 	return `mailto:${contact.value.email}?subject=${encodeURIComponent(trial.value.primarySubject)}`;
 });
+const smsHref = computed(() => contact.value.phoneHref.replace(/^tel:/, "sms:"));
 
 const formStatus = ref<"idle" | "sending" | "success">("idle");
 const hasSubmitted = ref(false);
@@ -35,7 +36,8 @@ function handleIframeLoad() {
 			<p class="text-sm text-slate-700 dark:text-slate-200">
 				{{ trial.body }}
 			</p>
-			<div class="flex flex-wrap gap-3">
+			<br />
+			<div class="flex flex-col gap-3 items-start">
 				<a
 					class="inline-flex items-center gap-2 rounded-full bg-amber-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-500/50 transition hover:-translate-y-0.5 hover:shadow-amber-600/60"
 					:href="trialMailto"
@@ -45,9 +47,17 @@ function handleIframeLoad() {
 				</a>
 				<a
 					class="inline-flex items-center gap-2 rounded-full border border-amber-200 px-5 py-3 text-sm font-semibold text-amber-800 transition hover:-translate-y-0.5 hover:border-amber-400 dark:border-amber-900/60 dark:text-amber-200"
+					:href="smsHref"
+				>
+					{{ contact.textLabel }} {{ contact.phoneDisplay }}
+					<span class="i-carbon-chat text-base" />
+				</a>
+				<a
+					class="inline-flex items-center gap-2 rounded-full border border-amber-200 px-5 py-3 text-sm font-semibold text-amber-800 transition hover:-translate-y-0.5 hover:border-amber-400 dark:border-amber-900/60 dark:text-amber-200"
 					:href="contact.phoneHref"
 				>
-					{{ trial.secondaryLabel }} {{ contact.phoneDisplay }}
+					{{ contact.callLabel }} {{ contact.phoneDisplay }}
+					<span class="i-carbon-phone text-base" />
 				</a>
 			</div>
 		</div>
@@ -96,21 +106,15 @@ function handleIframeLoad() {
 				/>
 			</div>
 
-			<div class="flex flex-wrap gap-3">
+			<div class="flex">
 				<button
 					type="submit"
-					class="inline-flex items-center gap-2 rounded-full bg-amber-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-500/50 transition hover:-translate-y-0.5 hover:shadow-amber-600/60 disabled:cursor-wait disabled:opacity-70"
+					class="mx-auto inline-flex items-center gap-2 rounded-full bg-amber-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-500/50 transition hover:-translate-y-0.5 hover:shadow-amber-600/60 disabled:cursor-wait disabled:opacity-70"
 					:disabled="formStatus === 'sending'"
 				>
 					{{ contactForm.submitLabel }}
 					<span class="i-carbon-email text-base" />
 				</button>
-				<a
-					class="inline-flex items-center gap-2 rounded-full border border-amber-200 px-5 py-3 text-sm font-semibold text-amber-800 transition hover:-translate-y-0.5 hover:border-amber-400 dark:border-amber-900/60 dark:text-amber-200"
-					:href="contact.phoneHref"
-				>
-					{{ trial.secondaryLabel }} {{ contact.phoneDisplay }}
-				</a>
 			</div>
 			<p v-if="formStatus === 'success'" class="text-xs font-semibold text-emerald-700">
 				Thanks! Your message has been sent.

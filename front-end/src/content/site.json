@@ -8,8 +8,16 @@
 		"colorModeDefault": "light",
 		"_colorModeDefaultHint": "Use \"system\" to follow the visitor's OS theme; keep \"light\" or set \"dark\" to force a mode."
 	},
+	"announcement": {
+		"enabled": true,
+		"message": "Piano lessons are opening soon. Feel free to contact for more info.",
+		"ctaLabel": "Reach out",
+		"ctaHref": "/#contact"
+	},
 	"contact": {
 		"email": "mariettaviolinwithcarlalowe@gmail.com",
+		"callLabel": "Call",
+		"textLabel": "Text",
 		"phoneDisplay": "770-568-0161",
 		"phoneHref": "tel:+17705680161"
 	},

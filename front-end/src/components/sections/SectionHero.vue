@@ -10,6 +10,8 @@ const heroMailto = computed(() => {
 	return `mailto:${contact.value.email}?subject=${encodeURIComponent(hero.value.primaryCta.emailSubject)}`;
 });
 
+const smsHref = computed(() => contact.value.phoneHref.replace(/^tel:/, "sms:"));
+
 const tagToneClasses: Record<string, string> = {
 	amber: "rounded-full bg-amber-100 px-3 py-1 text-amber-800 dark:bg-amber-900/40 dark:text-amber-100",
 	emerald: "rounded-full bg-emerald-100 px-3 py-1 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-100",
@@ -40,13 +42,21 @@ const tagToneClasses: Record<string, string> = {
 						:href="heroMailto"
 					>
 						{{ hero.primaryCta.label }}
-						<span class="i-carbon-arrow-right text-base" />
+						<span class="i-carbon-email text-base" />
 					</a>
 					<a
 						class="inline-flex items-center gap-2 rounded-full border border-amber-200 px-5 py-3 text-sm font-semibold text-amber-800 transition hover:-translate-y-0.5 hover:border-amber-400 dark:border-amber-900/60 dark:text-amber-200"
 						:href="contact.phoneHref"
 					>
-						{{ hero.secondaryCta.label }} {{ contact.phoneDisplay }}
+						{{ contact.callLabel }} {{ contact.phoneDisplay }}
+						<span class="i-carbon-phone text-base" />
+					</a>
+					<a
+						class="inline-flex items-center gap-2 rounded-full border border-amber-200 px-5 py-3 text-sm font-semibold text-amber-800 transition hover:-translate-y-0.5 hover:border-amber-400 dark:border-amber-900/60 dark:text-amber-200"
+						:href="smsHref"
+					>
+						{{ contact.textLabel }} {{ contact.phoneDisplay }}
+						<span class="i-carbon-chat text-base" />
 					</a>
 				</div>
 				<div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">

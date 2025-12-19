@@ -6,7 +6,7 @@ import Footer from "~/components/Footer.vue";
 import { useSiteStore } from "~/stores/site";
 
 const site = useSiteStore();
-const { site: siteInfo, contact, hero } = storeToRefs(site);
+const { site: siteInfo, contact, hero, announcement } = storeToRefs(site);
 
 const primaryCtaHref = computed(() => {
 	return `mailto:${contact.value.email}?subject=${encodeURIComponent(hero.value.primaryCta.emailSubject)}`;
@@ -69,6 +69,23 @@ const primaryCtaHref = computed(() => {
 				</div>
 			</div>
 		</header>
+
+		<div v-if="announcement.enabled" class="relative z-10 container mx-auto px-6">
+			<div
+				class="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-emerald-50/90 px-4 py-3 text-s text-emerald-900 shadow-sm ring-1 ring-emerald-100/80 dark:bg-emerald-900/20 dark:text-emerald-50 dark:ring-emerald-900/50"
+			>
+				<p class="font-bold">
+					{{ announcement.message }}
+				</p>
+				<NuxtLink
+					class="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 font-semibold text-emerald-800 shadow-sm transition hover:-translate-y-0.5 dark:bg-emerald-950 dark:text-emerald-100"
+					:to="announcement.ctaHref"
+				>
+					{{ announcement.ctaLabel }}
+					<span class="i-carbon-arrow-right text-sm" />
+				</NuxtLink>
+			</div>
+		</div>
 
 		<main class="relative z-10 container mx-auto px-6 pb-16 pt-2">
 			<slot />

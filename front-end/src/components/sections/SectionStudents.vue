@@ -9,6 +9,7 @@ const { students, contact } = storeToRefs(site);
 const supportMailto = computed(() => {
 	return `mailto:${contact.value.email}?subject=${encodeURIComponent(students.value.ctaCard.emailSubject)}`;
 });
+const smsHref = computed(() => contact.value.phoneHref.replace(/^tel:/, "sms:"));
 </script>
 
 <template>
@@ -44,7 +45,7 @@ const supportMailto = computed(() => {
 				</a>
 				<a
 					class="inline-flex items-center gap-2 rounded-full border border-white/60 px-4 py-2 font-semibold text-white transition hover:-translate-y-0.5"
-					:href="contact.phoneHref"
+					:href="smsHref"
 				>
 					{{ students.ctaCard.secondaryLabel }}
 					<span class="i-carbon-mobile text-base" />

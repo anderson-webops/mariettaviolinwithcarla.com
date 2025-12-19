@@ -1,6 +1,7 @@
 import site from "../../src/content/site.json";
 
 const { hero, contact, lessons, studio, students, trial, footer, contactForm } = site;
+const smsHref = contact.phoneHref.replace(/^tel:/, "sms:");
 
 describe("Homepage", () => {
 	it("shows the hero headline and primary contact actions", () => {
@@ -8,7 +9,10 @@ describe("Homepage", () => {
 
 		cy.contains("h1", hero.headline, { matchCase: false }).should("be.visible");
 		cy.contains("a", hero.primaryCta.label).should("have.attr", "href").and("contain", contact.email);
-		cy.contains("a", contact.phoneDisplay).should("have.attr", "href").and("eq", contact.phoneHref);
+		cy.contains("a", `${contact.callLabel} ${contact.phoneDisplay}`)
+			.should("have.attr", "href")
+			.and("eq", contact.phoneHref);
+		cy.contains("a", `${contact.textLabel} ${contact.phoneDisplay}`).should("have.attr", "href").and("eq", smsHref);
 	});
 
 	it("lists lesson options, studio details, and student support notes", () => {
@@ -55,7 +59,12 @@ describe("Homepage", () => {
 						});
 						cy.contains("button", contactForm.submitLabel).should("be.visible");
 					});
-				cy.contains(trial.secondaryLabel).should("have.attr", "href").and("eq", contact.phoneHref);
+				cy.contains("a", `${contact.callLabel} ${contact.phoneDisplay}`)
+					.should("have.attr", "href")
+					.and("eq", contact.phoneHref);
+				cy.contains("a", `${contact.textLabel} ${contact.phoneDisplay}`)
+					.should("have.attr", "href")
+					.and("eq", smsHref);
 			});
 
 		cy.get("footer").within(() => {

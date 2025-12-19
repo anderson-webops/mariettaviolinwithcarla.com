@@ -82,6 +82,13 @@ interface ContactFormContent {
 	fields: ContactFormField[];
 }
 
+interface AnnouncementContent {
+	enabled: boolean;
+	message: string;
+	ctaLabel: string;
+	ctaHref: string;
+}
+
 interface SiteContent {
 	site: {
 		name: string;
@@ -91,8 +98,11 @@ interface SiteContent {
 	settings: {
 		colorModeDefault: ColorModePreference;
 	};
+	announcement: AnnouncementContent;
 	contact: {
 		email: string;
+		callLabel: string;
+		textLabel: string;
 		phoneDisplay: string;
 		phoneHref: string;
 	};
@@ -135,6 +145,7 @@ export const useSiteStore = defineStore("site", () => {
 		students: computed(() => content.value.students),
 		trial: computed(() => content.value.trial),
 		contactForm: computed(() => content.value.contactForm),
+		announcement: computed(() => content.value.announcement),
 		footer: computed(() => content.value.footer),
 		colorModeDefault
 	};
