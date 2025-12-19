@@ -56,7 +56,7 @@ const primaryCtaHref = computed(() => {
 					:href="primaryCtaHref"
 				>
 					{{ hero.primaryCta.label }}
-					<span class="i-carbon-arrow-right text-base" />
+					<span class="i-carbon-email text-base" />
 				</a>
 				<a
 					class="hidden text-amber-800 underline-offset-4 hover:underline dark:text-amber-200 sm:inline-flex"
@@ -82,7 +82,7 @@ const primaryCtaHref = computed(() => {
 					:to="announcement.ctaHref"
 				>
 					{{ announcement.ctaLabel }}
-					<span class="i-carbon-arrow-right text-sm" />
+					<span class="i-carbon-email text-sm" />
 				</NuxtLink>
 			</div>
 		</div>
