@@ -51,7 +51,7 @@
 		"highlights": [
 			{
 				"title": "Patient, musical teaching",
-				"copy": "Carla blends multiple foundations of music with creative repertoire so students build confident tone, intonation, and musicianship at every age.",
+				"copy": "I blend multiple foundations of music with creative repertoire so students build confident tone, intonation, and musicianship at every age.",
 				"icon": "i-carbon-music"
 			},
 			{
@@ -85,43 +85,18 @@
 			}
 		]
 	},
-	"studio": {
-		"notes": [
-			{
-				"label": "Where",
-				"value": "Near Wheeler High — 2207 Clearwater Dr, Marietta, GA 30067. Cozy home studio with dedicated practice space.",
-				"icon": "i-carbon-location"
-			},
-			{
-				"label": "How we meet",
-				"value": "In-person or Zoom. Clean copies of music, recordings, and practice notes provided after each lesson.",
-				"icon": "i-carbon-calendar"
-			},
-			{
-				"label": "Who I teach",
-				"value": "Beginners (age 6+), middle/high school orchestra students, and motivated adult learners.",
-				"icon": "i-carbon-user-multiple"
-			}
-		]
-	},
 	"students": {
 		"eyebrow": "Current students",
 		"title": "What to expect each week",
+		"body": "Each week blends technique, repertoire, and clear next steps so students and parents know exactly what to practice between lessons.",
 		"support": [
+			"Home studio near Wheeler High — 2207 Clearwater Dr, Marietta, GA 30067",
+			"Beginners (age 6+), middle/high school orchestra students, and motivated adult learners",
 			"Weekly lesson notes emailed to students and parents",
 			"Two studio recitals each year with pianist provided",
-			"Studio classes for sight-reading and ensemble skills",
-			"Audition prep for chamber groups, youth orchestra, and All-State",
+			"Studio classes for sight-reading, ensemble skills, and audition prep",
 			"Digital practice journal templates available on request"
-		],
-		"ctaCard": {
-			"eyebrow": "Need something?",
-			"title": "Parent & student quick help",
-			"body": "Email Carla if you need a fresh practice plan, recordings, or to reschedule.",
-			"emailSubject": "Practice plan request",
-			"primaryLabel": "Request notes",
-			"secondaryLabel": "Text Carla"
-		}
+		]
 	},
 	"trial": {
 		"eyebrow": "Ready to begin?",

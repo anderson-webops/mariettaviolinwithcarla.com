@@ -36,26 +36,11 @@ interface LessonOption {
 	format: string;
 }
 
-interface StudioNote {
-	label: string;
-	value: string;
-	icon: string;
-}
-
-interface StudentCtaCard {
-	eyebrow: string;
-	title: string;
-	body: string;
-	emailSubject: string;
-	primaryLabel: string;
-	secondaryLabel: string;
-}
-
 interface StudentsContent {
 	eyebrow: string;
 	title: string;
+	body: string;
 	support: string[];
-	ctaCard: StudentCtaCard;
 }
 
 interface TrialContent {
@@ -110,9 +95,6 @@ interface SiteContent {
 	lessons: {
 		cards: LessonOption[];
 	};
-	studio: {
-		notes: StudioNote[];
-	};
 	students: StudentsContent;
 	trial: TrialContent;
 	contactForm: ContactFormContent;
@@ -141,7 +123,6 @@ export const useSiteStore = defineStore("site", () => {
 		contact: computed(() => content.value.contact),
 		hero: computed(() => content.value.hero),
 		lessons: computed(() => content.value.lessons),
-		studio: computed(() => content.value.studio),
 		students: computed(() => content.value.students),
 		trial: computed(() => content.value.trial),
 		contactForm: computed(() => content.value.contactForm),
