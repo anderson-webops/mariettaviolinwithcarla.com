@@ -24,7 +24,8 @@
 	"hero": {
 		"_location": "Near Wheeler High — ",
 		"location": "2207 Clearwater Dr, Marietta, GA 30067",
-		"headline": "Violin lessons with Carla — warm, encouraging, and tailored to every student.",
+		"headline": "Violin lessons with Carla",
+		"_healine": " - Warm, encouraging, and tailored to every student.",
 		"body": "Whether you're picking up the violin for the first time or preparing for an audition, Carla's studio pairs clear fundamentals with musicality and performance confidence.",
 		"primaryCta": {
 			"label": "Schedule a lesson",

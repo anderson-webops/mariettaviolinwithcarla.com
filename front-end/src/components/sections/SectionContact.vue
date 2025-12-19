@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { computed, ref } from "vue";
+// import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useSiteStore } from "~/stores/site";
 
 const site = useSiteStore();
-const { contact, trial, contactForm } = storeToRefs(site);
+// const { contact, trial, contactForm } = storeToRefs(site);
+const { trial, contactForm } = storeToRefs(site);
 
-const trialMailto = computed(() => {
+/* const trialMailto = computed(() => {
 	return `mailto:${contact.value.email}?subject=${encodeURIComponent(trial.value.primarySubject)}`;
 });
-const smsHref = computed(() => contact.value.phoneHref.replace(/^tel:/, "sms:"));
+const smsHref = computed(() => contact.value.phoneHref.replace(/^tel:/, "sms:")); */
 
 const formStatus = ref<"idle" | "sending" | "success">("idle");
 const hasSubmitted = ref(false);
@@ -36,7 +38,7 @@ function handleIframeLoad() {
 			<p class="text-sm text-slate-700 dark:text-slate-200">
 				{{ trial.body }}
 			</p>
-			<br />
+			<!--			<br />
 			<div class="flex flex-col gap-3 items-start">
 				<a
 					class="inline-flex items-center gap-2 rounded-full bg-amber-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-500/50 transition hover:-translate-y-0.5 hover:shadow-amber-600/60"
@@ -59,7 +61,7 @@ function handleIframeLoad() {
 					{{ contact.callLabel }} {{ contact.phoneDisplay }}
 					<span class="i-carbon-phone text-base" />
 				</a>
-			</div>
+			</div> -->
 		</div>
 
 		<iframe

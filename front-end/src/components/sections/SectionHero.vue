@@ -33,7 +33,7 @@ const tagToneClasses: Record<string, string> = {
 				>
 					{{ hero.headline }}
 				</h1>
-				<p class="text-lg text-slate-700 dark:text-slate-200">
+				<p class="text-[16px] text-slate-700 dark:text-slate-200">
 					{{ hero.body }}
 				</p>
 				<div class="flex flex-wrap gap-3">
