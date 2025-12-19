@@ -53,8 +53,8 @@ function handleIframeLoad() {
 		</div>
 
 		<iframe
-			name="getform-iframe"
-			title="Getform submission target"
+			name="basin-iframe"
+			title="Basin submission target"
 			class="hidden"
 			aria-hidden="true"
 			tabindex="-1"
@@ -62,10 +62,12 @@ function handleIframeLoad() {
 		/>
 
 		<form
+			id="form"
 			class="space-y-4 rounded-2xl bg-white/90 p-5 shadow-md shadow-amber-100/60 ring-1 ring-amber-100/60 dark:bg-slate-900/70 dark:ring-amber-900/40"
 			method="POST"
 			:action="contactForm.action"
-			target="getform-iframe"
+			enctype="multipart/form-data"
+			target="basin-iframe"
 			:aria-busy="formStatus === 'sending'"
 			@submit="handleSubmit"
 		>

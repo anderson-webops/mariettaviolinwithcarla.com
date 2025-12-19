@@ -49,9 +49,9 @@ npm run -w front-end preview
 npm run -w back-end server
 ```
 
-## Forms (Getform)
+## Forms (Basin)
 
-The contact form posts to Getform via a standard form POST (targeted to a hidden iframe to avoid navigation).
+The contact form posts to Basin via a standard form POST (targeted to a hidden iframe to avoid navigation).
 
 - Update the endpoint at `front-end/src/content/site.json` under `contactForm.action`.
 - Form fields are configured in the same file under `contactForm.fields`.
