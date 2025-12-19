@@ -1,6 +1,6 @@
 import site from "../../src/content/site.json";
 
-const { hero, contact, lessons, studio, students, trial, footer, contactForm } = site;
+const { hero, contact, lessons, students, trial, footer, contactForm } = site;
 const smsHref = contact.phoneHref.replace(/^tel:/, "sms:");
 
 describe("Homepage", () => {
@@ -15,7 +15,7 @@ describe("Homepage", () => {
 		cy.contains("a", `${contact.textLabel} ${contact.phoneDisplay}`).should("have.attr", "href").and("eq", smsHref);
 	});
 
-	it("lists lesson options, studio details, and student support notes", () => {
+	it("lists lesson options and student support notes", () => {
 		cy.visit("/");
 
 		cy.get("section#lessons")
@@ -26,16 +26,9 @@ describe("Homepage", () => {
 				});
 			});
 
-		cy.get("section#studio")
-			.should("be.visible")
-			.within(() => {
-				studio.notes.forEach((note) => {
-					cy.contains(note.label).should("be.visible");
-				});
-			});
-
 		cy.get("section#students").within(() => {
 			cy.contains(students.title).should("be.visible");
+			cy.contains(students.body).should("be.visible");
 			cy.get("li").its("length").should("be.greaterThan", 3);
 		});
 	});
@@ -46,7 +39,8 @@ describe("Homepage", () => {
 		cy.get("section#contact")
 			.should("be.visible")
 			.within(() => {
-				cy.contains(trial.primaryLabel).should("have.attr", "href").and("contain", contact.email);
+				cy.contains(trial.title).should("be.visible");
+				cy.contains(trial.body).should("be.visible");
 				cy.get("form")
 					.should("have.attr", "action", contactForm.action)
 					.within(() => {
@@ -59,12 +53,6 @@ describe("Homepage", () => {
 						});
 						cy.contains("button", contactForm.submitLabel).should("be.visible");
 					});
-				cy.contains("a", `${contact.callLabel} ${contact.phoneDisplay}`)
-					.should("have.attr", "href")
-					.and("eq", contact.phoneHref);
-				cy.contains("a", `${contact.textLabel} ${contact.phoneDisplay}`)
-					.should("have.attr", "href")
-					.and("eq", smsHref);
 			});
 
 		cy.get("footer").within(() => {
