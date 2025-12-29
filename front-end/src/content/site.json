@@ -10,7 +10,7 @@
 	},
 	"announcement": {
 		"enabled": true,
-		"message": "Piano lessons are opening soon. Feel free to contact for more info.",
+		"message": "Piano lessons open now. Feel free to contact for more info.",
 		"ctaLabel": "Reach out",
 		"ctaHref": "/#contact"
 	},
