@@ -1,0 +1,38 @@
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import DarkToggle from "~/components/DarkToggle.vue";
+import { useSiteStore } from "~/stores/site";
+
+const site = useSiteStore();
+const { footer, contact } = storeToRefs(site);
+</script>
+
+<template>
+	<footer class="mt-16 border-t border-slate-200/70 pt-8 dark:border-slate-800">
+		<div
+			class="flex flex-col gap-4 text-sm text-slate-700 dark:text-slate-200 md:flex-row md:items-center md:justify-between"
+		>
+			<div>
+				<p class="text-[11px] uppercase tracking-[0.25em] text-amber-700 font-semibold">
+					{{ footer.eyebrow }}
+				</p>
+				<p class="mt-1 text-slate-700 dark:text-slate-300">
+					{{ footer.body }}
+				</p>
+			</div>
+			<div class="flex flex-wrap items-center gap-4">
+				<a
+					class="font-semibold text-amber-800 underline-offset-4 hover:underline dark:text-amber-200"
+					:href="`mailto:${contact.email}`"
+					>{{ contact.email }}</a
+				>
+				<a
+					class="text-slate-700 underline-offset-4 hover:underline dark:text-slate-200"
+					:href="contact.phoneHref"
+					>{{ contact.phoneDisplay }}</a
+				>
+				<DarkToggle />
+			</div>
+		</div>
+	</footer>
+</template>

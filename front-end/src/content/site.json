@@ -1,0 +1,138 @@
+{
+	"site": {
+		"name": "Marietta Violin with Carla",
+		"description": "Private violin lessons in Marietta, GA with a warm, patient studio for students and families.",
+		"label": "Violin studio"
+	},
+	"settings": {
+		"colorModeDefault": "light",
+		"_colorModeDefaultHint": "Use \"system\" to follow the visitor's OS theme; keep \"light\" or set \"dark\" to force a mode."
+	},
+	"announcement": {
+		"enabled": true,
+		"message": "Piano lessons open now. Feel free to contact for more info.",
+		"ctaLabel": "Reach out",
+		"ctaHref": "/#contact"
+	},
+	"contact": {
+		"email": "mariettaviolinwithcarlalowe@gmail.com",
+		"callLabel": "Call",
+		"textLabel": "Text",
+		"phoneDisplay": "770-568-0161",
+		"phoneHref": "tel:+17705680161"
+	},
+	"hero": {
+		"_location": "Near Wheeler High — ",
+		"location": "2207 Clearwater Dr, Marietta, GA 30067",
+		"headline": "Violin lessons with Carla",
+		"_healine": " - Warm, encouraging, and tailored to every student.",
+		"body": "Whether you're picking up the violin for the first time or preparing for an audition, Carla's studio pairs clear fundamentals with musicality and performance confidence.",
+		"primaryCta": {
+			"label": "Schedule a lesson",
+			"emailSubject": "Lesson inquiry"
+		},
+		"secondaryCta": {
+			"label": "Call or text"
+		},
+		"tags": [
+			{
+				"label": "Beginner to advanced",
+				"tone": "amber"
+			},
+			{
+				"label": "In-person + online",
+				"tone": "emerald"
+			},
+			{
+				"label": "Studio recitals",
+				"tone": "slate"
+			}
+		],
+		"highlights": [
+			{
+				"title": "Patient, musical teaching",
+				"copy": "I blend multiple foundations of music with creative repertoire so students build confident tone, intonation, and musicianship at every age.",
+				"icon": "i-carbon-music"
+			},
+			{
+				"title": "Clear weekly practice plans",
+				"copy": "Each lesson ends with a written plan and audio clips for home practice. Parents get simple notes to keep progress steady.",
+				"icon": "i-carbon-notebook"
+			},
+			{
+				"title": "Perform with ease",
+				"copy": "Studio classes and twice-yearly recitals help students feel comfortable performing, auditioning, and leading in orchestra.",
+				"icon": "i-carbon-star-review"
+			}
+		]
+	},
+	"lessons": {
+		"cards": [
+			{
+				"name": "30-minute weekly",
+				"description": "Perfect for new players and young students. Gentle pace, lots of games, and posture-focused fundamentals.",
+				"format": "In-person or online"
+			},
+			{
+				"name": "45-minute weekly",
+				"description": "For growing students who want room for scales, etudes, and recital prep with meaningful feedback.",
+				"format": "In-person or online"
+			},
+			{
+				"name": "60-minute coaching",
+				"description": "Audition and ensemble prep, chair challenges, All-State, or polishing solo repertoire with detailed guidance.",
+				"format": "In-person or online"
+			}
+		]
+	},
+	"students": {
+		"eyebrow": "Current students",
+		"title": "What to expect each week",
+		"body": "Each week blends technique, repertoire, and clear next steps so students and parents know exactly what to practice between lessons.",
+		"support": [
+			"Home studio near Wheeler High — 2207 Clearwater Dr, Marietta, GA 30067",
+			"Beginners (age 6+), middle/high school orchestra students, and motivated adult learners",
+			"Weekly lesson notes emailed to students and parents",
+			"Two studio recitals each year",
+			"Studio classes for sight-reading, ensemble skills, and audition prep"
+		]
+	},
+	"trial": {
+		"eyebrow": "Ready to begin?",
+		"title": "Set up a trial lesson",
+		"body": "Tell me a bit about the student, experience level, and times that work best. We'll set a relaxed trial lesson and send you a simple practice outline afterward.",
+		"primaryLabel": "Email Carla",
+		"primarySubject": "Trial lesson request",
+		"secondaryLabel": "Call or text"
+	},
+	"contactForm": {
+		"action": "https://usebasin.com/f/1826d5c11791",
+		"title": "Send a lesson request",
+		"body": "Share a few details and I'll reply with scheduling options and a simple next step.",
+		"submitLabel": "Send message",
+		"fields": [
+			{
+				"name": "name",
+				"label": "Your name",
+				"type": "text",
+				"required": true
+			},
+			{
+				"name": "email",
+				"label": "Email",
+				"type": "email",
+				"required": true
+			},
+			{
+				"name": "message",
+				"label": "Anything else you'd like to share",
+				"type": "textarea",
+				"required": true
+			}
+		]
+	},
+	"footer": {
+		"eyebrow": "Carla's violin studio",
+		"body": "Serving families in Marietta & East Cobb — in-person and online."
+	}
+}
