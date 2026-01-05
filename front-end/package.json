@@ -35,7 +35,7 @@
 		"@oxc-transform/binding-linux-arm64-gnu": "0.105.0",
 		"@oxc-transform/binding-linux-x64-gnu": "0.102.0",
 		"@rollup/rollup-linux-arm64-gnu": "4.53.4",
-		"@rollup/rollup-linux-x64-gnu": "4.53.4"
+		"@rollup/rollup-linux-x64-gnu": "4.55.1"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^6.7.3",
