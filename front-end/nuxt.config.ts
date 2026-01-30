@@ -3,6 +3,7 @@
 import type { ModuleOptions as ColorModeOptions } from "@nuxtjs/color-mode";
 import type { ModuleOptions as PwaModuleOptions } from "@vite-pwa/nuxt";
 import type { NuxtConfig } from "nuxt/schema";
+import { createRequire } from "node:module";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -16,9 +17,18 @@ const enablePwaEnv = process.env.ENABLE_PWA === "true" || process.env.VITE_PLUGI
 const enablePwa = enablePwaEnv && (!isDev || devSwEnabled);
 
 const __dirname: string = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 const srcPath: string = path.resolve(__dirname, "src");
 const srcAlias = `${srcPath}/`;
 const manifestLinks = enablePwa ? [{ rel: "manifest", href: "/manifest.webmanifest" }] : [];
+const workspaceRoot = path.resolve(__dirname, "..");
+const workspaceParent = path.resolve(workspaceRoot, "..");
+const resolvePackageDir = (pkg: string) => path.dirname(require.resolve(`${pkg}/package.json`));
+const vitePackageDir = resolvePackageDir("vite");
+const nuxtPackageDir = resolvePackageDir("nuxt");
+const viteFsAllow = Array.from(
+	new Set([srcPath, __dirname, workspaceRoot, workspaceParent, vitePackageDir, nuxtPackageDir])
+);
 
 type ExtendedNuxtConfig = NuxtConfig & {
 	colorMode?: Partial<ColorModeOptions>;
@@ -117,6 +127,11 @@ export default defineNuxtConfig({
 			alias: {
 				"~": srcPath,
 				"@": srcPath
+			}
+		},
+		server: {
+			fs: {
+				allow: viteFsAllow
 			}
 		}
 	}
