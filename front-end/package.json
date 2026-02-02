@@ -28,7 +28,7 @@
 	"optionalDependencies": {
 		"@esbuild/linux-arm64": "0.27.2",
 		"@esbuild/linux-x64": "0.25.12",
-		"@oxc-minify/binding-linux-arm64-gnu": "0.106.0",
+		"@oxc-minify/binding-linux-arm64-gnu": "0.112.0",
 		"@oxc-minify/binding-linux-x64-gnu": "0.106.0",
 		"@oxc-parser/binding-linux-arm64-gnu": "0.106.0",
 		"@oxc-parser/binding-linux-x64-gnu": "0.106.0",
