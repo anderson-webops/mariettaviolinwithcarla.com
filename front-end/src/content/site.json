@@ -5,7 +5,7 @@
 		"label": "Violin studio"
 	},
 	"settings": {
-		"colorModeDefault": "light",
+		"colorModeDefault": "dark",
 		"_colorModeDefaultHint": "Use \"system\" to follow the visitor's OS theme; keep \"light\" or set \"dark\" to force a mode."
 	},
 	"announcement": {
