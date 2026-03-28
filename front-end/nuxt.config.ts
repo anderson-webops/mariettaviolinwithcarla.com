@@ -1,26 +1,19 @@
 // noinspection ES6PreferShortImport
 
 import type { ModuleOptions as ColorModeOptions } from "@nuxtjs/color-mode";
-import type { ModuleOptions as PwaModuleOptions } from "@vite-pwa/nuxt";
 import type { NuxtConfig } from "nuxt/schema";
 import { createRequire } from "node:module";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { defineNuxtConfig } from "nuxt/config";
-import { devSwEnabled, pwa } from "./src/config/pwa";
 import { appDescription } from "./src/constants";
 import siteContent from "./src/content/site.json";
-
-const isDev = process.env.NODE_ENV === "development";
-const enablePwaEnv = process.env.ENABLE_PWA === "true" || process.env.VITE_PLUGIN_PWA === "true";
-const enablePwa = enablePwaEnv && (!isDev || devSwEnabled);
 
 const __dirname: string = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
 const srcPath: string = path.resolve(__dirname, "src");
 const srcAlias = `${srcPath}/`;
-const manifestLinks = enablePwa ? [{ rel: "manifest", href: "/manifest.webmanifest" }] : [];
 const workspaceRoot = path.resolve(__dirname, "..");
 const workspaceParent = path.resolve(workspaceRoot, "..");
 const resolvePackageDir = (pkg: string) => path.dirname(require.resolve(`${pkg}/package.json`));
@@ -32,7 +25,6 @@ const viteFsAllow = Array.from(
 
 type ExtendedNuxtConfig = NuxtConfig & {
 	colorMode?: Partial<ColorModeOptions>;
-	pwa?: PwaModuleOptions | false;
 };
 
 type ColorModePreference = "light" | "dark" | "system";
@@ -46,7 +38,7 @@ export default defineNuxtConfig({
 		"@": srcAlias
 	},
 
-	modules: ["@vueuse/nuxt", "@unocss/nuxt", "@pinia/nuxt", "@nuxtjs/color-mode", "@vite-pwa/nuxt", "@nuxt/eslint"],
+	modules: ["@vueuse/nuxt", "@unocss/nuxt", "@pinia/nuxt", "@nuxtjs/color-mode", "@nuxt/eslint"],
 
 	srcDir: "src",
 
@@ -60,8 +52,7 @@ export default defineNuxtConfig({
 			link: [
 				{ rel: "icon", href: "/favicon.ico", sizes: "any" },
 				{ rel: "icon", type: "image/svg+xml", href: "/nuxt.svg" },
-				{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
-				...manifestLinks
+				{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" }
 			],
 			meta: [
 				{ name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -70,7 +61,7 @@ export default defineNuxtConfig({
 				{ name: "theme-color", media: "(prefers-color-scheme: light)", content: "white" },
 				{ name: "theme-color", media: "(prefers-color-scheme: dark)", content: "#222222" }
 			],
-			script: isDev
+			script: process.env.NODE_ENV === "development"
 				? []
 				: [
 						{
@@ -79,12 +70,6 @@ export default defineNuxtConfig({
 							"data-website-id": "a0761af6-a9e2-4937-b976-b3ac849d0ff4"
 						}
 					]
-		}
-	},
-
-	runtimeConfig: {
-		public: {
-			pwaDevSw: devSwEnabled
 		}
 	},
 
@@ -130,7 +115,6 @@ export default defineNuxtConfig({
 		}
 	},
 
-	pwa: { ...pwa, disable: !enablePwa },
 	vite: {
 		resolve: {
 			alias: {
