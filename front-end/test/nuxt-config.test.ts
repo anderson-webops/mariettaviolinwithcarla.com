@@ -10,6 +10,7 @@ test("nuxt config points to src and keeps the expected module set", async () => 
 		config.modules?.sort(),
 		["@nuxt/eslint", "@nuxtjs/color-mode", "@pinia/nuxt", "@unocss/nuxt", "@vueuse/nuxt"].sort()
 	);
+	assert.deepEqual(config.vite?.build?.modulePreload, { polyfill: false });
 	assert.equal(config.colorMode?.preference, siteContent.settings.colorModeDefault);
 	const expectedFallback =
 		siteContent.settings.colorModeDefault === "system" ? "light" : siteContent.settings.colorModeDefault;

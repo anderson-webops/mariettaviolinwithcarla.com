@@ -116,6 +116,12 @@ export default defineNuxtConfig({
 	},
 
 	vite: {
+		build: {
+			modulePreload: {
+				// Avoid Vite 7's polyfill transform, which emits a sourcemap warning in Nuxt builds.
+				polyfill: false
+			}
+		},
 		resolve: {
 			alias: {
 				"~": srcPath,
