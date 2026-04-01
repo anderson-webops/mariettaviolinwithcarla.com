@@ -3,6 +3,8 @@ import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useSiteStore } from "~/stores/site";
 
+const TELEPHONE_PROTOCOL_REGEX = /^tel:/;
+
 const site = useSiteStore();
 const { hero, contact } = storeToRefs(site);
 
@@ -10,7 +12,7 @@ const heroMailto = computed(() => {
 	return `mailto:${contact.value.email}?subject=${encodeURIComponent(hero.value.primaryCta.emailSubject)}`;
 });
 
-const smsHref = computed(() => contact.value.phoneHref.replace(/^tel:/, "sms:"));
+const smsHref = computed(() => contact.value.phoneHref.replace(TELEPHONE_PROTOCOL_REGEX, "sms:"));
 
 const tagToneClasses: Record<string, string> = {
 	amber: "rounded-full bg-amber-100 px-3 py-1 text-amber-800 dark:bg-amber-900/40 dark:text-amber-100",
