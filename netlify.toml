@@ -5,6 +5,20 @@ command = "npm run -w front-end build"
 [build.environment]
 NODE_VERSION = "20"
 
+[functions]
+directory = "netlify/functions"
+node_bundler = "esbuild"
+
+[[redirects]]
+from = "/healthz"
+to = "/.netlify/functions/healthz"
+status = 200
+
+[[redirects]]
+from = "/readyz"
+to = "/.netlify/functions/readyz"
+status = 200
+
 [[redirects]]
 from = "/*"
 to = "/index.html"

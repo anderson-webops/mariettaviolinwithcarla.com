@@ -2,7 +2,7 @@
 
 Use these endpoints for monitoring. They do not require auth and do not redirect.
 
-## Back-end (Express API)
+## Health endpoints
 - `GET /healthz`
   - returns `200 {"ok":true}`
 - `GET /readyz`
@@ -13,6 +13,6 @@ Use these endpoints for monitoring. They do not require auth and do not redirect
   - returns non-secret database metadata when allowed
   - returns `403 {"ok":false,"error":"forbidden"}` for public requests without internal access
 
-The front-end is a generated static site, so there is no SSR runtime health endpoint in this repo.
+The public site is deployed as static output on Netlify. `/healthz` and `/readyz` are exposed there via Netlify Functions so they do not fall through to the SPA HTML rewrite.
 
 Use `/healthz` and `/readyz` for monitors. Do not use `/`, login pages, or `/_dbinfo`.
