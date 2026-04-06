@@ -22,7 +22,7 @@
 	"dependencies": {
 		"@vueuse/core": "^14.2.1",
 		"pinia": "^3.0.4",
-		"vue": "^3.5.31"
+		"vue": "^3.5.32"
 	},
 	"optionalDependencies": {
 		"@esbuild/linux-arm64": "0.27.2",
