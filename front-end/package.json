@@ -49,7 +49,7 @@
 		"@vitejs/plugin-vue": "^6.0.5",
 		"@vueuse/nuxt": "^14.2.1",
 		"cypress": "^15.13.0",
-		"eslint": "^10.1.0",
+		"eslint": "^10.2.0",
 		"eslint-plugin-format": "^2.0.1",
 		"nuxt": "^4.4.2",
 		"terser": "^5.46.1",
