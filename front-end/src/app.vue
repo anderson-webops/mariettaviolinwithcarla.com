@@ -29,6 +29,7 @@ useHead(() => ({
 		{ property: "og:description", content: appDescription },
 		{ property: "og:type", content: "website" },
 		{ property: "og:url", content: canonicalUrl.value },
+		{ name: "robots", content: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" },
 		{ name: "twitter:card", content: "summary_large_image" },
 		{ name: "twitter:title", content: appName },
 		{ name: "twitter:description", content: appDescription }
@@ -40,7 +41,7 @@ useHead(() => ({
 		}
 	],
 	script: structuredData.map((entry, index) => ({
-		children: JSON.stringify(entry),
+		innerHTML: JSON.stringify(entry),
 		key: `structured-data-${index}`,
 		type: "application/ld+json"
 	}))

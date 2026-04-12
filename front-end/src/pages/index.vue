@@ -36,7 +36,7 @@ useHead(() => ({
 	],
 	script: [
 		{
-			children: JSON.stringify({
+			innerHTML: JSON.stringify({
 				"@context": "https://schema.org",
 				"@type": "MusicSchool",
 				"address": {
@@ -46,7 +46,13 @@ useHead(() => ({
 					"postalCode": "30067",
 					"streetAddress": "2207 Clearwater Dr"
 				},
+				"areaServed": [
+					"Marietta",
+					"East Cobb",
+					"Atlanta"
+				],
 				"description": site.value.description,
+				"email": contact.value.email,
 				"name": site.value.name,
 				"telephone": contact.value.phoneDisplay,
 				"url": "https://mariettaviolinwithcarla.com/"
@@ -55,7 +61,7 @@ useHead(() => ({
 			type: "application/ld+json"
 		},
 		{
-			children: JSON.stringify({
+			innerHTML: JSON.stringify({
 				"@context": "https://schema.org",
 				"@type": "FAQPage",
 				"mainEntity": faqEntries.value.map((entry) => ({
@@ -71,7 +77,7 @@ useHead(() => ({
 			type: "application/ld+json"
 		},
 		{
-			children: JSON.stringify({
+			innerHTML: JSON.stringify({
 				"@context": "https://schema.org",
 				"@type": "ItemList",
 				"itemListElement": lessons.value.cards.map((option, index) => ({
@@ -82,6 +88,22 @@ useHead(() => ({
 				"name": `${site.value.name} lesson options`
 			}),
 			key: "lesson-list-jsonld",
+			type: "application/ld+json"
+		},
+		{
+			innerHTML: JSON.stringify({
+				"@context": "https://schema.org",
+				"@type": "BreadcrumbList",
+				"itemListElement": [
+					{
+						"@type": "ListItem",
+						"item": "https://mariettaviolinwithcarla.com/",
+						"name": site.value.name,
+						"position": 1
+					}
+				]
+			}),
+			key: "breadcrumb-jsonld",
 			type: "application/ld+json"
 		}
 	]
