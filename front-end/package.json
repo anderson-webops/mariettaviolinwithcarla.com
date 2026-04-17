@@ -1,9 +1,6 @@
 {
 	"name": "front-end",
 	"type": "module",
-	"engines": {
-		"node": ">=22 <23"
-	},
 	"private": true,
 	"scripts": {
 		"build": "rm -rf dist && nuxt generate && rm -rf dist && mkdir -p dist && rsync -a .output/public/ dist/",
