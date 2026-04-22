@@ -31,6 +31,8 @@ type ColorModePreference = "light" | "dark" | "system";
 const contentColorPreference =
 	(siteContent as { settings?: { colorModeDefault?: ColorModePreference } }).settings?.colorModeDefault ?? "light";
 const colorModeFallback = contentColorPreference === "system" ? "light" : contentColorPreference;
+const centralAnalyticsDomain = "analytics.jacobdanderson.net";
+const centralAnalyticsWebsiteId = "13b7c9a4-e8bb-4a20-a361-04a740c92da1";
 
 export default defineNuxtConfig({
 	alias: {
@@ -69,6 +71,11 @@ export default defineNuxtConfig({
 								defer: true,
 								src: "https://analytics.mariettaviolinwithcarla.com/script.js",
 								"data-website-id": "a0761af6-a9e2-4937-b976-b3ac849d0ff4"
+							},
+							{
+								defer: true,
+								src: `https://${centralAnalyticsDomain}/script.js`,
+								"data-website-id": centralAnalyticsWebsiteId
 							}
 						]
 		}
