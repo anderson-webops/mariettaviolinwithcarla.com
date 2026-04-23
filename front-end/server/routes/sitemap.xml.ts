@@ -3,7 +3,7 @@ function xmlEscape(value: string) {
 		.replaceAll("&", "&amp;")
 		.replaceAll("<", "&lt;")
 		.replaceAll(">", "&gt;")
-		.replaceAll("\"", "&quot;")
+		.replaceAll('"', "&quot;")
 		.replaceAll("'", "&apos;");
 }
 
