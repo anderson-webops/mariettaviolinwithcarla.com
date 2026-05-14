@@ -17,7 +17,12 @@ function toggleDark() {
 </script>
 
 <template>
-	<button class="!outline-none" @click="toggleDark">
+	<button
+		:aria-label="color.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+		class="!outline-none"
+		type="button"
+		@click="toggleDark"
+	>
 		<div class="i-carbon-sun dark:i-carbon-moon" />
 	</button>
 </template>

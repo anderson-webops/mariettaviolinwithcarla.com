@@ -23,6 +23,9 @@ const structuredData = [
 ];
 
 useHead(() => ({
+	htmlAttrs: {
+		lang: "en"
+	},
 	title: appName,
 	meta: [
 		{ name: "description", content: appDescription },

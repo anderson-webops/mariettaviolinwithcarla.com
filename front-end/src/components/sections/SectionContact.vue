@@ -65,11 +65,15 @@ function handleIframeLoad() {
 			</div>
 
 			<div v-for="field in contactForm.fields" :key="field.name" class="space-y-1">
-				<label class="block text-xs font-semibold uppercase tracking-[0.16em] text-amber-700">
+				<label
+					class="block text-xs font-semibold uppercase tracking-[0.16em] text-amber-700"
+					:for="`contact-${field.name}`"
+				>
 					{{ field.label }}
 				</label>
 				<input
 					v-if="field.type !== 'textarea'"
+					:id="`contact-${field.name}`"
 					:type="field.type"
 					:name="field.name"
 					class="w-full rounded-lg border border-amber-200/70 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-100 dark:border-amber-900/50 dark:bg-slate-800 dark:text-slate-50 dark:focus:border-amber-400 dark:focus:ring-amber-900/40"
@@ -77,6 +81,7 @@ function handleIframeLoad() {
 				/>
 				<textarea
 					v-else
+					:id="`contact-${field.name}`"
 					:name="field.name"
 					rows="3"
 					class="w-full rounded-lg border border-amber-200/70 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-100 dark:border-amber-900/50 dark:bg-slate-800 dark:text-slate-50 dark:focus:border-amber-400 dark:focus:ring-amber-900/40"
