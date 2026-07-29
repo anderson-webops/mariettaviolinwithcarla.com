@@ -1,12 +1,12 @@
 FROM node:20-alpine AS build-stage
 
 WORKDIR /app
-RUN corepack enable
+RUN npm install --global npm@11.12.0
 
 COPY package.json package-lock.json ./
 COPY back-end/package*.json ./back-end/
 COPY front-end/package*.json ./front-end/
-RUN npm install --ignore-scripts
+RUN npm ci --ignore-scripts
 
 COPY . .
 RUN npm run build
