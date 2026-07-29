@@ -26,14 +26,10 @@
 	"optionalDependencies": {
 		"@esbuild/linux-arm64": "^0.28.1",
 		"@esbuild/linux-x64": "^0.28.1",
-		"@oxc-minify/binding-linux-arm64-gnu": "^0.125.0",
-		"@oxc-minify/binding-linux-x64-gnu": "^0.124.0",
-		"@oxc-parser/binding-linux-arm64-gnu": "^0.125.0",
-		"@oxc-parser/binding-linux-x64-gnu": "^0.124.0",
-		"@oxc-transform/binding-linux-arm64-gnu": "^0.124.0",
-		"@oxc-transform/binding-linux-x64-gnu": "^0.125.0",
-		"@rollup/rollup-linux-arm64-gnu": "4.53.4",
-		"@rollup/rollup-linux-x64-gnu": "4.55.1"
+		"@oxc-parser/binding-linux-arm64-gnu": "0.140.0",
+		"@oxc-parser/binding-linux-x64-gnu": "0.140.0",
+		"@rollup/rollup-linux-arm64-gnu": "4.62.3",
+		"@rollup/rollup-linux-x64-gnu": "4.62.3"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^7.7.3",
