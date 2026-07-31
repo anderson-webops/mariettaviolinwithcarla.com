@@ -4,6 +4,35 @@ import process from "node:process";
 const baseUrl = new URL(process.env.DEPLOYMENT_SMOKE_BASE_URL || "http://127.0.0.1:18080");
 const expectedCommit = String(process.env.DEPLOYMENT_SMOKE_EXPECT_COMMIT || "").trim();
 
+async function waitForReady(timeoutMs = 20_000) {
+	const deadline = Date.now() + timeoutMs;
+	const url = new URL("/readyz", baseUrl);
+	let lastError;
+
+	while (Date.now() < deadline) {
+		try {
+			const response = await fetch(url, {
+				redirect: "manual",
+				signal: AbortSignal.timeout(2_000)
+			});
+			if (response.status === 200) {
+				const body = await response.json();
+				if (body.status === "ready") return;
+				lastError = new Error(`${url} returned an unexpected readiness body.`);
+			}
+			else {
+				lastError = new Error(`${url} returned ${response.status}; expected 200.`);
+			}
+		}
+		catch (error) {
+			lastError = error;
+		}
+		await new Promise(resolveWait => setTimeout(resolveWait, 250));
+	}
+
+	throw new Error(`Timed out waiting for ${url}.`, { cause: lastError });
+}
+
 async function fetchChecked(pathname, expectedStatus = 200, options = {}) {
 	const url = new URL(pathname, baseUrl);
 	const response = await fetch(url, {
@@ -14,6 +43,8 @@ async function fetchChecked(pathname, expectedStatus = 200, options = {}) {
 	assert.equal(response.status, expectedStatus, `${url} returned ${response.status}; expected ${expectedStatus}.`);
 	return response;
 }
+
+await waitForReady();
 
 const homepage = await fetchChecked("/");
 const homepageHtml = await homepage.text();

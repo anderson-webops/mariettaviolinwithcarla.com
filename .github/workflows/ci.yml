@@ -193,6 +193,12 @@ jobs:
         env:
           DEPLOYMENT_SMOKE_EXPECT_COMMIT: ${{ github.sha }}
 
+      - name: Show container diagnostics
+        if: failure()
+        run: |
+          docker inspect --format '{{json .State}}' marietta-violin-ci
+          docker logs marietta-violin-ci
+
       - name: Stop production container
         if: always()
         run: docker rm --force marietta-violin-ci
