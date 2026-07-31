@@ -2,7 +2,6 @@
 
 import type { ModuleOptions as ColorModeOptions } from "@nuxtjs/color-mode";
 import type { NuxtConfig } from "nuxt/schema";
-import { createRequire } from "node:module";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -11,17 +10,10 @@ import { appDescription } from "./src/constants";
 import siteContent from "./src/content/site.json";
 
 const __dirname: string = path.dirname(fileURLToPath(import.meta.url));
-const require = createRequire(import.meta.url);
 const srcPath: string = path.resolve(__dirname, "src");
 const srcAlias = `${srcPath}/`;
 const workspaceRoot = path.resolve(__dirname, "..");
-const workspaceParent = path.resolve(workspaceRoot, "..");
-const resolvePackageDir = (pkg: string) => path.dirname(require.resolve(`${pkg}/package.json`));
-const vitePackageDir = resolvePackageDir("vite");
-const nuxtPackageDir = resolvePackageDir("nuxt");
-const viteFsAllow = Array.from(
-	new Set([srcPath, __dirname, workspaceRoot, workspaceParent, vitePackageDir, nuxtPackageDir])
-);
+const viteFsAllow = [srcPath, __dirname, workspaceRoot];
 
 type ExtendedNuxtConfig = NuxtConfig & {
 	colorMode?: Partial<ColorModeOptions>;
@@ -40,12 +32,12 @@ export default defineNuxtConfig({
 		"@": srcAlias
 	},
 
-	modules: ["@vueuse/nuxt", "@unocss/nuxt", "@pinia/nuxt", "@nuxtjs/color-mode", "@nuxt/eslint"],
+	modules: ["@unocss/nuxt", "@pinia/nuxt", "@nuxtjs/color-mode", "@nuxt/eslint"],
 
 	srcDir: "src",
 
 	devtools: {
-		enabled: true
+		enabled: process.env.NODE_ENV === "development"
 	},
 
 	app: {
@@ -98,7 +90,7 @@ export default defineNuxtConfig({
 		typedPages: true
 	},
 
-	compatibilityDate: "2024-08-14",
+	compatibilityDate: "2026-07-29",
 
 	nitro: {
 		esbuild: {

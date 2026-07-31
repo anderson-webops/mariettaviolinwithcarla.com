@@ -23,5 +23,7 @@ test("contact form fields are present and email is required", () => {
 
 	assert.ok(store.contactForm.fields.length > 0);
 	assert.ok(store.contactForm.fields.some((field) => field.name === "email" && field.required));
+	assert.ok(store.contactForm.fields.every((field) => field.maxLength > 0));
+	assert.match(store.contactForm.privacyNote, /Basin/);
 	assert.equal(store.contactForm.submitLabel.length > 0, true);
 });

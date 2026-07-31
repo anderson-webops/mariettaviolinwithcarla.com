@@ -1,5 +1,12 @@
 # Repository Guidelines
 
+## Architecture and Toolchain
+- This repository is intentionally a static Nuxt site. Do not add a local account system, admin role, session, API, database, Vault dependency, or serverless backend without a new documented product requirement and threat model.
+- The contact form posts directly to Basin. Preserve the third-party processing notice, field limits, sandboxed target, and direct-contact fallback.
+- Use Node `24.18.1` and npm `12.0.2` for local, CI, Netlify, and container builds.
+- Treat `front-end/dist` as the only production artifact. Keep Netlify and the rootless Nginx container behavior aligned.
+- Private-repository GitHub job availability is not a release gate when the equivalent local clean validation suite passes.
+
 ## Agent Delivery Workflow
 - Do not leave completed work uncommitted. After each coherent, validated change set, create a commit and push it in the same session.
 - Use multiple commits and pushes when that keeps unrelated changes, partial validations, or follow-up fixes clearly separated. Prefer small, logically grouped commits over one mixed commit.
@@ -32,7 +39,7 @@ Required dependency verification before every commit/push:
 2. Run `npm run lint`.
 3. Run `npm run typecheck`.
 4. Run `npm run build`.
-5. If API or back-end behavior changed and the repo has a back-end workspace, run `npm run -w back-end test` or the repo's equivalent API test command.
+5. Run `npm test`, both vulnerability audits, native lock/install checks, and accessibility checks for security or deployment releases.
 
 If `npm ci` fails because `package.json` and `package-lock.json` are out of sync:
 1. Run `npm install --package-lock-only --ignore-scripts --no-fund --no-audit` from the repository root.

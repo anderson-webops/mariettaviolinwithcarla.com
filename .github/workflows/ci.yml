@@ -2,164 +2,197 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: 24.18.1
+  NPM_VERSION: 12.0.2
+  NUXT_TELEMETRY_DISABLED: "1"
+  PUPPETEER_SKIP_DOWNLOAD: "true"
 
 jobs:
-  lint:
+  quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v7
-
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: 24.18.0
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
-      # Make runner's npm match packageManager in package.json
-      - name: Pin npm version
+      - name: Use the repository npm version
+        run: npm install --global "npm@${NPM_VERSION}"
+
+      - name: Install locked dependencies
+        run: npm ci --include=optional --strict-allow-scripts
+        env:
+          CYPRESS_INSTALL_BINARY: "0"
+
+      - name: Verify toolchain
         run: |
-          npm -v
-          npm i -g npm@11.16.0
-          npm -v
+          test "$(node --version)" = "v${NODE_VERSION}"
+          test "$(npm --version)" = "${NPM_VERSION}"
 
-      - name: Install deps
-        run: npm ci
-
-      # Root "lint" runs front-end and back-end lint
       - name: Lint
         run: npm run lint
 
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
+      - name: Typecheck
+        run: npm run typecheck
 
-      - uses: actions/setup-node@v7
+      - name: Tests
+        run: npm test
+
+      - name: Full dependency audit
+        run: npm run audit
+
+      - name: Production dependency audit
+        run: npm run audit:production
+
+      - name: Verify registry signatures
+        run: npm run audit:signatures
+
+      - name: Verify dependency tree
+        run: npm run verify:dependency-graph
+
+      - name: Verify native lockfile coverage
+        run: npm run verify:native-lock
+
+      - name: Simulate Linux ARM64 installs
+        run: npm run verify:platform-install
+
+      - name: Build and verify the static deployment
+        run: npm run build
+
+  end-to-end:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: 24.18.0
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
-      - name: Pin npm version
-        run: |
-          npm i -g npm@11.16.0
-          npm -v
+      - name: Use the repository npm version
+        run: npm install --global "npm@${NPM_VERSION}"
 
-      - name: Install deps
-        run: npm ci
-
-      # Only the front-end defines typecheck; call it directly
-      - name: Typecheck (front-end)
-        run: npm run -w front-end typecheck
-
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 24.18.0 ]
-        os: [ ubuntu-latest ]
-      fail-fast: false
-
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: ${{ matrix['node-version'] }}
-          cache: npm
-          registry-url: https://registry.npmjs.org/
-
-      # Only pin npm if compatible
-      - name: Pin npm version (if supported)
-        run: |
-          # optional guard:
-          if [ $(node -v | cut -d. -f1 | sed 's/v//') -ge 20 ]; then
-            npm i -g npm@11.16.0
-          fi
-          npm -v
-
-      - name: Install deps
-        run: npm ci
-
-      - name: Unit tests
-        run: npm run -w front-end test:unit
-
-  test-e2e:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24.18.0
-          cache: npm
-          registry-url: https://registry.npmjs.org/
-
-  accessibility:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24.18.0
-          cache: npm
-
-      - name: Pin npm version
-        run: |
-          npm i -g npm@11.16.0
-          npm -v
-
-      - name: Install deps
-        run: npm ci
-
-      - name: Axe accessibility smoke checks
-        run: npm run a11y
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24.18.0
-          cache: npm
-
-      - name: Pin npm version
-        run: |
-          npm i -g npm@11.16.0
-          npm -v
-
-      - name: Install deps
-        run: npm ci
+      - name: Install locked dependencies
+        run: npm ci --include=optional --strict-allow-scripts
 
       - name: Build
         run: npm run build
 
-      - name: Pin npm version
-        run: |
-          npm i -g npm@11.16.0
-          npm -v
-
-      - name: Install deps
-        run: npm ci
-
-      # Cache Cypress binary
-      - uses: actions/cache@v6
+      - name: Browser tests
+        uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7.4.1
         with:
-          path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
-      # Build site and run preview server for Cypress to hit
-      - name: Build (front-end)
-        run: npm run -w front-end build
-
-      - name: Cypress
-        uses: cypress-io/github-action@v7.4.1
-        with:
-          install: false # we already ran npm ci
+          install: false
           working-directory: front-end
-          config-file: cypress.config.ts
           start: npm run preview -- --port 3333
-          wait-on: "http://localhost:3333"
+          wait-on: http://127.0.0.1:3333
+
+  accessibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Use the repository npm version
+        run: npm install --global "npm@${NPM_VERSION}"
+
+      - name: Install locked dependencies
+        run: npm ci --include=optional --strict-allow-scripts
+        env:
+          CYPRESS_INSTALL_BINARY: "0"
+
+      - name: Accessibility smoke
+        run: npm run a11y
+
+  native-arm64:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Use the repository npm version
+        run: npm install --global "npm@${NPM_VERSION}"
+
+      - name: Install ARM64 dependencies
+        run: npm ci --include=optional --strict-allow-scripts
+        env:
+          CYPRESS_INSTALL_BINARY: "0"
+
+      - name: Verify native lockfile coverage
+        run: npm run verify:native-lock
+
+      - name: Build on ARM64
+        run: npm run build
+
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Build production container
+        run: |
+          docker build \
+            --build-arg SOURCE_COMMIT="${GITHUB_SHA}" \
+            --build-arg SOURCE_TAG="${GITHUB_REF_NAME}" \
+            --tag marietta-violin:test \
+            .
+
+      - name: Start confined production container
+        run: |
+          docker run --detach \
+            --name marietta-violin-ci \
+            --publish 127.0.0.1:18080:8080 \
+            --read-only \
+            --tmpfs /tmp:rw,noexec,nosuid,size=16m \
+            --cap-drop ALL \
+            --security-opt no-new-privileges \
+            marietta-violin:test
+
+      - name: Verify headers, identity, health, and retired routes
+        run: npm run smoke:deployment
+        env:
+          DEPLOYMENT_SMOKE_EXPECT_COMMIT: ${{ github.sha }}
+
+      - name: Stop production container
+        if: always()
+        run: docker rm --force marietta-violin-ci

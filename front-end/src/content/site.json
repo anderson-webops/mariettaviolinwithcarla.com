@@ -110,24 +110,33 @@
 		"title": "Send a lesson request",
 		"body": "Share a few details and I'll reply with scheduling options and a simple next step.",
 		"submitLabel": "Send message",
+		"privacyNote": "This form is processed by Basin, a third-party form provider. Submit only the information needed to arrange a lesson.",
+		"submittedNote": "Your request was submitted to the form provider. If you do not hear back, please email or call Carla directly.",
+		"uncertainNote": "The form provider did not confirm a response. Please email or call Carla directly.",
 		"fields": [
 			{
 				"name": "name",
 				"label": "Your name",
 				"type": "text",
-				"required": true
+				"required": true,
+				"maxLength": 120,
+				"autocomplete": "name"
 			},
 			{
 				"name": "email",
 				"label": "Email",
 				"type": "email",
-				"required": true
+				"required": true,
+				"maxLength": 254,
+				"autocomplete": "email"
 			},
 			{
 				"name": "message",
 				"label": "Anything else you'd like to share",
 				"type": "textarea",
-				"required": true
+				"required": true,
+				"maxLength": 2000,
+				"autocomplete": "off"
 			}
 		]
 	},

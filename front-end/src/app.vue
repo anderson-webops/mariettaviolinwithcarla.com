@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // noinspection ES6PreferShortImport
 import { appDescription, appName } from "@/constants";
+import { serializeJsonLd } from "@/utils/serializeJsonLd";
 
 const siteUrl = "https://mariettaviolinwithcarla.com";
 const route = useRoute();
@@ -45,7 +46,7 @@ useHead(() => ({
 		}
 	],
 	script: structuredData.map((entry, index) => ({
-		innerHTML: JSON.stringify(entry),
+		innerHTML: serializeJsonLd(entry),
 		key: `structured-data-${index}`,
 		type: "application/ld+json"
 	}))

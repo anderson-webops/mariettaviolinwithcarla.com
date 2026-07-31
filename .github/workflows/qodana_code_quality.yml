@@ -1,28 +1,33 @@
 name: Qodana
+
 on:
   workflow_dispatch:
   pull_request:
   push:
-    branches:
-      - main
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
   qodana:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
     steps:
-      - name: Skip Qodana when QODANA_TOKEN is not configured
+      - name: Qodana token is not configured
         if: env.QODANA_TOKEN == ''
-        run: echo "QODANA_TOKEN is not configured; skipping Qodana."
+        run: echo "Qodana is intentionally skipped because QODANA_TOKEN is unavailable."
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         if: env.QODANA_TOKEN != ''
         with:
           fetch-depth: 0
+          persist-credentials: false
 
-      - name: Qodana Scan
+      - name: Qodana scan
         if: env.QODANA_TOKEN != ''
-        uses: JetBrains/qodana-action@v2026.1.3
+        uses: JetBrains/qodana-action@4861e015da555e86a72b862892aba6c2b93e6891 # v2026.1.3
         env:
           QODANA_TOKEN: ${{ env.QODANA_TOKEN }}

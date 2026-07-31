@@ -1,71 +1,55 @@
 # Marietta Violin with Carla
 
-Marketing site and studio contact hub for mariettaviolinwithcarla.com. This repo is a small monorepo with a Nuxt 4 front-end and a Node back-end.
+Static studio and lesson-request site for [mariettaviolinwithcarla.com](https://mariettaviolinwithcarla.com).
 
-## Stack
+## Architecture
 
-- Nuxt 4 + Vue 3
-- Pinia
-- UnoCSS
-- Cypress (e2e)
+- Nuxt 4 and Vue 3 generate a static site in `front-end/dist`.
+- Pinia owns local content state and UnoCSS provides styling.
+- The lesson-request form posts directly to Basin. This repository has no API, database, user accounts, admin role, or server-side session.
+- Netlify and the rootless Nginx container serve the same static artifact.
 
-## Repo layout
+## Supported toolchain
 
-- `front-end/` - Nuxt app (static generate + preview)
-- `back-end/` - API/server utilities
+- Node `24.18.1`
+- npm `12.0.2`
 
-## Getting started
+Use the exact versions in `.node-version`, `.nvmrc`, and `package.json`.
 
 ```bash
-npm install
+npm ci --include=optional --strict-allow-scripts
 npm run dev
 ```
 
-This starts the front-end in dev mode at `http://localhost:3000`.
+Development is available at `http://127.0.0.1:3333`.
 
-## Common scripts
+## Validation
 
 ```bash
-# Front-end dev
-npm run dev
-
-# Front-end dev with PWA enabled
-npm run serve
-
-# Build both packages
-npm run build
-
-# Lint + typecheck
 npm run lint
 npm run typecheck
+npm test
+npm run audit
+npm run audit:production
+npm run audit:signatures
+npm run verify:dependency-graph
+npm run verify:native-lock
+npm run verify:platform-install
+npm run build
+npm run a11y
 ```
 
-For package-specific scripts:
+Browser tests run after a build:
 
 ```bash
-npm run -w front-end dev
-npm run -w front-end generate
-npm run -w front-end preview
-npm run -w back-end server
-```
-
-## Forms (Basin)
-
-The contact form posts to Basin via a standard form POST (targeted to a hidden iframe to avoid navigation).
-
-- Update the endpoint at `front-end/src/content/site.json` under `contactForm.action`.
-- Form fields are configured in the same file under `contactForm.fields`.
-
-## Tests
-
-```bash
-# Unit tests
-npm run -w front-end test:unit
-
-# Cypress (interactive)
+npm run build
 npm run -w front-end test:e2e
 ```
 
-## Deployment notes
+## Content and forms
 
-The front-end build uses `nuxt generate` and outputs a static site at `front-end/dist`. See `netlify.toml` for hosting configuration.
+Site content and contact-form limits live in `front-end/src/content/site.json`. Basin processes form submissions as a third party; the site does not store submissions itself. Keep the privacy notice and direct email/phone fallback aligned whenever the form changes.
+
+## Operations
+
+See `DEPLOYMENT.md`, `HEALTHCHECKS.md`, and `SECURITY.md`. Every build emits `deployment.json` and `release.json` with the exact 40-character source commit so operators can distinguish a source release from a live promotion.

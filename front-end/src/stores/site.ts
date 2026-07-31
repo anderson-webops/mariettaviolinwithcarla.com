@@ -57,6 +57,8 @@ interface ContactFormField {
 	label: string;
 	type: "text" | "email" | "textarea";
 	required?: boolean;
+	maxLength: number;
+	autocomplete: string;
 }
 
 interface ContactFormContent {
@@ -64,6 +66,9 @@ interface ContactFormContent {
 	title: string;
 	body: string;
 	submitLabel: string;
+	privacyNote: string;
+	submittedNote: string;
+	uncertainNote: string;
 	fields: ContactFormField[];
 }
 

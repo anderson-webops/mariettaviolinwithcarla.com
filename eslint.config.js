@@ -22,7 +22,8 @@ export default antfu({
 		"no-console": "off",
 		// disable Antfu’s “expect newline after if” check:
 		"antfu/if-newline": "off",
-		"style/comma-dangle": "off"
+		"style/comma-dangle": "off",
+		"test/no-import-node-test": "off"
 	}
 	// …any repo-wide rules you genuinely want everywhere…
 });

@@ -1,8 +1,12 @@
-import { spawn, spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { spawn } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import { dirname, resolve } from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 
+const require = createRequire(import.meta.url);
+const frontendRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
 
 function pickPort() {
@@ -18,21 +22,17 @@ function pickPort() {
 }
 
 const port = pickPort();
-const host = process.env.HOST || "0.0.0.0";
-const outputDir = resolve(".output/public");
+const host = process.env.HOST || "127.0.0.1";
+const outputDir = resolve(frontendRoot, "dist");
 
 if (!existsSync(outputDir)) {
-	const build = spawnSync("npx", ["nuxt", "generate"], {
-		stdio: "inherit",
-		env: { ...process.env }
-	});
-
-	if (build.status !== 0) {
-		process.exit(build.status ?? 1);
-	}
+	throw new Error("Static output is missing. Run npm run build before previewing.");
 }
 
-const serve = spawn("npx", ["serve", outputDir, "-l", port, "-n"], {
+const servePackagePath = require.resolve("serve/package.json");
+const servePackage = JSON.parse(readFileSync(servePackagePath, "utf8"));
+const serveEntry = resolve(dirname(servePackagePath), servePackage.bin.serve);
+const server = spawn(process.execPath, [serveEntry, outputDir, "--listen", `tcp://${host}:${port}`, "--no-clipboard"], {
 	stdio: "inherit",
 	env: {
 		...process.env,
@@ -41,6 +41,6 @@ const serve = spawn("npx", ["serve", outputDir, "-l", port, "-n"], {
 	}
 });
 
-serve.on("exit", (code) => {
+server.on("exit", (code) => {
 	process.exit(code ?? 0);
 });

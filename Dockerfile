@@ -1,23 +1,33 @@
-FROM node:24.18.0-alpine AS build-stage
+FROM node:24.18.1-alpine@sha256:f70403e87646dc51b45295f4b8b70cdad0b63d2297c4c9899119b03f7af7a6b3 AS build-stage
 
 WORKDIR /app
-RUN npm install --global npm@11.16.0
+ENV CYPRESS_INSTALL_BINARY=0 \
+    NUXT_TELEMETRY_DISABLED=1 \
+    PUPPETEER_SKIP_DOWNLOAD=true
 
-COPY package.json package-lock.json ./
-COPY back-end/package*.json ./back-end/
-COPY front-end/package*.json ./front-end/
-RUN npm ci --ignore-scripts
+RUN npm install --global npm@12.0.2
+
+COPY .npmrc package.json package-lock.json ./
+COPY front-end/package.json front-end/package.json
+RUN --mount=type=cache,id=marietta-violin-npm-cache,target=/root/.npm \
+	npm ci --include=optional --strict-allow-scripts \
+	&& npm cache clean --force
 
 COPY . .
-RUN npm run build
+ARG SOURCE_COMMIT
+ARG SOURCE_TAG=""
+ENV SOURCE_COMMIT=${SOURCE_COMMIT} \
+    SOURCE_TAG=${SOURCE_TAG}
+RUN test -n "${SOURCE_COMMIT}" && npm run build
 
-# SSR
-FROM node:24.18.0-alpine AS production-stage
+FROM nginx:stable-alpine@sha256:97d490c12ba55b4946b01546d1c3ed324e8d41ab1c9fcb2a616aa470620e5b46 AS production-stage
 
-WORKDIR /app
+COPY deploy/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build-stage --chown=101:101 /app/front-end/dist /usr/share/nginx/html
 
-COPY --from=build-stage /app/front-end/.output ./.output
+USER 101:101
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+	CMD ["wget", "--quiet", "--spider", "http://127.0.0.1:8080/healthz"]
 
-EXPOSE 3000
-
-CMD ["node", ".output/server/index.mjs"]
+CMD ["nginx", "-g", "daemon off;"]

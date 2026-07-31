@@ -1,18 +1,12 @@
-# Health Checks
+# Health checks
 
-Use these endpoints for monitoring. They do not require auth and do not redirect.
+This is a static site with no database or application server.
 
-## Health endpoints
-- `GET /healthz`
-  - returns `200 {"ok":true}`
-- `GET /readyz`
-  - returns `200 {"ready":true,"components":{"db":{"ok":true,"state":1}}}` when Mongo is connected and pingable
-  - returns `503 {"ready":false,...}` when Mongo is unavailable
-- `GET /_dbinfo`
-  - internal diagnostics only
-  - returns non-secret database metadata when allowed
-  - returns `403 {"ok":false,"error":"forbidden"}` for public requests without internal access
+- `GET /healthz` returns static JSON with `status: "ok"`.
+- `GET /readyz` returns static JSON with `status: "ready"` and an empty dependency list.
+- `GET /deployment.json` identifies the exact source commit, release reference, runtime, service, and package version.
+- `GET /release.json` mirrors deployment identity for release tooling.
 
-The public site is deployed as static output on Netlify. `/healthz` and `/readyz` are exposed there via Netlify Functions so they do not fall through to the SPA HTML rewrite.
+Health and identity responses are non-secret, require no authentication, and must use `Cache-Control: no-store`. Application, account, admin, API, and database-diagnostic routes are retired and must return `404`, not the homepage.
 
-Use `/healthz` and `/readyz` for monitors. Do not use `/`, login pages, or `/_dbinfo`.
+Use `/healthz` for liveness, `/readyz` for static readiness, and `/deployment.json` to verify promotion. Do not use `/` as the only deployment identity check.

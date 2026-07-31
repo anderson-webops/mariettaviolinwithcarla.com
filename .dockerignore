@@ -6,7 +6,11 @@ node_modules
 **/node_modules
 front-end/.nuxt
 front-end/.output
-back-end/dist
+front-end/dist
+front-end/cypress/downloads
+front-end/cypress/screenshots
+front-end/cypress/videos
+back-end
 dist
 .env
 .env.*

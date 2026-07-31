@@ -8,7 +8,7 @@ test("nuxt config points to src and keeps the expected module set", async () => 
 	assert.equal(config.srcDir, "src");
 	assert.deepEqual(
 		config.modules?.sort(),
-		["@nuxt/eslint", "@nuxtjs/color-mode", "@pinia/nuxt", "@unocss/nuxt", "@vueuse/nuxt"].sort()
+		["@nuxt/eslint", "@nuxtjs/color-mode", "@pinia/nuxt", "@unocss/nuxt"].sort()
 	);
 	assert.equal(config.experimental?.payloadExtraction, true);
 	assert.deepEqual(config.vite?.build?.modulePreload, { polyfill: false });

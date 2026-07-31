@@ -4,6 +4,7 @@ import SectionContact from "~/components/sections/SectionContact.vue";
 import SectionHero from "~/components/sections/SectionHero.vue";
 import SectionLessons from "~/components/sections/SectionLessons.vue";
 import SectionStudents from "~/components/sections/SectionStudents.vue";
+import { serializeJsonLd } from "~/utils/serializeJsonLd";
 
 definePageMeta({
 	layout: "home"
@@ -36,7 +37,7 @@ useHead(() => ({
 	],
 	script: [
 		{
-			innerHTML: JSON.stringify({
+			innerHTML: serializeJsonLd({
 				"@context": "https://schema.org",
 				"@type": "MusicSchool",
 				address: {
@@ -57,7 +58,7 @@ useHead(() => ({
 			type: "application/ld+json"
 		},
 		{
-			innerHTML: JSON.stringify({
+			innerHTML: serializeJsonLd({
 				"@context": "https://schema.org",
 				"@type": "FAQPage",
 				mainEntity: faqEntries.value.map((entry) => ({
@@ -73,7 +74,7 @@ useHead(() => ({
 			type: "application/ld+json"
 		},
 		{
-			innerHTML: JSON.stringify({
+			innerHTML: serializeJsonLd({
 				"@context": "https://schema.org",
 				"@type": "ItemList",
 				itemListElement: lessons.value.cards.map((option, index) => ({
@@ -87,7 +88,7 @@ useHead(() => ({
 			type: "application/ld+json"
 		},
 		{
-			innerHTML: JSON.stringify({
+			innerHTML: serializeJsonLd({
 				"@context": "https://schema.org",
 				"@type": "BreadcrumbList",
 				itemListElement: [

@@ -49,10 +49,16 @@ describe("Homepage", () => {
 								field.type === "textarea"
 									? `textarea[name="${field.name}"]`
 									: `input[name="${field.name}"]`;
-							cy.get(selector).should("exist");
+							cy.get(selector)
+								.should("have.attr", "maxlength", String(field.maxLength))
+								.and("have.attr", "autocomplete", field.autocomplete);
 						});
+						cy.contains(contactForm.privacyNote).should("be.visible");
 						cy.contains("button", contactForm.submitLabel).should("be.visible");
 					});
+				cy.get('iframe[name="basin-iframe"]')
+					.should("have.attr", "sandbox", "allow-forms")
+					.and("have.attr", "referrerpolicy", "no-referrer");
 			});
 
 		cy.get("footer").within(() => {
