@@ -1,5 +1,7 @@
 # Security, identity, and system workflow audit — 2026-07-29
 
+> Follow-up, 2026-08-02: the static-only architecture remains unchanged, but the production-container path described below has been retired. Production now uses the atomic direct host-Nginx contract in `deploy/direct/`, with exact IPv4/IPv6 identity checks and automatic rollback. Container references in this dated evidence record describe the earlier v1.4.0 gate, not the current production contract.
+
 ## Scope
 
 This audit covered authentication, authorization, privilege promotion/demotion, lesson-request data handling, backend and system trust boundaries, dependency integrity, CI, static hosting, container execution, deployment identity, and public route behavior.

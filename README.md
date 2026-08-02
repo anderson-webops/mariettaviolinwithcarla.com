@@ -7,7 +7,7 @@ Static studio and lesson-request site for [mariettaviolinwithcarla.com](https://
 - Nuxt 4 and Vue 3 generate a static site in `front-end/dist`.
 - Pinia owns local content state and UnoCSS provides styling.
 - The lesson-request form posts directly to Basin. This repository has no API, database, user accounts, admin role, or server-side session.
-- Netlify and the rootless Nginx container serve the same static artifact.
+- Direct host Nginx and optional Netlify static hosting serve the same artifact; production does not require Docker.
 
 ## Supported toolchain
 
@@ -52,4 +52,7 @@ Site content and contact-form limits live in `front-end/src/content/site.json`. 
 
 ## Operations
 
-See `DEPLOYMENT.md`, `HEALTHCHECKS.md`, and `SECURITY.md`. Every build emits `deployment.json` and `release.json` with the exact 40-character source commit so operators can distinguish a source release from a live promotion.
+See `DEPLOYMENT.md`, `HEALTHCHECKS.md`, `SECURITY.md`, and the current
+`docs/security-backend-workflow-audit-2026-08-02.md` audit. Every build emits
+`deployment.json` and `release.json` with the exact 40-character source commit
+so operators can distinguish a source release from a live promotion.

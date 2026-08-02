@@ -1,0 +1,97 @@
+# Direct Nginx edge for mariettaviolinwithcarla.com.
+#
+# Install this as a host virtual server after adding certificate paths managed
+# by the production host. The document root follows the atomic release symlink
+# selected by deploy/direct/promote-static-release.sh.
+
+map $uri $marietta_violin_cache_control {
+	default "no-cache";
+	~^/_nuxt/ "public, max-age=31536000, immutable";
+	~^/(?:healthz|readyz|deployment\.json|release\.json)$ "no-store";
+}
+
+server {
+	listen 80;
+	listen [::]:80;
+	server_name mariettaviolinwithcarla.com www.mariettaviolinwithcarla.com;
+	server_tokens off;
+
+	location ^~ /.well-known/acme-challenge/ {
+		root /var/www/acme;
+		try_files $uri =404;
+	}
+
+	return 301 https://mariettaviolinwithcarla.com$request_uri;
+}
+
+server {
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+	server_name mariettaviolinwithcarla.com www.mariettaviolinwithcarla.com;
+	server_tokens off;
+
+	# Certificate paths are host-managed and intentionally not committed.
+	# ssl_certificate /etc/letsencrypt/live/mariettaviolinwithcarla.com/fullchain.pem;
+	# ssl_certificate_key /etc/letsencrypt/live/mariettaviolinwithcarla.com/privkey.pem;
+
+	root /srv/mariettaviolinwithcarla.com/current/front-end/dist;
+	index index.html;
+	client_max_body_size 1k;
+
+	if ($request_method !~ ^(?:GET|HEAD)$) {
+		return 405;
+	}
+
+	add_header Cache-Control $marietta_violin_cache_control always;
+	add_header Content-Security-Policy "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action https://usebasin.com; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://analytics.mariettaviolinwithcarla.com https://analytics.jacobdanderson.net; script-src-attr 'none'; connect-src 'self' https://analytics.mariettaviolinwithcarla.com https://analytics.jacobdanderson.net; frame-src https://usebasin.com; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests" always;
+	add_header Cross-Origin-Opener-Policy "same-origin" always;
+	add_header Cross-Origin-Resource-Policy "same-origin" always;
+	add_header Permissions-Policy "accelerometer=(), autoplay=(), camera=(), clipboard-read=(), display-capture=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), xr-spatial-tracking=()" always;
+	add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+	add_header X-Content-Type-Options "nosniff" always;
+	add_header X-Frame-Options "DENY" always;
+
+	error_page 404 /404.html;
+
+	location = /404.html {
+		internal;
+		try_files $uri =404;
+	}
+
+	location = /healthz {
+		default_type application/json;
+		try_files /healthz.json =404;
+	}
+
+	location = /readyz {
+		default_type application/json;
+		try_files /readyz.json =404;
+	}
+
+	location = /deployment.json {
+		default_type application/json;
+		try_files $uri =404;
+	}
+
+	location = /release.json {
+		default_type application/json;
+		try_files $uri =404;
+	}
+
+	location ~ ^/(?:api(?:/|$)|accounts(?:/|$)|admin(?:/|$)|_dbinfo$) {
+		return 404;
+	}
+
+	location /_nuxt/ {
+		try_files $uri =404;
+	}
+
+	location ~ (^|/)\. {
+		return 404;
+	}
+
+	location / {
+		try_files $uri $uri/ $uri/index.html =404;
+	}
+}

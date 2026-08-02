@@ -3,8 +3,10 @@
 ## Architecture and Toolchain
 - This repository is intentionally a static Nuxt site. Do not add a local account system, admin role, session, API, database, Vault dependency, or serverless backend without a new documented product requirement and threat model.
 - The contact form posts directly to Basin. Preserve the third-party processing notice, field limits, sandboxed target, and direct-contact fallback.
-- Use Node `24.18.1` and npm `12.0.2` for local, CI, Netlify, and container builds.
-- Treat `front-end/dist` as the only production artifact. Keep Netlify and the rootless Nginx container behavior aligned.
+- Use Node `24.18.1` and npm `12.0.2` for local, CI, Netlify, and direct static builds.
+- Treat `front-end/dist` as the only production artifact. Keep Netlify and the direct host-Nginx behavior aligned.
+- Do not reintroduce a production Docker path. Preserve the atomic release symlink, automatic rollback, and exact
+  IPv4/IPv6 identity checks in `deploy/direct/`.
 - Private-repository GitHub job availability is not a release gate when the equivalent local clean validation suite passes.
 
 ## Agent Delivery Workflow

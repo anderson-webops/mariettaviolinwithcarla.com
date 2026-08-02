@@ -1,20 +1,36 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
-const dockerfile = readFileSync("Dockerfile", "utf8");
-const nginx = readFileSync("deploy/nginx/nginx.conf", "utf8");
+const nginx = readFileSync("deploy/nginx/mariettaviolinwithcarla.conf.example", "utf8");
+const prepare = readFileSync("deploy/direct/prepare-static-release.sh", "utf8");
+const promote = readFileSync("deploy/direct/promote-static-release.sh", "utf8");
 const netlify = readFileSync("netlify.toml", "utf8");
+const workflow = readFileSync(".github/workflows/ci.yml", "utf8");
+const dependabot = readFileSync(".github/dependabot.yml", "utf8");
 
-test("container images and runtime identity are pinned and unprivileged", () => {
-	assert.match(dockerfile, /^FROM node:24\.18\.1-alpine@sha256:[0-9a-f]{64}/m);
-	assert.match(dockerfile, /^FROM nginx:stable-alpine@sha256:[0-9a-f]{64}/m);
-	assert.match(dockerfile, /^USER 101:101$/m);
-	assert.match(dockerfile, /SOURCE_COMMIT/);
-	assert.doesNotMatch(dockerfile, /\.output\/server|back-end/);
+test("production is an atomic direct static release without Docker", () => {
+	assert.equal(existsSync("Dockerfile"), false);
+	assert.equal(existsSync(".dockerignore"), false);
+	assert.equal(existsSync("deploy/nginx/nginx.conf"), false);
+	assert.doesNotMatch(workflow, /docker|container:/i);
+	assert.doesNotMatch(dependabot, /package-ecosystem:\s*docker/);
+
+	assert.match(prepare, /npm ci --include=dev --include=optional --strict-allow-scripts/);
+	assert.match(prepare, /npm ci --omit=dev --include=optional --ignore-scripts/);
+	assert.match(prepare, /audit:signatures/);
+	assert.match(promote, /\.marietta-violin-static-release\.json/);
+	assert.match(promote, /SITE_RESOLVE_IPV6/);
+	assert.match(promote, /restoring the previous release/i);
 });
 
-test("hosting policies reject retired routes and avoid permissive script evaluation", () => {
+test("direct and preview hosting reject retired routes and preserve the form boundary", () => {
+	assert.match(nginx, /listen 443 ssl http2/);
+	assert.match(nginx, /listen \[::\]:443 ssl http2/);
+	assert.match(
+		nginx,
+		/root \/srv\/mariettaviolinwithcarla\.com\/current\/front-end\/dist/
+	);
 	assert.match(nginx, /accounts/);
 	assert.match(nginx, /_dbinfo/);
 	assert.match(nginx, /return 404/);

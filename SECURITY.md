@@ -21,10 +21,11 @@ These origins and Basin are the only intentional production third-party network 
 
 - Static generation removes database, Vault, session, and server-side account attack surfaces.
 - Unknown, API, admin, account, and retired database-diagnostic routes return `404`.
-- The container runs Nginx as an unprivileged user on port 8080 and supports a read-only filesystem, dropped capabilities, and `no-new-privileges`.
+- Direct host Nginx serves only the generated static artifact from an atomic release symlink; promotion verifies exact identity over IPv4 and IPv6 and automatically restores the previous release on failure.
 - Security headers restrict framing, forms, scripts, connections, browser capabilities, referrers, MIME sniffing, and transport downgrade.
 - Deployment metadata contains source identity only and never contains secrets.
 - npm lifecycle scripts are allowlisted and Linux ARM64 glibc/musl native packages are explicitly locked and tested.
+- Production Docker artifacts and container-specific dependency automation are intentionally absent.
 
 ## Reporting a vulnerability
 
