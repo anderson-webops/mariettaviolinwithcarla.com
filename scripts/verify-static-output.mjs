@@ -62,7 +62,8 @@ assert.deepEqual(readiness.dependencies, []);
 const homepage = await readFile(path.join(outputRoot, "index.html"), "utf8");
 assert.match(homepage, /Violin lessons with Carla/i);
 assert.match(homepage, /analytics\.mariettaviolinwithcarla\.com/);
-assert.match(homepage, /analytics\.jacobdanderson\.net/);
+assert.match(homepage, /data-domains="mariettaviolinwithcarla\.com"/);
+assert.doesNotMatch(homepage, /analytics\.jacobdanderson\.net/);
 
 const sitemap = await readFile(path.join(outputRoot, "sitemap.xml"), "utf8");
 assert.match(sitemap, /https:\/\/mariettaviolinwithcarla\.com\//);

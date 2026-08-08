@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 const nginx = readFileSync("deploy/nginx/mariettaviolinwithcarla.conf.example", "utf8");
+const homeLayout = readFileSync("front-end/src/layouts/home.vue", "utf8");
 const prepare = readFileSync("deploy/direct/prepare-static-release.sh", "utf8");
 const promote = readFileSync("deploy/direct/promote-static-release.sh", "utf8");
 const netlify = readFileSync("netlify.toml", "utf8");
@@ -35,10 +36,16 @@ test("direct and preview hosting reject retired routes and preserve the form bou
 	assert.match(nginx, /_dbinfo/);
 	assert.match(nginx, /return 404/);
 	assert.match(nginx, /form-action https:\/\/usebasin\.com/);
+	assert.doesNotMatch(nginx, /analytics\.jacobdanderson\.net/);
 	assert.doesNotMatch(nginx, /unsafe-eval|wasm-unsafe-eval/);
 
 	assert.match(netlify, /from = "\/accounts\/\*"/);
 	assert.match(netlify, /from = "\/_dbinfo"/);
+	assert.doesNotMatch(netlify, /analytics\.jacobdanderson\.net/);
 	assert.doesNotMatch(netlify, /from = "\/\*"\s+to = "\/index\.html"/);
 	assert.doesNotMatch(netlify, /unsafe-eval|wasm-unsafe-eval/);
+});
+
+test("same-page navigation avoids duplicate Nuxt payload prefetches", () => {
+	assert.doesNotMatch(homeLayout, /<NuxtLink[^>]*(?:to|:to)="[^"]*#/);
 });

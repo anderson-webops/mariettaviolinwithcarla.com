@@ -1,7 +1,7 @@
 {
 	"name": "mariettaviolinwithcarla-front-end",
 	"type": "module",
-	"version": "1.4.1",
+	"version": "1.4.2",
 	"private": true,
 	"packageManager": "npm@12.0.2",
 	"engines": {

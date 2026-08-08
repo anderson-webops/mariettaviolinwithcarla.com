@@ -46,10 +46,10 @@ const primaryCtaHref = computed(() => {
 			</div>
 
 			<nav class="hidden items-center gap-6 text-sm font-medium text-slate-700 dark:text-slate-200 md:flex">
-				<NuxtLink class="hover:text-amber-700" to="/#about">About</NuxtLink>
-				<NuxtLink class="hover:text-amber-700" to="/#lessons">Lessons</NuxtLink>
-				<NuxtLink class="hover:text-amber-700" to="/#students">Students</NuxtLink>
-				<NuxtLink class="hover:text-amber-700" to="/#contact">Contact</NuxtLink>
+				<a class="hover:text-amber-700" href="/#about">About</a>
+				<a class="hover:text-amber-700" href="/#lessons">Lessons</a>
+				<a class="hover:text-amber-700" href="/#students">Students</a>
+				<a class="hover:text-amber-700" href="/#contact">Contact</a>
 			</nav>
 
 			<div class="flex items-center gap-3 text-sm">
@@ -79,13 +79,13 @@ const primaryCtaHref = computed(() => {
 				<p class="font-bold">
 					{{ announcement.message }}
 				</p>
-				<NuxtLink
+				<a
 					class="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 font-semibold text-emerald-800 shadow-sm transition hover:-translate-y-0.5 dark:bg-emerald-950 dark:text-emerald-100"
-					:to="announcement.ctaHref"
+					:href="announcement.ctaHref"
 				>
 					{{ announcement.ctaLabel }}
 					<span class="i-carbon-email text-sm" />
-				</NuxtLink>
+				</a>
 			</div>
 		</div>
 
