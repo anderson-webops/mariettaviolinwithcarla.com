@@ -7,5 +7,9 @@ dist
 .nuxt
 .env
 .idea/
+.playwright-cli/
+front-end/cypress/downloads/
+front-end/cypress/screenshots/
+front-end/cypress/videos/
 public/assets/fonts
 .marietta-violin-static-release.json

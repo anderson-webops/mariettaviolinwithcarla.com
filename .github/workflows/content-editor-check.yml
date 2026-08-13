@@ -1,0 +1,61 @@
+name: Content editor check
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS action context
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: 24.18.1
+  NPM_VERSION: 12.0.2
+  NUXT_TELEMETRY_DISABLED: "1"
+  PUPPETEER_SKIP_DOWNLOAD: "true"
+
+jobs:
+  check:
+    name: Validate and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Use the repository npm version
+        run: npm install --global "npm@${NPM_VERSION}"
+
+      - name: Install locked dependencies
+        run: npm ci --include=optional --strict-allow-scripts
+        env:
+          CYPRESS_INSTALL_BINARY: "0"
+
+      - name: Verify toolchain
+        run: |
+          test "$(node --version)" = "v${NODE_VERSION}"
+          test "$(npm --version)" = "${NPM_VERSION}"
+
+      - name: Validate website content
+        run: npm run validate:content
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Tests
+        run: npm test
+
+      - name: Build static website
+        run: npm run build

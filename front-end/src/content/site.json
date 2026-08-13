@@ -18,8 +18,7 @@
 		"email": "mariettaviolinwithcarlalowe@gmail.com",
 		"callLabel": "Call",
 		"textLabel": "Text",
-		"phoneDisplay": "770-568-0161",
-		"phoneHref": "tel:+17705680161"
+		"phoneDisplay": "770-568-0161"
 	},
 	"hero": {
 		"_location": "Near Wheeler High — ",
@@ -89,8 +88,8 @@
 		"eyebrow": "Current students",
 		"title": "What to expect each week",
 		"body": "Each week blends technique, repertoire, and clear next steps so students and parents know exactly what to practice between lessons.",
+		"locationLabel": "Home studio near Wheeler High",
 		"support": [
-			"Home studio near Wheeler High — 2207 Clearwater Dr, Marietta, GA 30067",
 			"Beginners (age 6+), middle/high school orchestra students, and motivated adult learners",
 			"Weekly lesson notes available to students and parents",
 			"Two studio recitals each year",

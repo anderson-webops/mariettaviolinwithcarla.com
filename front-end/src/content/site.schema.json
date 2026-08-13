@@ -1,0 +1,354 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://mariettaviolinwithcarla.com/schemas/site-content.json",
+	"title": "Marietta Violin site content",
+	"description": "Editable text and settings for the static website. The contact form contract is maintainer-managed.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"site",
+		"settings",
+		"announcement",
+		"contact",
+		"hero",
+		"lessons",
+		"students",
+		"trial",
+		"contactForm",
+		"footer"
+	],
+	"properties": {
+		"site": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["name", "description", "label"],
+			"properties": {
+				"name": { "$ref": "#/$defs/shortTitle" },
+				"description": { "$ref": "#/$defs/longText" },
+				"label": { "$ref": "#/$defs/shortLabel" }
+			}
+		},
+		"settings": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["colorModeDefault", "_colorModeDefaultHint"],
+			"properties": {
+				"colorModeDefault": {
+					"type": "string",
+					"enum": ["light", "dark", "system"]
+				},
+				"_colorModeDefaultHint": {
+					"$ref": "#/$defs/editorNote",
+					"readOnly": true
+				}
+			}
+		},
+		"announcement": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["enabled", "message", "ctaLabel", "ctaHref"],
+			"properties": {
+				"enabled": { "type": "boolean" },
+				"message": { "$ref": "#/$defs/mediumText" },
+				"ctaLabel": { "$ref": "#/$defs/shortLabel" },
+				"ctaHref": { "$ref": "#/$defs/internalHref" }
+			}
+		},
+		"contact": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["email", "callLabel", "textLabel", "phoneDisplay"],
+			"properties": {
+				"email": {
+					"type": "string",
+					"format": "email",
+					"maxLength": 254
+				},
+				"callLabel": { "$ref": "#/$defs/shortLabel" },
+				"textLabel": { "$ref": "#/$defs/shortLabel" },
+				"phoneDisplay": {
+					"type": "string",
+					"minLength": 10,
+					"maxLength": 30,
+					"pattern": "^[+()0-9. \\-]{10,30}$",
+					"description": "The call and text links are generated automatically from this number."
+				}
+			}
+		},
+		"hero": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [
+				"_location",
+				"location",
+				"headline",
+				"_healine",
+				"body",
+				"primaryCta",
+				"secondaryCta",
+				"tags",
+				"highlights"
+			],
+			"properties": {
+				"_location": { "$ref": "#/$defs/editorNote", "readOnly": true },
+				"location": { "$ref": "#/$defs/mediumText" },
+				"headline": { "$ref": "#/$defs/shortTitle" },
+				"_healine": { "$ref": "#/$defs/editorNote", "readOnly": true },
+				"body": { "$ref": "#/$defs/longText" },
+				"primaryCta": {
+					"type": "object",
+					"additionalProperties": false,
+					"required": ["label", "emailSubject"],
+					"properties": {
+						"label": { "$ref": "#/$defs/shortLabel" },
+						"emailSubject": { "$ref": "#/$defs/shortTitle" }
+					}
+				},
+				"secondaryCta": {
+					"type": "object",
+					"additionalProperties": false,
+					"required": ["label"],
+					"properties": {
+						"label": { "$ref": "#/$defs/shortLabel" }
+					}
+				},
+				"tags": {
+					"type": "array",
+					"minItems": 1,
+					"maxItems": 6,
+					"uniqueItems": true,
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["label", "tone"],
+						"properties": {
+							"label": { "$ref": "#/$defs/shortLabel" },
+							"tone": {
+								"type": "string",
+								"enum": ["amber", "emerald", "slate"]
+							}
+						}
+					}
+				},
+				"highlights": {
+					"type": "array",
+					"minItems": 1,
+					"maxItems": 6,
+					"uniqueItems": true,
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["title", "copy", "icon"],
+						"properties": {
+							"title": { "$ref": "#/$defs/shortTitle" },
+							"copy": { "$ref": "#/$defs/longText" },
+							"icon": {
+								"type": "string",
+								"pattern": "^i-carbon-[a-z0-9-]+$",
+								"readOnly": true
+							}
+						}
+					}
+				}
+			}
+		},
+		"lessons": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["cards"],
+			"properties": {
+				"cards": {
+					"type": "array",
+					"minItems": 1,
+					"maxItems": 6,
+					"uniqueItems": true,
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["name", "description", "format"],
+						"properties": {
+							"name": { "$ref": "#/$defs/shortTitle" },
+							"description": { "$ref": "#/$defs/longText" },
+							"format": { "$ref": "#/$defs/shortTitle" }
+						}
+					}
+				}
+			}
+		},
+		"students": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["eyebrow", "title", "body", "locationLabel", "support"],
+			"properties": {
+				"eyebrow": { "$ref": "#/$defs/shortLabel" },
+				"title": { "$ref": "#/$defs/shortTitle" },
+				"body": { "$ref": "#/$defs/longText" },
+				"locationLabel": {
+					"$ref": "#/$defs/shortTitle",
+					"description": "Text shown immediately before the single studio address."
+				},
+				"support": {
+					"type": "array",
+					"minItems": 1,
+					"maxItems": 9,
+					"uniqueItems": true,
+					"items": { "$ref": "#/$defs/mediumText" }
+				}
+			}
+		},
+		"trial": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["eyebrow", "title", "body", "primaryLabel", "primarySubject", "secondaryLabel"],
+			"properties": {
+				"eyebrow": { "$ref": "#/$defs/shortLabel" },
+				"title": { "$ref": "#/$defs/shortTitle" },
+				"body": { "$ref": "#/$defs/longText" },
+				"primaryLabel": { "$ref": "#/$defs/shortLabel" },
+				"primarySubject": { "$ref": "#/$defs/shortTitle" },
+				"secondaryLabel": { "$ref": "#/$defs/shortLabel" }
+			}
+		},
+		"contactForm": {
+			"$comment": "Maintainer-managed security and third-party processing contract.",
+			"type": "object",
+			"readOnly": true,
+			"additionalProperties": false,
+			"required": [
+				"action",
+				"title",
+				"body",
+				"submitLabel",
+				"privacyNote",
+				"submittedNote",
+				"uncertainNote",
+				"fields"
+			],
+			"properties": {
+				"action": {
+					"type": "string",
+					"format": "uri",
+					"pattern": "^https://usebasin\\.com/f/[A-Za-z0-9]+$"
+				},
+				"title": { "$ref": "#/$defs/shortTitle" },
+				"body": { "$ref": "#/$defs/longText" },
+				"submitLabel": { "$ref": "#/$defs/shortLabel" },
+				"privacyNote": { "$ref": "#/$defs/longText" },
+				"submittedNote": { "$ref": "#/$defs/longText" },
+				"uncertainNote": { "$ref": "#/$defs/longText" },
+				"fields": {
+					"type": "array",
+					"minItems": 3,
+					"maxItems": 3,
+					"prefixItems": [
+						{ "$ref": "#/$defs/nameField" },
+						{ "$ref": "#/$defs/emailField" },
+						{ "$ref": "#/$defs/messageField" }
+					],
+					"items": false
+				}
+			}
+		},
+		"footer": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["eyebrow", "body"],
+			"properties": {
+				"eyebrow": { "$ref": "#/$defs/shortLabel" },
+				"body": { "$ref": "#/$defs/mediumText" }
+			}
+		}
+	},
+	"$defs": {
+		"shortLabel": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 80,
+			"pattern": "^\\S(?:.*\\S)?$"
+		},
+		"shortTitle": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 120,
+			"pattern": "^\\S(?:.*\\S)?$"
+		},
+		"mediumText": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 320,
+			"pattern": "^\\S(?:.*\\S)?$"
+		},
+		"longText": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 600,
+			"pattern": "^\\S(?:.*\\S)?$"
+		},
+		"editorNote": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 240
+		},
+		"internalHref": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 160,
+			"pattern": "^/(?!/)(?:[^\\s#?]*)?(?:#[A-Za-z][\\w-]*)?$"
+		},
+		"contactField": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["name", "label", "type", "required", "maxLength", "autocomplete"],
+			"properties": {
+				"name": { "type": "string" },
+				"label": { "$ref": "#/$defs/shortTitle" },
+				"type": { "type": "string" },
+				"required": { "const": true },
+				"maxLength": { "type": "integer" },
+				"autocomplete": { "type": "string" }
+			}
+		},
+		"nameField": {
+			"allOf": [
+				{ "$ref": "#/$defs/contactField" },
+				{
+					"type": "object",
+					"properties": {
+						"name": { "const": "name" },
+						"type": { "const": "text" },
+						"maxLength": { "const": 120 },
+						"autocomplete": { "const": "name" }
+					}
+				}
+			]
+		},
+		"emailField": {
+			"allOf": [
+				{ "$ref": "#/$defs/contactField" },
+				{
+					"type": "object",
+					"properties": {
+						"name": { "const": "email" },
+						"type": { "const": "email" },
+						"maxLength": { "const": 254 },
+						"autocomplete": { "const": "email" }
+					}
+				}
+			]
+		},
+		"messageField": {
+			"allOf": [
+				{ "$ref": "#/$defs/contactField" },
+				{
+					"type": "object",
+					"properties": {
+						"name": { "const": "message" },
+						"type": { "const": "textarea" },
+						"maxLength": { "const": 2000 },
+						"autocomplete": { "const": "off" }
+					}
+				}
+			]
+		}
+	}
+}

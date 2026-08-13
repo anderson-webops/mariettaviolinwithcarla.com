@@ -1,0 +1,396 @@
+settings:
+  hide: true
+  content:
+    merge: true
+  commit:
+    identity: app
+    templates:
+      update: "content: update website through Pages CMS"
+
+content:
+  - name: website-content
+    label: Website content
+    type: file
+    path: front-end/src/content/site.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    commit:
+      identity: app
+    actions:
+      - name: check-website
+        label: Check website
+        workflow: content-editor-check.yml
+        ref: current
+        cancelable: true
+        confirm:
+          title: Check this version of the website?
+          message: This checks the text, links, layout build, and automated tests without changing the live website.
+          button: Run checks
+    fields:
+      - name: site
+        label: Website identity
+        type: object
+        required: true
+        description: Browser, search-result, and studio-name information.
+        fields:
+          - name: name
+            label: Website name
+            type: string
+            required: true
+            options:
+              maxlength: 120
+          - name: description
+            label: Search description
+            type: text
+            required: true
+            options:
+              maxlength: 320
+          - name: label
+            label: Header label
+            type: string
+            required: true
+            options:
+              maxlength: 80
+
+      - name: settings
+        label: Display settings
+        type: object
+        required: true
+        fields:
+          - name: colorModeDefault
+            label: Default color style
+            type: select
+            required: true
+            description: Dark and light force that style. System follows the visitor's device preference.
+            options:
+              values:
+                - name: dark
+                  label: Dark
+                - name: light
+                  label: Light
+                - name: system
+                  label: Visitor's device setting
+          - name: _colorModeDefaultHint
+            type: string
+            hidden: true
+            readonly: true
+
+      - name: announcement
+        label: Announcement bar
+        type: object
+        required: true
+        fields:
+          - name: enabled
+            label: Show announcement
+            type: boolean
+            required: true
+          - name: message
+            label: Announcement
+            type: text
+            required: true
+            options:
+              maxlength: 240
+          - name: ctaLabel
+            label: Button label
+            type: string
+            required: true
+            options:
+              maxlength: 60
+          - name: ctaHref
+            type: string
+            hidden: true
+            readonly: true
+
+      - name: contact
+        label: Contact details
+        type: object
+        required: true
+        description: The phone link is generated automatically from the displayed number.
+        fields:
+          - name: email
+            label: Email address
+            type: string
+            required: true
+            pattern:
+              regex: "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+              message: Enter a complete email address.
+            options:
+              maxlength: 254
+          - name: phoneDisplay
+            label: Phone number
+            type: string
+            required: true
+            pattern:
+              regex: "^[+()0-9. \\-]{10,30}$"
+              message: Enter a 10-digit US phone number, such as 770-568-0161.
+            options:
+              maxlength: 30
+          - name: callLabel
+            label: Call-button wording
+            type: string
+            required: true
+            options:
+              maxlength: 30
+          - name: textLabel
+            label: Text-button wording
+            type: string
+            required: true
+            options:
+              maxlength: 30
+
+      - name: hero
+        label: Top of home page
+        type: object
+        required: true
+        fields:
+          - name: _location
+            type: string
+            hidden: true
+            readonly: true
+          - name: location
+            label: Studio address
+            type: string
+            required: true
+            description: This one address automatically appears in both website locations.
+            options:
+              maxlength: 180
+          - name: headline
+            label: Main heading
+            type: string
+            required: true
+            options:
+              maxlength: 120
+          - name: _healine
+            type: string
+            hidden: true
+            readonly: true
+          - name: body
+            label: Introduction
+            type: text
+            required: true
+            options:
+              maxlength: 600
+          - name: primaryCta
+            label: Main button
+            type: object
+            required: true
+            fields:
+              - name: label
+                label: Button wording
+                type: string
+                required: true
+                options:
+                  maxlength: 60
+              - name: emailSubject
+                label: Email subject
+                type: string
+                required: true
+                description: Subject filled in when a visitor chooses this button.
+                options:
+                  maxlength: 120
+          - name: secondaryCta
+            label: Phone button
+            type: object
+            required: true
+            fields:
+              - name: label
+                label: Button wording
+                type: string
+                required: true
+                options:
+                  maxlength: 60
+          - name: tags
+            label: Short highlights
+            type: object
+            required: true
+            list:
+              min: 1
+              max: 6
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - name: label
+                label: Wording
+                type: string
+                required: true
+                options:
+                  maxlength: 60
+              - name: tone
+                label: Color
+                type: select
+                required: true
+                options:
+                  values:
+                    - name: amber
+                      label: Amber
+                    - name: emerald
+                      label: Emerald
+                    - name: slate
+                      label: Slate
+          - name: highlights
+            label: Teaching highlights
+            type: object
+            required: true
+            list:
+              min: 1
+              max: 6
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - name: title
+                label: Heading
+                type: string
+                required: true
+                options:
+                  maxlength: 100
+              - name: copy
+                label: Description
+                type: text
+                required: true
+                options:
+                  maxlength: 500
+              - name: icon
+                label: Icon
+                type: string
+                required: true
+                readonly: true
+
+      - name: lessons
+        label: Lesson options
+        type: object
+        required: true
+        fields:
+          - name: cards
+            label: Lesson cards
+            type: object
+            required: true
+            list:
+              min: 1
+              max: 6
+              collapsible:
+                collapsed: true
+                summary: "{name}"
+            fields:
+              - name: name
+                label: Name
+                type: string
+                required: true
+                options:
+                  maxlength: 100
+              - name: description
+                label: Description
+                type: text
+                required: true
+                options:
+                  maxlength: 500
+              - name: format
+                label: Format
+                type: string
+                required: true
+                options:
+                  maxlength: 100
+
+      - name: students
+        label: Current-students section
+        type: object
+        required: true
+        fields:
+          - name: eyebrow
+            label: Small heading
+            type: string
+            required: true
+            options:
+              maxlength: 80
+          - name: title
+            label: Main heading
+            type: string
+            required: true
+            options:
+              maxlength: 120
+          - name: body
+            label: Introduction
+            type: text
+            required: true
+            options:
+              maxlength: 600
+          - name: locationLabel
+            label: Address introduction
+            type: string
+            required: true
+            description: The studio address is added automatically after this wording.
+            options:
+              maxlength: 120
+          - name: support
+            label: Student information
+            type: string
+            required: true
+            list:
+              min: 1
+              max: 9
+            options:
+              maxlength: 260
+
+      - name: trial
+        label: Trial-lesson section
+        type: object
+        required: true
+        fields:
+          - name: eyebrow
+            label: Small heading
+            type: string
+            required: true
+            options:
+              maxlength: 80
+          - name: title
+            label: Main heading
+            type: string
+            required: true
+            options:
+              maxlength: 120
+          - name: body
+            label: Description
+            type: text
+            required: true
+            options:
+              maxlength: 600
+          - name: primaryLabel
+            label: Email-button wording
+            type: string
+            required: true
+            options:
+              maxlength: 60
+          - name: primarySubject
+            label: Email subject
+            type: string
+            required: true
+            options:
+              maxlength: 120
+          - name: secondaryLabel
+            label: Phone-button wording
+            type: string
+            required: true
+            options:
+              maxlength: 60
+
+      - name: footer
+        label: Footer
+        type: object
+        required: true
+        fields:
+          - name: eyebrow
+            label: Small heading
+            type: string
+            required: true
+            options:
+              maxlength: 80
+          - name: body
+            label: Footer text
+            type: text
+            required: true
+            options:
+              maxlength: 320
