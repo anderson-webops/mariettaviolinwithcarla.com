@@ -2,6 +2,12 @@
   "files.associations": {
     "*.css": "postcss"
   },
+  "json.schemas": [
+    {
+      "fileMatch": ["/front-end/src/content/site.json"],
+      "url": "./front-end/src/content/site.schema.json"
+    }
+  ],
 
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,

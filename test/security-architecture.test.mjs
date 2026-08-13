@@ -28,3 +28,18 @@ test("the lesson request is bounded and discloses its third-party processor", ()
 	assert.ok(site.contactForm.fields.find(field => field.name === "email")?.maxLength <= 254);
 	assert.ok(site.contactForm.fields.find(field => field.name === "message")?.maxLength <= 2000);
 });
+
+test("the optional content editor cannot rewrite protected form settings or repository structure", () => {
+	const cmsConfig = readFileSync(".pages.yml", "utf8");
+	const editorWorkflow = readFileSync(".github/workflows/content-editor-check.yml", "utf8");
+
+	assert.match(cmsConfig, /path: front-end\/src\/content\/site\.json/);
+	assert.match(cmsConfig, /merge: true/);
+	assert.match(cmsConfig, /identity: app/);
+	assert.match(cmsConfig, /create: false/);
+	assert.match(cmsConfig, /rename: false/);
+	assert.match(cmsConfig, /delete: false/);
+	assert.doesNotMatch(cmsConfig, /name: contactForm/);
+	assert.match(editorWorkflow, /permissions:\n {2}contents: read/);
+	assert.doesNotMatch(editorWorkflow, /contents: write|pull-requests: write/);
+});

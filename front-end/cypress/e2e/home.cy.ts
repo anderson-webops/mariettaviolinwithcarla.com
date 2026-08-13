@@ -1,7 +1,9 @@
 import site from "../../src/content/site.json";
 
 const { hero, contact, lessons, students, trial, footer, contactForm } = site;
-const smsHref = contact.phoneHref.replace(/^tel:/, "sms:");
+const phoneDigits = contact.phoneDisplay.replace(/\D/g, "");
+const phoneHref = phoneDigits.length === 10 ? `tel:+1${phoneDigits}` : `tel:+${phoneDigits}`;
+const smsHref = phoneHref.replace(/^tel:/, "sms:");
 
 describe("Homepage", () => {
 	it("shows the hero headline and primary contact actions", () => {
@@ -11,7 +13,7 @@ describe("Homepage", () => {
 		cy.contains("a", hero.primaryCta.label).should("have.attr", "href").and("contain", contact.email);
 		cy.contains("a", `${contact.callLabel} ${contact.phoneDisplay}`)
 			.should("have.attr", "href")
-			.and("eq", contact.phoneHref);
+			.and("eq", phoneHref);
 		cy.contains("a", `${contact.textLabel} ${contact.phoneDisplay}`).should("have.attr", "href").and("eq", smsHref);
 	});
 
@@ -63,7 +65,7 @@ describe("Homepage", () => {
 
 		cy.get("footer").within(() => {
 			cy.contains(contact.email).should("have.attr", "href").and("contain", contact.email);
-			cy.contains(contact.phoneDisplay).should("have.attr", "href", contact.phoneHref);
+			cy.contains(contact.phoneDisplay).should("have.attr", "href", phoneHref);
 			cy.contains(footer.eyebrow).should("be.visible");
 		});
 	});

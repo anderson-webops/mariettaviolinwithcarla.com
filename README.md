@@ -28,6 +28,7 @@ Development is available at `http://127.0.0.1:3333`.
 ```bash
 npm run lint
 npm run typecheck
+npm run validate:content
 npm test
 npm run audit
 npm run audit:production
@@ -49,6 +50,8 @@ npm run -w front-end test:e2e
 ## Content and forms
 
 Site content and contact-form limits live in `front-end/src/content/site.json`. Basin processes form submissions as a third party; the site does not store submissions itself. Keep the privacy notice and direct email/phone fallback aligned whenever the form changes.
+
+Routine content can also be edited through the repository's Pages CMS configuration without adding a runtime CMS or database. See the nontechnical [site owner guide](docs/site-owner-guide.md) and the [one-time editor setup](docs/content-editor-setup.md). The JSON schema and automated validator protect the file in GitHub, VS Code, CI, and production builds.
 
 ## Operations
 

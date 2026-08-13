@@ -46,6 +46,9 @@ jobs:
           test "$(node --version)" = "v${NODE_VERSION}"
           test "$(npm --version)" = "${NPM_VERSION}"
 
+      - name: Validate editable site content
+        run: npm run validate:content
+
       - name: Lint
         run: npm run lint
 
