@@ -1,7 +1,7 @@
 {
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@10.32.1",
+  "packageManager": "pnpm@11.22.0",
   "scripts": {
     "build": "nuxt build",
     "dev:pwa": "VITE_PLUGIN_PWA=true nuxt dev",
@@ -36,14 +36,5 @@
     "unocss": "catalog:build",
     "vue": "catalog:frontend",
     "vue-tsc": "catalog:dev"
-  },
-  "resolutions": {
-    "@nuxt/devtools": "catalog:build",
-    "@nuxt/kit": "catalog:build",
-    "chokidar": "catalog:build",
-    "nuxt": "catalog:build",
-    "semver": "catalog:build",
-    "unplugin": "catalog:build",
-    "vite": "catalog:build"
   }
 }
