@@ -25,8 +25,8 @@
 		"up": "taze major -I"
 	},
 	"dependencies": {
-		"pinia": "^4.0.2",
-		"vue": "^3.5.40"
+		"pinia": "^4.0.3",
+		"vue": "^3.5.41"
 	},
 	"optionalDependencies": {
 		"@esbuild/linux-arm64": "0.28.1",
@@ -59,25 +59,25 @@
 	"devDependencies": {
 		"@iconify-json/carbon": "^1.2.25",
 		"@iconify-json/twemoji": "^1.2.5",
-		"@nuxt/eslint": "^1.16.0",
+		"@nuxt/eslint": "^1.17.0",
 		"@nuxtjs/color-mode": "^4.0.1",
-		"@pinia/nuxt": "^1.0.1",
+		"@pinia/nuxt": "^1.0.2",
 		"@types/node": "^24.13.3",
-		"@unocss/eslint-config": "^66.7.5",
-		"@unocss/nuxt": "^66.7.5",
+		"@unocss/eslint-config": "^66.8.1",
+		"@unocss/nuxt": "^66.8.1",
 		"@vitejs/plugin-vue": "^6.0.6",
-		"cypress": "^15.19.0",
-		"nuxt": "^4.5.1",
-		"rollup": "^4.62.4",
+		"cypress": "^15.21.0",
+		"nuxt": "^4.5.2",
+		"rollup": "^4.62.5",
 		"serve": "^14.2.6",
-		"terser": "^5.49.0",
-		"tsx": "^4.23.3",
+		"terser": "^5.50.0",
+		"tsx": "^4.23.12",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.65.0",
-		"unocss": "^66.7.5",
+		"typescript-eslint": "^8.67.0",
+		"unocss": "^66.8.1",
 		"unplugin": "^3.3.0",
-		"vite": "^8.2.0",
+		"vite": "^8.2.2",
 		"vue-eslint-parser": "^10.4.1",
-		"vue-tsc": "^3.3.9"
+		"vue-tsc": "^3.3.11"
 	}
 }
