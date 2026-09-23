@@ -29,7 +29,6 @@ function run(command, args) {
 			cwd: repositoryRoot,
 			env: {
 				...process.env,
-				CYPRESS_INSTALL_BINARY: "0",
 				NUXT_TELEMETRY_DISABLED: "1",
 				PUPPETEER_SKIP_DOWNLOAD: "true"
 			},

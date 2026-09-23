@@ -38,8 +38,6 @@ jobs:
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
-        env:
-          CYPRESS_INSTALL_BINARY: "0"
 
       - name: Verify toolchain
         run: |
@@ -103,18 +101,14 @@ jobs:
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: "true"
 
       - name: Build
         run: npm run build
 
       - name: Browser tests
-        uses: cypress-io/github-action@01e3b659a495b41649cdd0aa82e1d1624e26520b # v7.4.4
-        with:
-          browser: chrome
-          install: false
-          working-directory: front-end
-          start: npm run preview -- --port 3333
-          wait-on: http://127.0.0.1:3333
+        run: npm run test:e2e
 
   accessibility:
     runs-on: ubuntu-latest
@@ -134,8 +128,6 @@ jobs:
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
-        env:
-          CYPRESS_INSTALL_BINARY: "0"
 
       - name: Accessibility smoke
         run: npm run a11y
@@ -158,8 +150,6 @@ jobs:
 
       - name: Install ARM64 dependencies
         run: npm ci --include=optional --strict-allow-scripts
-        env:
-          CYPRESS_INSTALL_BINARY: "0"
 
       - name: Verify native lockfile coverage
         run: npm run verify:native-lock

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import {
+	BASIN_FORM_ACTION,
 	SITE_CONTENT_PATH,
 	SiteContentValidationError,
 	validateSiteContent
@@ -51,6 +52,19 @@ test("navigation links must stay within the static site", () => {
 	assertInvalid((content) => {
 		content.announcement.ctaHref = "//example.com";
 	}, "announcement.ctaHref");
+	assertInvalid((content) => {
+		content.announcement.ctaHref = "/\\\\example.com/";
+	}, "announcement.ctaHref");
+	assertInvalid((content) => {
+		content.announcement.ctaHref = "/%5cexample.com/";
+	}, "announcement.ctaHref");
+	assertInvalid((content) => {
+		content.announcement.ctaHref = "/about/../#contact";
+	}, "announcement.ctaHref");
+
+	const content = copyContent();
+	content.announcement.ctaHref = "/lessons/#contact";
+	assert.equal(validateSiteContent(content).announcement.ctaHref, "/lessons/#contact");
 });
 
 test("the Basin endpoint, disclosure, and field limits are protected", () => {
@@ -58,9 +72,13 @@ test("the Basin endpoint, disclosure, and field limits are protected", () => {
 		content.contactForm.action = "https://example.com/form";
 	}, "contactForm.action");
 	assertInvalid((content) => {
+		content.contactForm.action = "https://usebasin.com/f/another-account";
+	}, "contactForm.action");
+	assertInvalid((content) => {
 		content.contactForm.privacyNote = "Submit the form.";
 	}, "contactForm.privacyNote");
 	assertInvalid((content) => {
 		content.contactForm.fields[2].maxLength = 20_000;
 	}, "contactForm.fields[2].maxLength");
+	assert.equal(validContent.contactForm.action, BASIN_FORM_ACTION);
 });

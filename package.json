@@ -1,7 +1,7 @@
 {
 	"name": "mariettaviolinwithcarla-com",
 	"type": "module",
-	"version": "1.5.1",
+	"version": "1.6.0",
 	"private": true,
 	"packageManager": "npm@12.0.2",
 	"engines": {
@@ -14,8 +14,7 @@
 	"workspaces": [
 		"front-end"
 	],
-	"allowScripts": {
-		"cypress@16.1.0": true,
+		"allowScripts": {
 		"esbuild@0.28.2": true,
 		"fsevents@2.3.3": true,
 		"puppeteer@25.11.0": false,
@@ -23,13 +22,14 @@
 		"unrs-resolver@1.12.2": true
 	},
 	"scripts": {
-		"build": "npm run validate:content && npm run -w front-end build",
+		"build": "npm run validate:content && npm run verify:analytics && npm run verify:retired-secrets && npm run -w front-end build",
 		"dev": "npm run validate:content && npm run -w front-end dev",
 		"serve": "node front-end/scripts/preview.mjs",
 		"preview": "node front-end/scripts/preview.mjs",
 		"postinstall": "simple-git-hooks && npm run -w front-end prepare",
-		"test": "npm run validate:content && npm run -w front-end test:unit && node --test test/*.test.mjs",
-		"test:e2e": "npm run -w front-end test:e2e",
+		"test": "npm run validate:content && npm run verify:analytics && npm run verify:retired-secrets && npm run -w front-end test:unit && node --test test/*.test.mjs && npm run test:artifact",
+		"test:artifact": "python3 -B -m unittest scripts/test_static_artifact.py -v",
+		"test:e2e": "node scripts/e2e-smoke.mjs",
 		"lint": "npm run lint:root && npm run -w front-end lint",
 		"lint:root": "eslint \"scripts/**/*.{js,mjs,cjs,ts}\" \"test/**/*.{js,mjs,cjs,ts}\" eslint.config.js",
 		"lint-fix": "npm run lint:root -- --fix && npm run -w front-end lint-fix",
@@ -40,8 +40,10 @@
 		"verify:dependency-graph": "node scripts/verify-dependency-graph.mjs",
 		"verify:native-lock": "node scripts/verify-native-lock.mjs",
 		"verify:platform-install": "node scripts/verify-platform-install.mjs",
+		"verify:analytics": "node scripts/verify-vendored-analytics.mjs",
+		"verify:retired-secrets": "node scripts/verify-no-retired-secrets.mjs",
 		"validate:content": "node scripts/validate-site-content.mjs",
-		"verify:static": "node scripts/verify-static-output.mjs",
+		"verify:static": "node scripts/verify-vendored-analytics.mjs && node scripts/verify-static-output.mjs",
 		"smoke:deployment": "node scripts/live-site-smoke.mjs",
 		"smoke:live": "node scripts/live-site-smoke.mjs",
 		"clean": "node scripts/clean.mjs",

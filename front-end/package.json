@@ -1,7 +1,7 @@
 {
 	"name": "mariettaviolinwithcarla-front-end",
 	"type": "module",
-	"version": "1.5.1",
+	"version": "1.6.0",
 	"private": true,
 	"packageManager": "npm@12.0.2",
 	"engines": {
@@ -20,8 +20,7 @@
 		"lint-fix": "eslint . --fix",
 		"typecheck": "nuxt typecheck",
 		"test:unit": "node --test --import tsx test/*.test.ts",
-		"test:e2e": "cypress run",
-		"test:e2e:open": "cypress open",
+		"test:e2e": "node ../scripts/e2e-smoke.mjs",
 		"up": "taze major -I"
 	},
 	"dependencies": {
@@ -66,7 +65,6 @@
 		"@unocss/eslint-config": "^66.10.5",
 		"@unocss/nuxt": "^66.10.5",
 		"@vitejs/plugin-vue": "^6.0.9",
-		"cypress": "^16.1.0",
 		"nuxt": "^4.5.2",
 		"rollup": "^4.63.4",
 		"serve": "^14.2.6",

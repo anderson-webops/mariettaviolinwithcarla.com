@@ -1,0 +1,7 @@
+* @Jacoba1100254352
+
+# Content changes still require owner review because the site includes
+# maintainer-managed destinations and privacy controls.
+/front-end/src/content/site.json @Jacoba1100254352
+/scripts/validate-site-content.mjs @Jacoba1100254352
+/scripts/verify-content-pr.mjs @Jacoba1100254352

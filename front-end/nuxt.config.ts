@@ -58,8 +58,9 @@ export default defineNuxtConfig({
 					: [
 							{
 								defer: true,
-								src: "https://analytics.mariettaviolinwithcarla.com/script.js",
+								src: "/vendor/umami-tracker.js",
 								"data-domains": "mariettaviolinwithcarla.com",
+								"data-host-url": "https://analytics.mariettaviolinwithcarla.com",
 								"data-website-id": "a0761af6-a9e2-4937-b976-b3ac849d0ff4"
 							}
 						]

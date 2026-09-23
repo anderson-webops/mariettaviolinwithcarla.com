@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
+import { Buffer } from "node:buffer";
 import { lstat, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { assertGeneratedTrackerMatchesSource } from "./static-output-integrity.mjs";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputRoot = path.join(repositoryRoot, "front-end/dist");
@@ -61,9 +63,17 @@ assert.deepEqual(readiness.dependencies, []);
 
 const homepage = await readFile(path.join(outputRoot, "index.html"), "utf8");
 assert.match(homepage, /Violin lessons with Carla/i);
-assert.match(homepage, /analytics\.mariettaviolinwithcarla\.com/);
+assert.match(homepage, /src="\/vendor\/umami-tracker\.js"/);
+assert.match(homepage, /data-host-url="https:\/\/analytics\.mariettaviolinwithcarla\.com"/);
 assert.match(homepage, /data-domains="mariettaviolinwithcarla\.com"/);
+assert.doesNotMatch(homepage, /src="https:\/\/analytics\.mariettaviolinwithcarla\.com/);
 assert.doesNotMatch(homepage, /analytics\.jacobdanderson\.net/);
+
+const vendoredTracker = await readFile(path.join(outputRoot, "vendor/umami-tracker.js"));
+const reviewedTracker = await readFile(path.join(repositoryRoot, "front-end/public/vendor/umami-tracker.js"));
+assertGeneratedTrackerMatchesSource(reviewedTracker, vendoredTracker);
+assert.ok(vendoredTracker.length > 1_000 && vendoredTracker.length < 32_000);
+assert.ok(vendoredTracker.includes(Buffer.from("host-url")));
 
 const sitemap = await readFile(path.join(outputRoot, "sitemap.xml"), "utf8");
 assert.match(sitemap, /https:\/\/mariettaviolinwithcarla\.com\//);

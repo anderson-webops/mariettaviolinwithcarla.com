@@ -7,6 +7,7 @@ Static studio and lesson-request site for [mariettaviolinwithcarla.com](https://
 - Nuxt 4 and Vue 3 generate a static site in `front-end/dist`.
 - Pinia owns local content state and UnoCSS provides styling.
 - The lesson-request form posts directly to Basin. This repository has no API, database, user accounts, admin role, or server-side session.
+- The reviewed Umami client is vendored into the static artifact and sends collection requests to the isolated site analytics service. No third-party origin supplies executable code at request time.
 - Direct host Nginx and optional Netlify static hosting serve the same artifact; production does not require Docker.
 
 ## Supported toolchain
@@ -36,6 +37,7 @@ npm run audit:signatures
 npm run verify:dependency-graph
 npm run verify:native-lock
 npm run verify:platform-install
+npm run verify:analytics
 npm run build
 npm run a11y
 ```
@@ -44,14 +46,19 @@ Browser tests run after a build:
 
 ```bash
 npm run build
-npm run -w front-end test:e2e
+npm run test:e2e
 ```
 
 ## Content and forms
 
 Site content and contact-form limits live in `front-end/src/content/site.json`. Basin processes form submissions as a third party; the site does not store submissions itself. Keep the privacy notice and direct email/phone fallback aligned whenever the form changes.
 
-Routine content can also be edited through the repository's Pages CMS configuration without adding a runtime CMS or database. See the nontechnical [site owner guide](docs/site-owner-guide.md) and the [one-time editor setup](docs/content-editor-setup.md). The JSON schema and automated validator protect the file in GitHub, VS Code, CI, and production builds.
+Routine content can be proposed through GitHub's web editor on the dedicated
+`content-updates` branch without adding a runtime CMS or database. See the
+nontechnical [site owner guide](docs/site-owner-guide.md) and the
+[one-time editor setup](docs/content-editor-setup.md). An independent
+base-branch workflow validates the exact changed file and protected fields before
+owner review and merge.
 
 ## Operations
 

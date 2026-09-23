@@ -226,9 +226,7 @@
 			],
 			"properties": {
 				"action": {
-					"type": "string",
-					"format": "uri",
-					"pattern": "^https://usebasin\\.com/f/[A-Za-z0-9]+$"
+					"const": "https://usebasin.com/f/1826d5c11791"
 				},
 				"title": { "$ref": "#/$defs/shortTitle" },
 				"body": { "$ref": "#/$defs/longText" },
@@ -293,7 +291,7 @@
 			"type": "string",
 			"minLength": 1,
 			"maxLength": 160,
-			"pattern": "^/(?!/)(?:[^\\s#?]*)?(?:#[A-Za-z][\\w-]*)?$"
+			"pattern": "^/(?!/)(?:[A-Za-z0-9._~/-]*)(?:#[A-Za-z][A-Za-z0-9_-]*)?$"
 		},
 		"contactField": {
 			"type": "object",

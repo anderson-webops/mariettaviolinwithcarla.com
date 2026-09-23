@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "entrypoints": [
+    "front-end/dist/index.html"
+  ],
+  "required": [
+    "front-end/dist/index.html",
+    "front-end/dist/404.html",
+    "front-end/dist/deployment.json",
+    "front-end/dist/release.json",
+    "front-end/dist/robots.txt",
+    "front-end/dist/sitemap.xml",
+    "front-end/dist/vendor/umami-tracker.js"
+  ],
+  "legacyRollback": {
+    "maximumVersion": "1.5.1",
+    "required": [
+      "front-end/dist/index.html",
+      "front-end/dist/404.html",
+      "front-end/dist/deployment.json",
+      "front-end/dist/release.json",
+      "front-end/dist/robots.txt",
+      "front-end/dist/sitemap.xml"
+    ]
+  },
+  "runtime": {
+    "type": "static",
+    "server": "host-managed nginx",
+    "applicationProcesses": 0
+  },
+  "modulesOutsideDist": [],
+  "productionDependencies": [],
+  "generatedClients": [],
+  "nativeBindings": [],
+  "staticAssets": [
+    "front-end/dist"
+  ],
+  "writableState": [],
+  "privateConfiguration": "No credentials or private configuration belong in the artifact.",
+  "topology": "Preserve the existing /srv/mariettaviolinwithcarla.com/current/front-end/dist Nginx document root, host-managed certificates, and IPv4/IPv6 listeners. The artifact requires no Node service, package manager, container, database, queue, spool, cache, or migration."
+}

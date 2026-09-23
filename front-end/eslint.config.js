@@ -66,7 +66,7 @@ export default base
 				"test/no-import-node-test": "off"
 			}
 		},
-		{ ignores: [".nuxt/**", "dist/**", "src/layouts/README.md"] }
+		{ ignores: [".nuxt/**", "dist/**", "public/vendor/**", "src/layouts/README.md"] }
 	)
 
 	/* keep Prettier conflict-killer last */

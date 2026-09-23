@@ -2,7 +2,6 @@ name: Qodana
 
 on:
   workflow_dispatch:
-  pull_request:
   push:
     branches: [main]
 
@@ -13,21 +12,27 @@ jobs:
   qodana:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
     steps:
-      - name: Qodana token is not configured
-        if: env.QODANA_TOKEN == ''
-        run: echo "Qodana is intentionally skipped because QODANA_TOKEN is unavailable."
+      - name: Check Qodana availability
+        id: qodana-token
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+        run: |
+          if [ -n "$QODANA_TOKEN" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Qodana is intentionally skipped because QODANA_TOKEN is unavailable."
+          fi
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        if: env.QODANA_TOKEN != ''
+        if: steps.qodana-token.outputs.enabled == 'true'
         with:
           fetch-depth: 0
           persist-credentials: false
 
       - name: Qodana scan
-        if: env.QODANA_TOKEN != ''
+        if: steps.qodana-token.outputs.enabled == 'true'
         uses: JetBrains/qodana-action@10be11607eb323a180e2b76b26c9c5cdceac3e77 # v2026.2.1
         env:
-          QODANA_TOKEN: ${{ env.QODANA_TOKEN }}
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}

@@ -8,11 +8,9 @@ const generatedPaths = [
 	"node_modules",
 	"back-end/dist",
 	"back-end/node_modules",
+	"back-end/tsconfig.tsbuildinfo",
 	"front-end/.nuxt",
 	"front-end/.output",
-	"front-end/cypress/downloads",
-	"front-end/cypress/screenshots",
-	"front-end/cypress/videos",
 	"front-end/dist",
 	"front-end/node_modules",
 	"front-end/tsconfig.tsbuildinfo"

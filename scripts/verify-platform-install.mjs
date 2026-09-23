@@ -17,7 +17,6 @@ function run(command, args, cwd, cacheDirectory) {
 			cwd,
 			env: {
 				...process.env,
-				CYPRESS_INSTALL_BINARY: "0",
 				npm_config_cache: cacheDirectory,
 				PUPPETEER_SKIP_DOWNLOAD: "true"
 			},

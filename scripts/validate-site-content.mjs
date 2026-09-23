@@ -3,6 +3,8 @@ import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const SITE_CONTENT_PATH = fileURLToPath(new URL("../front-end/src/content/site.json", import.meta.url));
+export const CANONICAL_SITE_ORIGIN = "https://mariettaviolinwithcarla.com";
+export const BASIN_FORM_ACTION = "https://usebasin.com/f/1826d5c11791";
 
 export class SiteContentValidationError extends Error {
 	constructor(path, message) {
@@ -99,16 +101,24 @@ function assertPhone(value, path) {
 
 function assertInternalHref(value, path) {
 	assertString(value, path, { maxLength: 160 });
-	const [pathname, fragment, extraFragment] = value.split("#");
-	if (
-		!pathname.startsWith("/")
-		|| pathname.startsWith("//")
-		|| pathname.includes("?")
-		|| containsWhitespace(value)
-		|| extraFragment !== undefined
-		|| (fragment !== undefined && !/^[a-z][\w-]*$/i.test(fragment))
-	) {
+	let resolved;
+	try {
+		resolved = new URL(value, CANONICAL_SITE_ORIGIN);
+	}
+	catch {
 		fail(path, "must be a site-relative path or section link");
+	}
+
+	const normalized = `${resolved.pathname}${resolved.hash}`;
+	if (
+		resolved.origin !== CANONICAL_SITE_ORIGIN
+		|| resolved.username
+		|| resolved.password
+		|| resolved.search
+		|| normalized !== value
+		|| !/^\/[\w./~-]*(?:#[a-z][\w-]*)?$/i.test(value)
+	) {
+		fail(path, "must be a normalized site-relative path or section link");
 	}
 }
 
@@ -245,22 +255,8 @@ function validateContactForm(contactForm) {
 		"fields"
 	]);
 	assertString(contactForm.action, "contactForm.action", { maxLength: 200 });
-	let formAction;
-	try {
-		formAction = new URL(contactForm.action);
-	}
-	catch {
-		fail("contactForm.action", "must be a valid HTTPS Basin URL");
-	}
-	if (
-		formAction.origin !== "https://usebasin.com"
-		|| formAction.username
-		|| formAction.password
-		|| !/^\/f\/[A-Za-z0-9]+$/.test(formAction.pathname)
-		|| formAction.search
-		|| formAction.hash
-	) {
-		fail("contactForm.action", "must remain a direct Basin form endpoint");
+	if (contactForm.action !== BASIN_FORM_ACTION) {
+		fail("contactForm.action", "must remain the reviewed Basin form endpoint");
 	}
 
 	assertString(contactForm.title, "contactForm.title", { maxLength: 120 });
