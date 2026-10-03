@@ -1,7 +1,7 @@
 {
 	"name": "mariettaviolinwithcarla-com",
 	"type": "module",
-	"version": "1.6.1",
+	"version": "1.6.2",
 	"private": true,
 	"packageManager": "npm@12.0.2",
 	"engines": {
@@ -27,7 +27,7 @@
 		"serve": "node front-end/scripts/preview.mjs",
 		"preview": "node front-end/scripts/preview.mjs",
 		"postinstall": "simple-git-hooks && npm run -w front-end prepare",
-		"test": "npm run validate:content && npm run verify:analytics && npm run verify:retired-secrets && npm run -w front-end test:unit && node --test test/*.test.mjs && npm run test:artifact",
+		"test": "npm run validate:content && npm run verify:analytics && npm run verify:retired-secrets && npm run -w front-end test:unit && node --test test/*.test.mjs vendor/tests/*.test.mjs && npm run test:artifact",
 		"test:artifact": "python3 -B -m unittest scripts/test_static_artifact.py -v",
 		"test:e2e": "node scripts/e2e-smoke.mjs",
 		"lint": "npm run lint:root && npm run -w front-end lint",
@@ -53,6 +53,7 @@
 	"devDependencies": {
 		"@antfu/eslint-config": "^9.2.0",
 		"axe-core": "^4.13.0",
+		"braces": "file:vendor/braces",
 		"eslint": "^10.11.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-format": "^2.0.1",
@@ -60,6 +61,7 @@
 		"eslint-plugin-vue": "^10.10.0",
 		"globals": "^17.8.0",
 		"lint-staged": "^17.5.1",
+		"listhen": "file:vendor/listhen",
 		"prettier": "^3.9.8",
 		"puppeteer": "^25.11.0",
 		"simple-git-hooks": "^2.14.0",
@@ -76,6 +78,8 @@
 		"{eslint.config.js,scripts/*.{js,mjs,cjs,ts},test/*.{js,mjs,cjs,ts}}": "eslint --fix"
 	},
 	"overrides": {
+		"braces": "$braces",
+		"listhen": "$listhen",
 		"archiver-utils": {
 			"glob": "13.0.6"
 		},
@@ -103,7 +107,6 @@
 		"serialize-javascript": "7.1.2",
 		"js-yaml": "4.3.2",
 		"nanoid": "3.3.18",
-		"node-forge": "1.4.0",
 		"postcss": "8.5.28",
 		"qs": "6.16.0",
 		"shell-quote": "1.10.0",
