@@ -1,18 +1,3 @@
-# Workspace instructions
+# Gemini Instructions
 
-## GitGuardian Availability
-
-- Use GitGuardian/`ggshield` when available. Quota, authentication, network, or service failures are not commit or push blockers. Record the scan as unavailable, review staged and outgoing changes, run an available independent local secret scan, and proceed with the other required checks. Never ignore a confirmed secret finding or claim a failed scan passed.
-- If only the global GitGuardian hook blocks delivery, inspect it for other checks, then use a command-scoped `core.hooksPath` pointing to the repository's own hooks for that commit or push. Do not disable hooks globally or skip unrelated checks.
-
-Follow `AGENTS.md` as the canonical repository workflow.
-
-This project is intentionally a static Nuxt site. Do not recreate the retired backend, database, admin, session, or serverless readiness implementation without an explicit product requirement and a new security review. Use Node `24.18.1`, npm `12.0.2`, the root lockfile, and the complete local validation suite before release.
-
-## Direct Delivery and Pull Requests
-
-- After a coherent change set passes the repository's required checks, default to committing it and pushing it directly to the repository's default branch. Do not open a pull request unless the user explicitly asks for one, branch protection requires it, or an external-contribution policy makes direct integration inappropriate.
-- For a release-worthy application change, update the project version as required, create an annotated tag, and publish or update the corresponding GitHub release in the same work session. Keep documentation-only, formatting-only, and other non-deployable housekeeping changes as committed and pushed source changes without inventing an application release.
-- Never force-push a shared branch or move an existing published tag unless the user explicitly authorizes that exact history rewrite.
-- If automation or repository policy creates a pull request, review it, wait for required checks, merge it when safe, and remove the merged branch before wrapping up. Do not leave redundant pull requests or branches open.
-- Treat commit, push, tag, and GitHub release publication as source delivery only. Do not claim or perform production deployment unless it was separately authorized and verified.
+Read this repository's `AGENTS.md` in full before any work. It is the canonical source of repository-specific AI instructions. When this checkout is under Sites, follow the parent `AGENTS.md` too.
