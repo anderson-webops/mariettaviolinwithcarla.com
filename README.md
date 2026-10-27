@@ -12,8 +12,8 @@ Static studio and lesson-request site for [mariettaviolinwithcarla.com](https://
 
 ## Supported toolchain
 
-- Node `24.18.1`
-- npm `12.0.2`
+- Node `24.22.1`
+- npm `12.2.1`
 
 Use the exact versions in `.node-version`, `.nvmrc`, and `package.json`.
 
