@@ -1,7 +1,7 @@
 {
 	"site": {
 		"name": "Marietta Violin with Carla",
-		"description": "Private violin lessons in Marietta, GA with a warm, patient studio for students and families.",
+		"description": "Private violin lessons online with a warm, patient studio for students and families.",
 		"label": "Violin studio"
 	},
 	"settings": {
@@ -21,8 +21,8 @@
 		"phoneDisplay": "770-568-0161"
 	},
 	"hero": {
-		"_location": "Near Wheeler High — ",
-		"location": "2207 Clearwater Dr, Marietta, GA 30067",
+		"_location": "Near Timpanogos Elementary — ",
+		"location": "483 N 1220 W Provo, UT 84601",
 		"headline": "Violin lessons with Carla",
 		"_healine": " - Warm, encouraging, and tailored to every student.",
 		"body": "Whether you're picking up the violin for the first time or preparing for an audition, Carla's studio pairs clear fundamentals with musicality and performance confidence.",
@@ -141,6 +141,6 @@
 	},
 	"footer": {
 		"eyebrow": "Carla's violin studio",
-		"body": "Serving families in Marietta & East Cobb — in-person and online."
+		"body": "Serving families in Marietta, East Cobb, and Provo — online."
 	}
 }
