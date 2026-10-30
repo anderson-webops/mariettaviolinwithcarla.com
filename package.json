@@ -54,6 +54,7 @@
 		"@antfu/eslint-config": "^9.5.1",
 		"axe-core": "^4.14.0",
 		"braces": "file:vendor/braces",
+		"deepmerge": "file:vendor/deepmerge",
 		"eslint": "^10.13.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-format": "^2.0.1",
@@ -79,6 +80,7 @@
 	},
 	"overrides": {
 		"braces": "$braces",
+		"deepmerge": "$deepmerge",
 		"listhen": "$listhen",
 		"archiver-utils": {
 			"glob": "13.0.6"
