@@ -1,7 +1,7 @@
 {
 	"name": "mariettaviolinwithcarla-com",
 	"type": "module",
-	"version": "1.6.3",
+	"version": "1.6.4",
 	"private": true,
 	"packageManager": "npm@12.2.1",
 	"engines": {
@@ -54,6 +54,7 @@
 		"@antfu/eslint-config": "^9.5.1",
 		"axe-core": "^4.14.0",
 		"braces": "file:vendor/braces",
+		"deepmerge": "file:vendor/deepmerge",
 		"eslint": "^10.13.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-format": "^2.0.1",
@@ -65,7 +66,7 @@
 		"prettier": "^3.9.10",
 		"puppeteer": "^25.16.0",
 		"simple-git-hooks": "^2.14.0",
-		"srvx": "1.0.6",
+		"srvx": "1.0.7",
 		"taze": "^21.3.0",
 		"typescript": "^6.0.3",
 		"unplugin": "^3.4.0"
@@ -79,6 +80,7 @@
 	},
 	"overrides": {
 		"braces": "$braces",
+		"deepmerge": "$deepmerge",
 		"listhen": "$listhen",
 		"archiver-utils": {
 			"glob": "13.0.6"
@@ -117,7 +119,7 @@
 			"katex": "0.18.2"
 		},
 		"tinypool": "2.2.0",
-		"srvx": "1.0.6",
+		"srvx": "1.0.7",
 		"svgo": "4.1.0",
 		"tar": "7.5.22",
 		"valibot": "1.4.2"

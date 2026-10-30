@@ -9,7 +9,7 @@ const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url))
 const frontendManifest = JSON.parse(await readFile(path.join(repositoryRoot, "front-end/package.json"), "utf8"));
 const npmCommand = process.platform === "win32"
 	? "npm.cmd"
-	: path.join(path.dirname(process.execPath), "npm");
+	: process.env.npm_execpath || path.join(path.dirname(process.execPath), "npm");
 
 function run(command, args, cwd, cacheDirectory) {
 	return new Promise((resolveRun, reject) => {
