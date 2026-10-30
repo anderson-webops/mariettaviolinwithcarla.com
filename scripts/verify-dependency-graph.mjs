@@ -6,7 +6,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const npmCommand = process.platform === "win32" ? "npm.cmd" : path.join(path.dirname(process.execPath), "npm");
+const npmCommand = process.platform === "win32" ? "npm.cmd" : process.env.npm_execpath || path.join(path.dirname(process.execPath), "npm");
 const result = spawnSync(npmCommand, ["ls", "--all", "--json"], {
 	cwd: repositoryRoot,
 	encoding: "utf8",
