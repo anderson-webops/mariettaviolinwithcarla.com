@@ -6,7 +6,7 @@ updates:
       interval: weekly
     open-pull-requests-limit: 5
     ignore:
-      # Keep editor/compiler types aligned with the Node 24 LTS and
+      # Keep editor/compiler types aligned with the Node 26 LTS and
       # TypeScript 6 production toolchain until those baselines move.
       - dependency-name: "@types/node"
         update-types: [version-update:semver-major]

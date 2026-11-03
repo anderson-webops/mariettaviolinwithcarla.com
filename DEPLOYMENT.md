@@ -19,10 +19,10 @@ mode, size, and SHA-256 digest and binds the artifact to an exact source commit.
 
 ## Build the sealed artifact
 
-Use Node `24.22.1` and npm `12.2.1` as an unprivileged user:
+Use Node `26.13.0` and npm `12.2.1` as an unprivileged user:
 
 ```bash
-NODE_BIN_DIR=/opt/node-24.22.1/bin \
+NODE_BIN_DIR=/opt/node-26.13.0/bin \
   deploy/direct/prepare-static-release.sh \
   /srv/mariettaviolinwithcarla.com/builds/<clean-checkout> \
   /srv/mariettaviolinwithcarla.com/builds

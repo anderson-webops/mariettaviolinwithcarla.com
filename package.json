@@ -5,7 +5,7 @@
 	"private": true,
 	"packageManager": "npm@12.2.1",
 	"engines": {
-		"node": ">=24.22.1 <25",
+		"node": ">=26.13.0 <27",
 		"npm": ">=12.2.1 <13"
 	},
 	"description": "Static studio and lesson-request site for Marietta Violin with Carla",
@@ -26,7 +26,7 @@
 		"dev": "npm run validate:content && npm run -w front-end dev",
 		"serve": "node front-end/scripts/preview.mjs",
 		"preview": "node front-end/scripts/preview.mjs",
-		"postinstall": "simple-git-hooks && npm run -w front-end prepare",
+		"postinstall": "node scripts/patch-minimatch-consumers.mjs && simple-git-hooks && npm run -w front-end prepare",
 		"test": "npm run validate:content && npm run verify:analytics && npm run verify:retired-secrets && npm run -w front-end test:unit && node --test test/*.test.mjs vendor/tests/*.test.mjs && npm run test:artifact",
 		"test:artifact": "python3 -B -m unittest scripts/test_static_artifact.py -v",
 		"test:e2e": "node scripts/e2e-smoke.mjs",
@@ -82,9 +82,8 @@
 		"braces": "$braces",
 		"deepmerge": "$deepmerge",
 		"listhen": "$listhen",
-		"archiver-utils": {
-			"glob": "13.0.6"
-		},
+		"glob": "14.0.3",
+		"minimatch": "11.0.4",
 		"@nuxt/devtools": "^3.4.4",
 		"@nuxt/kit": "^4.6.3",
 		"nuxt": "^4.6.3",
