@@ -20,16 +20,23 @@ type ExtendedNuxtConfig = NuxtConfig & {
 };
 
 type ColorModePreference = "light" | "dark" | "system";
-const contentColorPreference =
-	(siteContent as { settings?: { colorModeDefault?: ColorModePreference } }).settings?.colorModeDefault ?? "light";
-const colorModeFallback = contentColorPreference === "system" ? "light" : contentColorPreference;
+const contentColorPreference
+	= (siteContent as { settings?: { colorModeDefault?: ColorModePreference } }).settings?.colorModeDefault ?? "light";
+const colorModeFallback = contentColorPreference === "system"
+	? "light"
+	: contentColorPreference;
 export default defineNuxtConfig({
 	alias: {
 		"~": srcAlias,
 		"@": srcAlias
 	},
 
-	modules: ["@unocss/nuxt", "@pinia/nuxt", "@nuxtjs/color-mode", "@nuxt/eslint"],
+	modules: [
+		"@unocss/nuxt",
+		"@pinia/nuxt",
+		"@nuxtjs/color-mode",
+		"@nuxt/eslint"
+	],
 
 	srcDir: "src",
 
@@ -57,8 +64,8 @@ export default defineNuxtConfig({
 					? []
 					: [
 							{
-								defer: true,
-								src: "/vendor/umami-tracker.js",
+								"defer": true,
+								"src": "/vendor/umami-tracker.js",
 								"data-domains": "mariettaviolinwithcarla.com",
 								"data-host-url": "https://analytics.mariettaviolinwithcarla.com",
 								"data-website-id": "a0761af6-a9e2-4937-b976-b3ac849d0ff4"

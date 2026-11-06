@@ -13,11 +13,12 @@ Static studio and lesson-request site for [mariettaviolinwithcarla.com](https://
 ## Supported toolchain
 
 - Node `26.13.0`
-- npm `12.2.1`
+- independently locked npm `12.2.2` build profile
 
 Use the exact versions in `.node-version`, `.nvmrc`, and `package.json`.
 
 ```bash
+export PATH="$(node scripts/build-toolchain.mjs --print-bin):$PATH"
 npm ci --include=optional --strict-allow-scripts
 npm run dev
 ```

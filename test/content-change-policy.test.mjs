@@ -5,7 +5,9 @@ import { validateContentTransition } from "../scripts/verify-content-pr.mjs";
 
 const path = "front-end/src/content/site.json";
 const valid = JSON.parse(readFileSync(path, "utf8"));
-const changedFiles = [{ filename: path, status: "modified" }];
+const changedFiles = [
+	{ filename: path, status: "modified" }
+];
 
 test("routine content can change through the dedicated content branch", () => {
 	const proposed = structuredClone(valid);

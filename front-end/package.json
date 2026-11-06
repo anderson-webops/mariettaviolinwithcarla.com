@@ -1,12 +1,12 @@
 {
 	"name": "mariettaviolinwithcarla-front-end",
 	"type": "module",
-	"version": "1.6.5",
+	"version": "1.6.6",
 	"private": true,
-	"packageManager": "npm@12.2.1",
+	"packageManager": "npm@12.2.2",
 	"engines": {
 		"node": ">=26.13.0 <27",
-		"npm": ">=12.2.1 <13"
+		"npm": ">=12.2.2 <13"
 	},
 	"scripts": {
 		"build": "nuxt generate && node ../scripts/write-deployment-metadata.mjs && node ../scripts/prepare-static-output.mjs && node ../scripts/verify-static-output.mjs",
@@ -25,7 +25,7 @@
 	},
 	"dependencies": {
 		"pinia": "^4.1.0",
-		"vue": "^3.5.44"
+		"vue": "^3.5.45"
 	},
 	"optionalDependencies": {
 		"@esbuild/linux-arm64": "0.28.2",
@@ -38,14 +38,14 @@
 		"@oxfmt/binding-linux-arm64-musl": "0.35.0",
 		"@oxfmt/binding-linux-x64-gnu": "0.35.0",
 		"@oxfmt/binding-linux-x64-musl": "0.35.0",
-		"@rolldown/binding-linux-arm64-gnu": "1.2.15",
-		"@rolldown/binding-linux-arm64-musl": "1.2.15",
-		"@rolldown/binding-linux-x64-gnu": "1.2.15",
-		"@rolldown/binding-linux-x64-musl": "1.2.15",
-		"@rollup/rollup-linux-arm64-gnu": "4.65.1",
-		"@rollup/rollup-linux-arm64-musl": "4.65.1",
-		"@rollup/rollup-linux-x64-gnu": "4.65.1",
-		"@rollup/rollup-linux-x64-musl": "4.65.1",
+		"@rolldown/binding-linux-arm64-gnu": "1.3.0",
+		"@rolldown/binding-linux-arm64-musl": "1.3.0",
+		"@rolldown/binding-linux-x64-gnu": "1.3.0",
+		"@rolldown/binding-linux-x64-musl": "1.3.0",
+		"@rollup/rollup-linux-arm64-gnu": "4.67.5",
+		"@rollup/rollup-linux-arm64-musl": "4.67.5",
+		"@rollup/rollup-linux-x64-gnu": "4.67.5",
+		"@rollup/rollup-linux-x64-musl": "4.67.5",
 		"@unrs/resolver-binding-linux-arm64-gnu": "1.12.2",
 		"@unrs/resolver-binding-linux-arm64-musl": "1.12.2",
 		"@unrs/resolver-binding-linux-x64-gnu": "1.12.2",
@@ -58,24 +58,28 @@
 	"devDependencies": {
 		"@iconify-json/carbon": "^1.2.29",
 		"@iconify-json/twemoji": "^1.2.5",
+		"@nuxt/devtools": "^4.1.0",
 		"@nuxt/eslint": "^1.17.0",
-		"@nuxtjs/color-mode": "^4.0.1",
+		"@nuxtjs/color-mode": "^4.1.0",
 		"@pinia/nuxt": "^1.0.3",
 		"@types/node": "^26.6.6",
 		"@unocss/eslint-config": "^66.12.0",
 		"@unocss/nuxt": "^66.12.0",
+		"@vitejs/devtools": "0.8.2",
+		"@vitejs/devtools-kit": "0.8.2",
 		"@vitejs/plugin-vue": "^6.0.10",
-		"nuxt": "^4.6.3",
-		"rollup": "^4.65.1",
+		"@vue/compiler-sfc": "^3.5.45",
+		"nuxt": "^4.6.4",
+		"rollup": "^4.67.5",
 		"serve": "^14.2.6",
 		"terser": "^5.51.2",
 		"tsx": "^4.23.15",
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.72.1",
 		"unocss": "^66.12.0",
-		"unplugin": "^3.4.0",
-		"vite": "^8.3.5",
+		"unplugin": "^3.7.0",
+		"vite": "^8.3.6",
 		"vue-eslint-parser": "^10.4.1",
-		"vue-tsc": "^3.3.13"
+		"vue-tsc": "^3.3.14"
 	}
 }

@@ -32,7 +32,13 @@ if (!existsSync(outputDir)) {
 const servePackagePath = require.resolve("serve/package.json");
 const servePackage = JSON.parse(readFileSync(servePackagePath, "utf8"));
 const serveEntry = resolve(dirname(servePackagePath), servePackage.bin.serve);
-const server = spawn(process.execPath, [serveEntry, outputDir, "--listen", `tcp://${host}:${port}`, "--no-clipboard"], {
+const server = spawn(process.execPath, [
+	serveEntry,
+	outputDir,
+	"--listen",
+	`tcp://${host}:${port}`,
+	"--no-clipboard"
+], {
 	stdio: "inherit",
 	env: {
 		...process.env,

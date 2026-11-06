@@ -26,7 +26,9 @@ function protectedContent(content) {
 export function validateContentTransition(baseContent, proposedContent, changedFiles) {
 	assert.deepEqual(
 		changedFiles,
-		[{ filename: contentPath, status: "modified" }],
+		[
+			{ filename: contentPath, status: "modified" }
+		],
 		"The content branch may modify only the existing site content file."
 	);
 	validateSiteContent(proposedContent);
@@ -93,7 +95,9 @@ async function run() {
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
 	run().catch((error) => {
-		process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
+		process.stderr.write(`${error instanceof Error
+			? error.message
+			: String(error)}\n`);
 		process.exitCode = 1;
 	});
 }

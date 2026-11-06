@@ -25,7 +25,9 @@ const { students } = storeToRefs(site);
 			<p class="text-[11px] uppercase tracking-[0.28em] text-amber-700 font-semibold">
 				{{ students.eyebrow }}
 			</p>
-			<h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ students.title }}</h2>
+			<h2 class="text-2xl font-semibold text-slate-900 dark:text-white">
+				{{ students.title }}
+			</h2>
 			<p class="text-sm text-slate-700 dark:text-slate-200">
 				{{ students.body }}
 			</p>

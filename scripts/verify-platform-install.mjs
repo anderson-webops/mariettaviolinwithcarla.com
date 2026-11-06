@@ -24,7 +24,9 @@ function run(command, args, cwd, cacheDirectory) {
 		});
 		child.once("error", reject);
 		child.once("exit", code =>
-			code === 0 ? resolveRun() : reject(new Error(`${command} exited with code ${code}.`)));
+			code === 0
+				? resolveRun()
+				: reject(new Error(`${command} exited with code ${code}.`)));
 	});
 }
 
@@ -43,7 +45,7 @@ async function packageInstalled(temporaryRoot, dependency) {
 
 async function verifyTarget(libc) {
 	const temporaryRoot = await mkdtemp(path.join(os.tmpdir(), `marietta-violin-linux-arm64-${libc}-`));
-	const cacheDirectory = path.join(temporaryRoot, ".npm-cache");
+	const cacheDirectory = process.env.NPM_CONFIG_CACHE || process.env.npm_config_cache || path.join(temporaryRoot, ".npm-cache");
 	try {
 		await mkdir(path.join(temporaryRoot, "front-end"), { recursive: true });
 		await Promise.all([
@@ -74,7 +76,9 @@ async function verifyTarget(libc) {
 
 		const expected = Object.keys(frontendManifest.optionalDependencies || {}).filter((dependency) => {
 			if (dependency === "@esbuild/linux-arm64") return true;
-			return dependency.includes("linux-arm64") && dependency.endsWith(libc === "musl" ? "-musl" : "-gnu");
+			return dependency.includes("linux-arm64") && dependency.endsWith(libc === "musl"
+				? "-musl"
+				: "-gnu");
 		});
 		const missing = [];
 		for (const dependency of expected) {

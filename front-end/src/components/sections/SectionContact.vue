@@ -33,8 +33,12 @@ onBeforeUnmount(() => clearTimeout(responseTimer));
 		class="grid gap-6 rounded-3xl bg-white/90 p-7 shadow-lg shadow-amber-100/60 ring-1 ring-amber-100/60 dark:bg-slate-900/70 dark:ring-amber-900/40 md:grid-cols-2 md:items-center"
 	>
 		<div class="space-y-3">
-			<p class="text-[11px] uppercase tracking-[0.28em] text-amber-700 font-semibold">{{ trial.eyebrow }}</p>
-			<h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ trial.title }}</h2>
+			<p class="text-[11px] uppercase tracking-[0.28em] text-amber-700 font-semibold">
+				{{ trial.eyebrow }}
+			</p>
+			<h2 class="text-2xl font-semibold text-slate-900 dark:text-white">
+				{{ trial.title }}
+			</h2>
 			<p class="text-sm text-slate-700 dark:text-slate-200">
 				{{ trial.body }}
 			</p>
@@ -63,8 +67,12 @@ onBeforeUnmount(() => clearTimeout(responseTimer));
 			@submit="handleSubmit"
 		>
 			<div class="space-y-1">
-				<p class="text-sm font-semibold text-slate-900 dark:text-white">{{ contactForm.title }}</p>
-				<p class="text-xs text-slate-700 dark:text-slate-200">{{ contactForm.body }}</p>
+				<p class="text-sm font-semibold text-slate-900 dark:text-white">
+					{{ contactForm.title }}
+				</p>
+				<p class="text-xs text-slate-700 dark:text-slate-200">
+					{{ contactForm.body }}
+				</p>
 			</div>
 
 			<div v-for="field in contactForm.fields" :key="field.name" class="space-y-1">
@@ -83,7 +91,7 @@ onBeforeUnmount(() => clearTimeout(responseTimer));
 					:maxlength="field.maxLength"
 					class="w-full rounded-lg border border-amber-200/70 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-100 dark:border-amber-900/50 dark:bg-slate-800 dark:text-slate-50 dark:focus:border-amber-400 dark:focus:ring-amber-900/40"
 					:required="field.required"
-				/>
+				>
 				<textarea
 					v-else
 					:id="`contact-${field.name}`"
@@ -115,8 +123,7 @@ onBeforeUnmount(() => clearTimeout(responseTimer));
 			<p v-else-if="formStatus === 'uncertain'" role="alert" class="text-xs font-semibold text-amber-800">
 				{{ contactForm.uncertainNote }}
 				<a class="underline" :href="`mailto:${contact.email}`">Email Carla</a>
-				or <a class="underline" :href="contact.phoneHref">call {{ contact.phoneDisplay }}</a
-				>.
+				or <a class="underline" :href="contact.phoneHref">call {{ contact.phoneDisplay }}</a>.
 			</p>
 		</form>
 	</section>
