@@ -9,6 +9,16 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 
+test("CI restores only locked downloads without invoking an unqualified npm during Node setup", () => {
+	const workflow = readFileSync(path.join(root, ".github/workflows/ci.yml"), "utf8");
+	assert.doesNotMatch(workflow, /cache:\s*npm/u);
+	assert.equal((workflow.match(/package-manager-cache: false/gu) || []).length, 4);
+	assert.equal((workflow.match(/actions\/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9/gu) || []).length, 4);
+	assert.match(workflow, /hashFiles\('package-lock.json', 'build-toolchain\/package-lock.json'\)/u);
+	assert.match(workflow, /path: \$\{\{ env.NPM_CONFIG_CACHE \}\}\/_cacache/u);
+	assert.doesNotMatch(workflow, /path:.*(?:node_modules|_site-toolchains)/u);
+});
+
 test("the selected npm and child commands use the independently locked build profile", () => {
 	const entrypoint = realpathSync(process.env.npm_execpath);
 	const require = createRequire(path.resolve(path.dirname(entrypoint), "../package.json"));
