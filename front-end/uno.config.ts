@@ -21,9 +21,9 @@ export default defineConfig({
 	],
 	theme: {
 		fontFamily: {
-			sans: '"Inter","Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif',
-			serif: '"Georgia","Garamond","Times New Roman",serif',
-			mono: '"DM Mono","SFMono-Regular",ui-monospace,monospace'
+			sans: "\"Inter\",\"Avenir Next\",\"Segoe UI\",system-ui,-apple-system,sans-serif",
+			serif: "\"Georgia\",\"Garamond\",\"Times New Roman\",serif",
+			mono: "\"DM Mono\",\"SFMono-Regular\",ui-monospace,monospace"
 		},
 		colors: {
 			brand: "#b45309"
@@ -37,5 +37,8 @@ export default defineConfig({
 		}),
 		presetTypography()
 	],
-	transformers: [transformerDirectives(), transformerVariantGroup()]
+	transformers: [
+		transformerDirectives(),
+		transformerVariantGroup()
+	]
 });

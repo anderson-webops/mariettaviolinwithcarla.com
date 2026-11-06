@@ -12,23 +12,38 @@ import handler from "serve-handler";
 const require = createRequire(import.meta.url);
 const plugins = [
 	["esm", importPlugin],
-	["commonjs", require("eslint-plugin-import-x")],
+	[
+		"commonjs",
+		require("eslint-plugin-import-x")
+	],
 ];
 
 for (const [name, plugin] of plugins) {
 	test(`${name} import rule preserves allowed and forbidden glob behavior`, () => {
 		const linter = new Linter();
-		const config = options => [{
-			plugins: { "import-x": plugin },
-			languageOptions: { ecmaVersion: "latest", sourceType: "module" },
-			rules: { "import-x/no-internal-modules": ["error", options] },
-		}];
+		const config = options => [
+			{
+				plugins: { "import-x": plugin },
+				languageOptions: { ecmaVersion: "latest", sourceType: "module" },
+				rules: {
+					"import-x/no-internal-modules": ["error", options]
+				},
+			}
+		];
 		const source = "import value from '../vendor/tests/braces-compat.test.mjs'";
 		const check = options => linter.verify(source, config(options), { filename: "test/fixture.js" });
-		assert.equal(check({ allow: ["vendor/tests/**"] }).length, 0);
-		assert.equal(check({ allow: ["other/**"] }).length, 1);
-		assert.equal(check({ forbid: ["vendor/tests/**"] }).length, 1);
-		assert.equal(check({ forbid: ["other/**"] }).length, 0);
+		assert.equal(check({
+			allow: ["vendor/tests/**"]
+		}).length, 0);
+		assert.equal(check({
+			allow: ["other/**"]
+		}).length, 1);
+		assert.equal(check({
+			forbid: ["vendor/tests/**"]
+		}).length, 1);
+		assert.equal(check({
+			forbid: ["other/**"]
+		}).length, 0);
 	});
 }
 
@@ -37,7 +52,14 @@ test("serve-handler applies globbed response headers with patched minimatch", as
 	await writeFile(join(publicRoot, "index.html"), "<h1>fixture</h1>");
 	const server = createServer((request, response) => handler(request, response, {
 		public: publicRoot,
-		headers: [{ source: "**/*.html", headers: [{ key: "X-Compat", value: "passed" }] }],
+		headers: [
+			{
+				source: "**/*.html",
+				headers: [
+					{ key: "X-Compat", value: "passed" }
+				]
+			}
+		],
 	}));
 	try {
 		await new Promise(resolveServer => server.listen(0, "127.0.0.1", resolveServer));

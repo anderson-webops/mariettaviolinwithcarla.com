@@ -13,7 +13,9 @@ const port = Number(process.env.A11Y_FRONTEND_PORT || 3350);
 const baseUrl = `http://127.0.0.1:${port}`;
 const routes = ["/", "/404.html"];
 const colorSchemes = ["light", "dark"];
-const npmCommand = process.platform === "win32" ? "npm.cmd" : path.join(path.dirname(process.execPath), "npm");
+const npmCommand = process.platform === "win32"
+	? "npm.cmd"
+	: path.join(path.dirname(process.execPath), "npm");
 const chromePath = [
 	process.env.PUPPETEER_EXECUTABLE_PATH,
 	"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -36,7 +38,9 @@ function run(command, args) {
 		});
 		child.once("error", reject);
 		child.once("exit", code =>
-			code === 0 ? resolveRun() : reject(new Error(`${command} exited with code ${code}.`)));
+			code === 0
+				? resolveRun()
+				: reject(new Error(`${command} exited with code ${code}.`)));
 	});
 }
 
@@ -59,7 +63,9 @@ async function waitForHttp(url, timeoutMs = 30_000) {
 
 async function stopProcess(child) {
 	if (!child.pid || child.exitCode !== null) return;
-	const target = process.platform === "win32" ? child.pid : -child.pid;
+	const target = process.platform === "win32"
+		? child.pid
+		: -child.pid;
 	try {
 		process.kill(target, "SIGTERM");
 	}
@@ -77,10 +83,18 @@ async function stopProcess(child) {
 
 await run(npmCommand, ["run", "build"]);
 
-const server = spawn(process.execPath, ["front-end/scripts/preview.mjs", "--port", String(port)], {
+const server = spawn(process.execPath, [
+	"front-end/scripts/preview.mjs",
+	"--port",
+	String(port)
+], {
 	cwd: repositoryRoot,
 	detached: process.platform !== "win32",
-	env: { ...process.env, HOST: "127.0.0.1", PORT: String(port) },
+	env: {
+		...process.env,
+		HOST: "127.0.0.1",
+		PORT: String(port)
+	},
 	stdio: "inherit"
 });
 
@@ -103,13 +117,18 @@ try {
 				if (requestUrl.origin === baseUrl) request.continue();
 				else request.abort();
 			});
-			await page.emulateMediaFeatures([{ name: "prefers-color-scheme", value: scheme }]);
+			await page.emulateMediaFeatures([
+				{ name: "prefers-color-scheme", value: scheme }
+			]);
 			await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded", timeout: 30_000 });
 			await page.addScriptTag({ path: axeSourcePath });
 			const result = await page.evaluate(async () =>
 				globalThis.axe.run(document, {
 					resultTypes: ["violations"],
-					runOnly: { type: "tag", values: ["wcag2a", "wcag2aa"] }
+					runOnly: {
+						type: "tag",
+						values: ["wcag2a", "wcag2aa"]
+					}
 				})
 			);
 			const violations = result.violations.filter(violation => violation.id !== "frame-tested");

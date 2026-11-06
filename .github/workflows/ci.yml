@@ -15,7 +15,7 @@ permissions:
 
 env:
   NODE_VERSION: 26.13.0
-  NPM_VERSION: 12.2.1
+  NPM_VERSION: 12.2.2
   NUXT_TELEMETRY_DISABLED: "1"
   PUPPETEER_SKIP_DOWNLOAD: "true"
 
@@ -33,8 +33,12 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
-      - name: Use the repository npm version
-        run: npm install --global "npm@${NPM_VERSION}"
+      - name: Prepare independently locked build tools
+        run: |
+          bin="$(node scripts/build-toolchain.mjs --print-bin)"
+          printf '%s\n' "$bin" >> "$GITHUB_PATH"
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-build-toolchain.mjs
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
@@ -96,8 +100,12 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
-      - name: Use the repository npm version
-        run: npm install --global "npm@${NPM_VERSION}"
+      - name: Prepare independently locked build tools
+        run: |
+          bin="$(node scripts/build-toolchain.mjs --print-bin)"
+          printf '%s\n' "$bin" >> "$GITHUB_PATH"
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-build-toolchain.mjs
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
@@ -123,8 +131,12 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
-      - name: Use the repository npm version
-        run: npm install --global "npm@${NPM_VERSION}"
+      - name: Prepare independently locked build tools
+        run: |
+          bin="$(node scripts/build-toolchain.mjs --print-bin)"
+          printf '%s\n' "$bin" >> "$GITHUB_PATH"
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-build-toolchain.mjs
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
@@ -145,8 +157,12 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
-      - name: Use the repository npm version
-        run: npm install --global "npm@${NPM_VERSION}"
+      - name: Prepare independently locked build tools
+        run: |
+          bin="$(node scripts/build-toolchain.mjs --print-bin)"
+          printf '%s\n' "$bin" >> "$GITHUB_PATH"
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-build-toolchain.mjs
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
 
       - name: Install ARM64 dependencies
         run: npm ci --include=optional --strict-allow-scripts

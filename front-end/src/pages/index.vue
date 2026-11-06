@@ -40,19 +40,19 @@ useHead(() => ({
 			innerHTML: serializeJsonLd({
 				"@context": "https://schema.org",
 				"@type": "MusicSchool",
-				address: {
+				"address": {
 					"@type": "PostalAddress",
-					addressLocality: "Marietta",
-					addressRegion: "GA",
-					postalCode: "30067",
-					streetAddress: "2207 Clearwater Dr"
+					"addressLocality": "Marietta",
+					"addressRegion": "GA",
+					"postalCode": "30067",
+					"streetAddress": "2207 Clearwater Dr"
 				},
-				areaServed: ["Marietta", "East Cobb", "Atlanta"],
-				description: site.value.description,
-				email: contact.value.email,
-				name: site.value.name,
-				telephone: contact.value.phoneDisplay,
-				url: "https://mariettaviolinwithcarla.com/"
+				"areaServed": ["Marietta", "East Cobb", "Atlanta"],
+				"description": site.value.description,
+				"email": contact.value.email,
+				"name": site.value.name,
+				"telephone": contact.value.phoneDisplay,
+				"url": "https://mariettaviolinwithcarla.com/"
 			}),
 			key: "music-school-jsonld",
 			type: "application/ld+json"
@@ -61,13 +61,13 @@ useHead(() => ({
 			innerHTML: serializeJsonLd({
 				"@context": "https://schema.org",
 				"@type": "FAQPage",
-				mainEntity: faqEntries.value.map((entry) => ({
+				"mainEntity": faqEntries.value.map(entry => ({
 					"@type": "Question",
-					acceptedAnswer: {
+					"acceptedAnswer": {
 						"@type": "Answer",
-						text: entry.answer
+						"text": entry.answer
 					},
-					name: entry.question
+					"name": entry.question
 				}))
 			}),
 			key: "faq-jsonld",
@@ -77,12 +77,12 @@ useHead(() => ({
 			innerHTML: serializeJsonLd({
 				"@context": "https://schema.org",
 				"@type": "ItemList",
-				itemListElement: lessons.value.cards.map((option, index) => ({
+				"itemListElement": lessons.value.cards.map((option, index) => ({
 					"@type": "ListItem",
-					name: option.name,
-					position: index + 1
+					"name": option.name,
+					"position": index + 1
 				})),
-				name: `${site.value.name} lesson options`
+				"name": `${site.value.name} lesson options`
 			}),
 			key: "lesson-list-jsonld",
 			type: "application/ld+json"
@@ -91,12 +91,12 @@ useHead(() => ({
 			innerHTML: serializeJsonLd({
 				"@context": "https://schema.org",
 				"@type": "BreadcrumbList",
-				itemListElement: [
+				"itemListElement": [
 					{
 						"@type": "ListItem",
-						item: "https://mariettaviolinwithcarla.com/",
-						name: site.value.name,
-						position: 1
+						"item": "https://mariettaviolinwithcarla.com/",
+						"name": site.value.name,
+						"position": 1
 					}
 				]
 			}),
