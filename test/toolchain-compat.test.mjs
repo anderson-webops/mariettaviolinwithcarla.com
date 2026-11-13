@@ -25,6 +25,8 @@ test("direct and Netlify builds prepare the signed-source provider before the fr
 	const reviewed = readFileSync(path.join(root, "scripts/build-reviewed-static.sh"), "utf8");
 	const netlify = readFileSync(path.join(root, "netlify.toml"), "utf8");
 	assert.match(direct, /npm run prepare:unimport-source\nnpm ci --include=dev --include=optional --strict-allow-scripts/u);
+	assert.match(direct, /if \[\[ "\$\(uname -s\)" == Darwin \]\]; then\n\tsystem_path="\/opt\/homebrew\/bin:\$system_path"\nfi/u);
+	assert.match(direct, /PATH="\$node_bin_dir_real:\$system_path"/u);
 	assert.match(reviewed, /bash scripts\/prepare-unimport-source.sh\nnpm ci --include=optional --strict-allow-scripts/u);
 	assert.match(netlify, /command = "node scripts\/build-toolchain.mjs -- bash scripts\/build-reviewed-static.sh"/u);
 });

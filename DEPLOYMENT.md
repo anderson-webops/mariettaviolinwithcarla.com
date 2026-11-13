@@ -13,6 +13,8 @@ commands. Prepare the signed-source auto-import provider with
 `npm run prepare:unimport-source` before the clean application installation.
 Local, CI, optional Netlify and direct static preparation use the same frozen
 application lock and independent build-profile and source-provider locks.
+Mac preparation discovers Homebrew's GnuPG and Python tools while keeping the
+qualified Node/npm pair first in the executable path.
 
 The unprivileged source builder is `deploy/direct/prepare-static-release.sh`.
 It accepts a clean source checkout and a real empty artifact-output directory,
