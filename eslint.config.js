@@ -34,4 +34,27 @@ export default antfu({
 		"test/no-import-node-test": "off"
 	}
 	// …any repo-wide rules you genuinely want everywhere…
+}, {
+	files: [
+		"scripts/*build-toolchain*.mjs",
+		"scripts/check-toolchain-package.mjs",
+		"scripts/package-npm-compat.mjs",
+		"scripts/test-npm-tool-majors.mjs",
+		"scripts/*unimport*.mjs",
+		"scripts/fixtures/unimport-runtime.mjs"
+	],
+	rules: {
+		"style/indent": [
+			"error",
+			2,
+			{ offsetTernaryExpressions: true }
+		],
+		"style/indent-binary-ops": ["error", 2],
+		"style/quotes": [
+			"error",
+			"single",
+			{ allowTemplateLiterals: "always" }
+		],
+		"style/semi": ["error", "never"]
+	}
 });

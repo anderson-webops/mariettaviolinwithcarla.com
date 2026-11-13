@@ -64,6 +64,7 @@ cleanup() {
 trap cleanup EXIT
 
 cd -- "$candidate"
+npm run prepare:unimport-source
 npm ci --include=dev --include=optional --strict-allow-scripts
 npm run audit
 npm run audit:production

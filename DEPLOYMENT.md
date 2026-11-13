@@ -9,8 +9,10 @@ GitHub-main publishing workflow remain external invariants.
 
 Use Node 26.13.0 and the independently locked npm 12.2.2 build profile.
 `node scripts/build-toolchain.mjs --print-bin` prepares and qualifies its paired
-commands. Local, CI, optional Netlify and direct static preparation use the same
-frozen application lock and independent build-profile lock.
+commands. Prepare the signed-source auto-import provider with
+`npm run prepare:unimport-source` before the clean application installation.
+Local, CI, optional Netlify and direct static preparation use the same frozen
+application lock and independent build-profile and source-provider locks.
 
 The unprivileged source builder is `deploy/direct/prepare-static-release.sh`.
 It accepts a clean source checkout and a real empty artifact-output directory,

@@ -15,26 +15,15 @@ const patches = [
 	},
 	{
 		path: "node_modules/eslint-plugin-import-x/lib/rules/no-internal-modules.js",
-		sha256: "e8e65c1449e1ade45229001595b08f33fc879c4673e0c9be9013dd1df87acd21",
-		patchedSha256: "c4466222b36a8281cf18e3f22a2a44940529a44ad3a257b5294299034a153195",
-		replacements: [
-			["import { makeRe } from 'minimatch';", "import { minimatch } from 'minimatch';"],
-			["const allowRegexps = (options.allow || [])\n            .map(p => makeRe(p))\n            .filter(Boolean);", "const allowGlobs = options.allow || [];"],
-			["const forbidRegexps = (options.forbid || [])\n            .map(p => makeRe(p))\n            .filter(Boolean);", "const forbidGlobs = options.forbid || [];"],
-			["return allowRegexps.some(re => re.test(importPath));", "return allowGlobs.some(pattern => minimatch(importPath, pattern));"],
-			["return forbidRegexps.some(re => re.test(importPath));", "return forbidGlobs.some(pattern => minimatch(importPath, pattern));"],
-		],
+		sha256: "e9725a2253f98d1cf60799a6b81bc9314d0598989ffbba9bc75b53fdccff9adb",
+		patchedSha256: "e9725a2253f98d1cf60799a6b81bc9314d0598989ffbba9bc75b53fdccff9adb",
+		replacements: [],
 	},
 	{
 		path: "node_modules/eslint-plugin-import-x/lib/index.cjs",
-		sha256: "0d09a1c49ba7f3ec5030e246f81075ee5630cf216429e1db1ea7829bf4c52357",
-		patchedSha256: "2ff4487b45a63f6fd2bcaeca9519ea601df505f3587bdf1e88c7f922828d5560",
-		replacements: [
-			["const allowRegexps = (options.allow || []).map((p) => (0, minimatch.makeRe)(p)).filter(Boolean);", "const allowGlobs = options.allow || [];"],
-			["const forbidRegexps = (options.forbid || []).map((p) => (0, minimatch.makeRe)(p)).filter(Boolean);", "const forbidGlobs = options.forbid || [];"],
-			["return allowRegexps.some((re) => re.test(importPath));", "return allowGlobs.some((pattern) => (0, minimatch.minimatch)(importPath, pattern));"],
-			["return forbidRegexps.some((re) => re.test(importPath));", "return forbidGlobs.some((pattern) => (0, minimatch.minimatch)(importPath, pattern));"],
-		],
+		sha256: "fa3a68959b53af85852a5ce2d4f825e22e7ea1bdb3189fc84b8946bad97d5dd9",
+		patchedSha256: "fa3a68959b53af85852a5ce2d4f825e22e7ea1bdb3189fc84b8946bad97d5dd9",
+		replacements: [],
 	},
 ];
 

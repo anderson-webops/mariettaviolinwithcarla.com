@@ -3,11 +3,12 @@ import hashlib
 import importlib.util
 import io
 import json
+from pathlib import Path
 import tarfile
 import tempfile
 import unittest
-from pathlib import Path
 from unittest.mock import patch
+
 
 spec = importlib.util.spec_from_file_location("npm_toolchain_package", Path(__file__).with_name("package-npm-toolchain.py"))
 packager = importlib.util.module_from_spec(spec)
@@ -68,7 +69,7 @@ class BuildToolchainPackageTests(unittest.TestCase):
         original_gzip = packager.gzip.GzipFile
         for compression_default in [6, 9]:
             with self.subTest(compression_default=compression_default):
-                def changed_default(*args, compression_default=compression_default, **kwargs):
+                def changed_default(*args, **kwargs):
                     if len(args) < 3:
                         kwargs.setdefault("compresslevel", compression_default)
                     return original_gzip(*args, **kwargs)

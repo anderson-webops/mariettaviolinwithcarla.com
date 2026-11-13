@@ -4,8 +4,8 @@ import gzip
 import hashlib
 import io
 import json
-import tarfile
 from pathlib import Path, PurePosixPath
+import tarfile
 
 
 def rebuild(source_path, metadata):
@@ -16,36 +16,34 @@ def rebuild(source_path, metadata):
     output = io.BytesIO()
     retained = []
     names = set()
-    with (
-        tarfile.open(fileobj=io.BytesIO(original), mode="r:gz") as source,
-        gzip.GzipFile(fileobj=output, mode="wb", compresslevel=6, mtime=0, filename="") as compressed,
-        tarfile.open(fileobj=compressed, mode="w|") as archive,
-    ):
-        for member in source.getmembers():
-            parts = PurePosixPath(member.name).parts
-            if (not parts or parts[0] != "package" or ".." in parts or "\\" in member.name
-                    or PurePosixPath(member.name).as_posix() != member.name
-                    or not member.isfile() or member.name in names):
-                raise ValueError("invalid or repeated upstream archive member")
-            names.add(member.name)
-            if "node_modules" in parts:
-                continue
-            payload = source.extractfile(member).read()
-            original_digest = hashlib.sha256(payload).hexdigest()
-            if member.name == "package/package.json":
-                manifest = json.loads(payload)
-                if manifest["name"] != "npm" or manifest["version"] != metadata["npm"]:
-                    raise ValueError("unexpected upstream npm identity")
-                manifest.pop("bundleDependencies", None)
-                manifest.pop("bundledDependencies", None)
-                payload = (json.dumps(manifest, indent=2) + "\n").encode()
-            entry = tarfile.TarInfo(member.name)
-            entry.size = len(payload)
-            entry.mode = member.mode
-            entry.mtime = 0
-            archive.addfile(entry, io.BytesIO(payload))
-            retained.append({"path": member.name, "upstreamSha256": original_digest,
-                             "sha256": hashlib.sha256(payload).hexdigest()})
+    with tarfile.open(fileobj=io.BytesIO(original), mode="r:gz") as source:
+        with gzip.GzipFile(fileobj=output, mode="wb", compresslevel=6, mtime=0, filename="") as compressed:
+            with tarfile.open(fileobj=compressed, mode="w|") as archive:
+                for member in source.getmembers():
+                    parts = PurePosixPath(member.name).parts
+                    if (not parts or parts[0] != "package" or ".." in parts or "\\" in member.name
+                            or PurePosixPath(member.name).as_posix() != member.name
+                            or not member.isfile() or member.name in names):
+                        raise ValueError("invalid or repeated upstream archive member")
+                    names.add(member.name)
+                    if "node_modules" in parts:
+                        continue
+                    payload = source.extractfile(member).read()
+                    original_digest = hashlib.sha256(payload).hexdigest()
+                    if member.name == "package/package.json":
+                        manifest = json.loads(payload)
+                        if manifest["name"] != "npm" or manifest["version"] != metadata["npm"]:
+                            raise ValueError("unexpected upstream npm identity")
+                        manifest.pop("bundleDependencies", None)
+                        manifest.pop("bundledDependencies", None)
+                        payload = (json.dumps(manifest, indent=2) + "\n").encode()
+                    entry = tarfile.TarInfo(member.name)
+                    entry.size = len(payload)
+                    entry.mode = member.mode
+                    entry.mtime = 0
+                    archive.addfile(entry, io.BytesIO(payload))
+                    retained.append({"path": member.name, "upstreamSha256": original_digest,
+                                     "sha256": hashlib.sha256(payload).hexdigest()})
     if not retained or "package/bin/npm-cli.js" not in names or "package/LICENSE" not in names:
         raise ValueError("incomplete upstream npm distribution")
     return output.getvalue(), retained

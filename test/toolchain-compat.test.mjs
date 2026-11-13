@@ -14,9 +14,19 @@ test("CI restores only locked downloads without invoking an unqualified npm duri
 	assert.doesNotMatch(workflow, /cache:\s*npm/u);
 	assert.equal((workflow.match(/package-manager-cache: false/gu) || []).length, 4);
 	assert.equal((workflow.match(/actions\/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9/gu) || []).length, 4);
-	assert.match(workflow, /hashFiles\('package-lock.json', 'build-toolchain\/package-lock.json'\)/u);
+	assert.equal((workflow.match(/hashFiles\('package-lock.json', 'build-toolchain\/package-lock.json', 'vendor\/unimport\/build\/package-lock.json', 'vendor\/unimport\/runtime\/package-lock.json'\)/gu) || []).length, 4);
+	assert.equal((workflow.match(/run: bash scripts\/prepare-unimport-source.sh/gu) || []).length, 4);
 	assert.match(workflow, /path: \$\{\{ env.NPM_CONFIG_CACHE \}\}\/_cacache/u);
 	assert.doesNotMatch(workflow, /path:.*(?:node_modules|_site-toolchains)/u);
+});
+
+test("direct and Netlify builds prepare the signed-source provider before the frozen app install", () => {
+	const direct = readFileSync(path.join(root, "deploy/direct/prepare-static-release.sh"), "utf8");
+	const reviewed = readFileSync(path.join(root, "scripts/build-reviewed-static.sh"), "utf8");
+	const netlify = readFileSync(path.join(root, "netlify.toml"), "utf8");
+	assert.match(direct, /npm run prepare:unimport-source\nnpm ci --include=dev --include=optional --strict-allow-scripts/u);
+	assert.match(reviewed, /bash scripts\/prepare-unimport-source.sh\nnpm ci --include=optional --strict-allow-scripts/u);
+	assert.match(netlify, /command = "node scripts\/build-toolchain.mjs -- bash scripts\/build-reviewed-static.sh"/u);
 });
 
 test("the selected npm and child commands use the independently locked build profile", () => {
