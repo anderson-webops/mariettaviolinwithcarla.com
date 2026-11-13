@@ -1,11 +1,11 @@
 import { spawn } from "node:child_process";
 import { cp, mkdir, mkdtemp, readFile, rm } from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const temporaryParent = path.join(repositoryRoot, ".ai-work/runs/platform-installation");
 const frontendManifest = JSON.parse(await readFile(path.join(repositoryRoot, "front-end/package.json"), "utf8"));
 const npmCommand = process.platform === "win32"
 	? "npm.cmd"
@@ -44,7 +44,8 @@ async function packageInstalled(temporaryRoot, dependency) {
 }
 
 async function verifyTarget(libc) {
-	const temporaryRoot = await mkdtemp(path.join(os.tmpdir(), `marietta-violin-linux-arm64-${libc}-`));
+	await mkdir(temporaryParent, { recursive: true, mode: 0o700 });
+	const temporaryRoot = await mkdtemp(path.join(temporaryParent, `linux-arm64-${libc}-`));
 	const cacheDirectory = process.env.NPM_CONFIG_CACHE || process.env.npm_config_cache || path.join(temporaryRoot, ".npm-cache");
 	try {
 		await mkdir(path.join(temporaryRoot, "front-end"), { recursive: true });

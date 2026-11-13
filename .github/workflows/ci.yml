@@ -38,7 +38,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: ${{ env.NPM_CONFIG_CACHE }}/_cacache
-          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json') }}
+          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json', 'vendor/*/upstream/package-lock.json', 'vendor/*/tools/package-lock.json', 'vendor/nitro-tools/current/package-lock.json') }}
 
       - name: Prepare independently locked build tools
         run: |
@@ -48,7 +48,9 @@ jobs:
           npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
 
       - name: Verify and rebuild the signed-source auto-import provider
-        run: bash scripts/prepare-unimport-source.sh
+        run: |
+          bash scripts/prepare-unimport-source.sh
+          bash scripts/prepare-shared-build-fixtures.sh
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
@@ -114,7 +116,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: ${{ env.NPM_CONFIG_CACHE }}/_cacache
-          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json') }}
+          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json', 'vendor/*/upstream/package-lock.json', 'vendor/*/tools/package-lock.json', 'vendor/nitro-tools/current/package-lock.json') }}
 
       - name: Prepare independently locked build tools
         run: |
@@ -124,7 +126,9 @@ jobs:
           npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
 
       - name: Verify and rebuild the signed-source auto-import provider
-        run: bash scripts/prepare-unimport-source.sh
+        run: |
+          bash scripts/prepare-unimport-source.sh
+          bash scripts/prepare-shared-build-fixtures.sh
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
@@ -135,7 +139,9 @@ jobs:
         run: npm run build
 
       - name: Browser tests
-        run: npm run test:e2e
+        run: |
+          npm run test:e2e
+          npm run test:shared-build-browser
 
   accessibility:
     runs-on: ubuntu-latest
@@ -154,7 +160,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: ${{ env.NPM_CONFIG_CACHE }}/_cacache
-          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json') }}
+          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json', 'vendor/*/upstream/package-lock.json', 'vendor/*/tools/package-lock.json', 'vendor/nitro-tools/current/package-lock.json') }}
 
       - name: Prepare independently locked build tools
         run: |
@@ -164,7 +170,9 @@ jobs:
           npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
 
       - name: Verify and rebuild the signed-source auto-import provider
-        run: bash scripts/prepare-unimport-source.sh
+        run: |
+          bash scripts/prepare-unimport-source.sh
+          bash scripts/prepare-shared-build-fixtures.sh
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
@@ -189,7 +197,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: ${{ env.NPM_CONFIG_CACHE }}/_cacache
-          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json') }}
+          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json', 'vendor/*/upstream/package-lock.json', 'vendor/*/tools/package-lock.json', 'vendor/nitro-tools/current/package-lock.json') }}
 
       - name: Prepare independently locked build tools
         run: |
@@ -199,13 +207,27 @@ jobs:
           npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
 
       - name: Verify and rebuild the signed-source auto-import provider
-        run: bash scripts/prepare-unimport-source.sh
+        run: |
+          bash scripts/prepare-unimport-source.sh
+          bash scripts/prepare-shared-build-fixtures.sh
 
       - name: Install ARM64 dependencies
         run: npm ci --include=optional --strict-allow-scripts
 
       - name: Verify native lockfile coverage
         run: npm run verify:native-lock
+
+      - name: Audit the ARM64 application and independent fixtures
+        run: |
+          npm run audit
+          npm run audit:production
+          npm run audit:signatures
+
+      - name: Verify actual ARM64 shared providers and compiler contracts
+        run: |
+          npm run verify:shared-build
+          npm run typecheck
+          npm run test:shared-build
 
       - name: Build on ARM64
         run: npm run build

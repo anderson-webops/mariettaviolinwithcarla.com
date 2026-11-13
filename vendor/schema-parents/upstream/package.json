@@ -1,0 +1,31 @@
+{
+  "name": "marietta-original-schema-comparison",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@12.2.2",
+  "engines": {
+    "node": ">=26.13.0 <27",
+    "npm": ">=12.2.2 <13"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "eslint": "10.14.0",
+    "postcss": "8.5.32",
+    "nanoid": "3.3.20",
+    "fast-uri": "3.1.9",
+    "ajv-draft-04": "1.0.0"
+  },
+  "overrides": {
+    "nanoid@^3": "3.3.20",
+    "fast-uri": "3.1.9",
+    "minimatch": "11.0.5"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "fsevents@2.3.3": true,
+    "puppeteer@25.17.0": false,
+    "simple-git-hooks@2.14.0": true,
+    "unrs-resolver@1.12.2": true
+  }
+}

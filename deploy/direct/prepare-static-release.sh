@@ -68,6 +68,7 @@ trap cleanup EXIT
 
 cd -- "$candidate"
 npm run prepare:unimport-source
+npm run prepare:shared-build-fixtures
 npm ci --include=dev --include=optional --strict-allow-scripts
 npm run audit
 npm run audit:production
@@ -81,6 +82,7 @@ npm test
 npm run build
 npm run a11y
 npm run test:e2e
+npm run test:shared-build-browser
 npm run verify:static
 
 version="$(node -p 'require(process.argv[1]).version' "$candidate/package.json")"
