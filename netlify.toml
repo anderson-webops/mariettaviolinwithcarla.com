@@ -1,11 +1,11 @@
 [build]
 publish = "front-end/dist"
-command = "npm run build"
+command = "node scripts/build-toolchain.mjs -- bash scripts/build-reviewed-static.sh"
 
 [build.environment]
 NODE_VERSION = "26.13.0"
-NPM_VERSION = "12.2.1"
-NPM_FLAGS = "--include=optional --strict-allow-scripts"
+NPM_VERSION = "12.2.2"
+NPM_FLAGS = "--prefix=build-toolchain --workspaces=false --ignore-scripts --include=optional"
 NUXT_TELEMETRY_DISABLED = "1"
 PUPPETEER_SKIP_DOWNLOAD = "true"
 

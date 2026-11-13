@@ -136,7 +136,12 @@ function validateSettings(settings) {
 }
 
 function validateAnnouncement(announcement) {
-	assertObject(announcement, "announcement", ["enabled", "message", "ctaLabel", "ctaHref"]);
+	assertObject(announcement, "announcement", [
+		"enabled",
+		"message",
+		"ctaLabel",
+		"ctaHref"
+	]);
 	assertBoolean(announcement.enabled, "announcement.enabled");
 	assertString(announcement.message, "announcement.message", { maxLength: 240 });
 	assertString(announcement.ctaLabel, "announcement.ctaLabel", { maxLength: 60 });
@@ -144,7 +149,12 @@ function validateAnnouncement(announcement) {
 }
 
 function validateContact(contact) {
-	assertObject(contact, "contact", ["email", "callLabel", "textLabel", "phoneDisplay"]);
+	assertObject(contact, "contact", [
+		"email",
+		"callLabel",
+		"textLabel",
+		"phoneDisplay"
+	]);
 	assertEmail(contact.email, "contact.email");
 	assertString(contact.callLabel, "contact.callLabel", { maxLength: 30 });
 	assertString(contact.textLabel, "contact.textLabel", { maxLength: 30 });
@@ -213,7 +223,13 @@ function validateLessons(lessons) {
 }
 
 function validateStudents(students) {
-	assertObject(students, "students", ["eyebrow", "title", "body", "locationLabel", "support"]);
+	assertObject(students, "students", [
+		"eyebrow",
+		"title",
+		"body",
+		"locationLabel",
+		"support"
+	]);
 	assertString(students.eyebrow, "students.eyebrow", { maxLength: 80 });
 	assertString(students.title, "students.title", { maxLength: 120 });
 	assertString(students.body, "students.body", { maxLength: 600 });
@@ -270,15 +286,37 @@ function validateContactForm(contactForm) {
 	}
 
 	const expectedFields = [
-		{ name: "name", type: "text", maxLength: 120, autocomplete: "name" },
-		{ name: "email", type: "email", maxLength: 254, autocomplete: "email" },
-		{ name: "message", type: "textarea", maxLength: 2000, autocomplete: "off" }
+		{
+			name: "name",
+			type: "text",
+			maxLength: 120,
+			autocomplete: "name"
+		},
+		{
+			name: "email",
+			type: "email",
+			maxLength: 254,
+			autocomplete: "email"
+		},
+		{
+			name: "message",
+			type: "textarea",
+			maxLength: 2000,
+			autocomplete: "off"
+		}
 	];
 	const fields = assertArray(contactForm.fields, "contactForm.fields", { min: 3, max: 3 });
 	for (const [index, field] of fields.entries()) {
 		const path = `contactForm.fields[${index}]`;
 		const expected = expectedFields[index];
-		assertObject(field, path, ["name", "label", "type", "required", "maxLength", "autocomplete"]);
+		assertObject(field, path, [
+			"name",
+			"label",
+			"type",
+			"required",
+			"maxLength",
+			"autocomplete"
+		]);
 		assertString(field.name, `${path}.name`, { maxLength: 30 });
 		assertString(field.label, `${path}.label`, { maxLength: 120 });
 		assertString(field.type, `${path}.type`, { maxLength: 20 });
@@ -346,7 +384,9 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
 		process.stdout.write(`Site content is valid: ${SITE_CONTENT_PATH}\n`);
 	}
 	catch (error) {
-		const message = error instanceof Error ? error.message : String(error);
+		const message = error instanceof Error
+			? error.message
+			: String(error);
 		if (process.env.GITHUB_ACTIONS === "true") {
 			const annotation = message.replaceAll("%", "%25").replaceAll("\r", "%0D").replaceAll("\n", "%0A");
 			process.stderr.write(`::error title=Website content needs attention::${annotation}\n`);

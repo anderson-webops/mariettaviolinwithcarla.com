@@ -24,13 +24,11 @@ const { footer, contact } = storeToRefs(site);
 				<a
 					class="font-semibold text-amber-800 underline-offset-4 hover:underline dark:text-amber-200"
 					:href="`mailto:${contact.email}`"
-					>{{ contact.email }}</a
-				>
+				>{{ contact.email }}</a>
 				<a
 					class="text-slate-700 underline-offset-4 hover:underline dark:text-slate-200"
 					:href="contact.phoneHref"
-					>{{ contact.phoneDisplay }}</a
-				>
+				>{{ contact.phoneDisplay }}</a>
 				<DarkToggle />
 			</div>
 		</div>

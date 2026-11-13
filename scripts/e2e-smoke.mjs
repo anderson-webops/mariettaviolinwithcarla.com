@@ -45,7 +45,9 @@ async function waitForHttp(url, timeoutMs = 30_000) {
 
 async function stopProcess(child) {
 	if (!child.pid || child.exitCode !== null) return;
-	const target = process.platform === "win32" ? child.pid : -child.pid;
+	const target = process.platform === "win32"
+		? child.pid
+		: -child.pid;
 	try {
 		process.kill(target, "SIGTERM");
 	}
@@ -69,10 +71,18 @@ async function stopProcess(child) {
 	});
 }
 
-const server = spawn(process.execPath, ["front-end/scripts/preview.mjs", "--port", String(port)], {
+const server = spawn(process.execPath, [
+	"front-end/scripts/preview.mjs",
+	"--port",
+	String(port)
+], {
 	cwd: repositoryRoot,
 	detached: process.platform !== "win32",
-	env: { ...process.env, HOST: "127.0.0.1", PORT: String(port) },
+	env: {
+		...process.env,
+		HOST: "127.0.0.1",
+		PORT: String(port)
+	},
 	stdio: "inherit"
 });
 
@@ -103,23 +113,33 @@ try {
 		};
 		return {
 			headline: text("h1"),
-			lessonNames: [...document.querySelectorAll("section#lessons > div > p:first-child")]
+			lessonNames: [
+				...document.querySelectorAll("section#lessons > div > p:first-child")
+			]
 				.map(element => element.textContent?.trim()),
 			studentItems: document.querySelectorAll("section#students li").length,
 			form: attributes("section#contact form"),
-			fields: [...document.querySelectorAll("section#contact form input, section#contact form textarea")].map(element => ({
+			fields: [
+				...document.querySelectorAll("section#contact form input, section#contact form textarea")
+			].map(element => ({
 				autocomplete: element.getAttribute("autocomplete"),
 				maxLength: element.getAttribute("maxlength"),
 				name: element.getAttribute("name"),
-				type: element.tagName === "TEXTAREA" ? "textarea" : element.getAttribute("type")
+				type: element.tagName === "TEXTAREA"
+					? "textarea"
+					: element.getAttribute("type")
 			})),
-			formParagraphs: [...document.querySelectorAll("section#contact form p.text-xs")]
+			formParagraphs: [
+				...document.querySelectorAll("section#contact form p.text-xs")
+			]
 				.map(element => element.textContent?.trim()),
 			iframe: attributes("iframe[name=\"basin-iframe\"]"),
 			footer: text("footer"),
 			tracker: attributes("script[src=\"/vendor/umami-tracker.js\"]"),
 			mailHref: document.querySelector("a[href^=\"mailto:\"]")?.getAttribute("href"),
-			phoneHrefs: [...document.querySelectorAll("a[href^=\"tel:\"], a[href^=\"sms:\"]")].map(element => element.getAttribute("href"))
+			phoneHrefs: [
+				...document.querySelectorAll("a[href^=\"tel:\"], a[href^=\"sms:\"]")
+			].map(element => element.getAttribute("href"))
 		};
 	});
 

@@ -41,8 +41,9 @@ Shared Sites policy (`../AGENTS.md` when available) applies. These essentials al
 ## Architecture and Toolchain
 - This repository is intentionally a static Nuxt site. Do not add a local account system, admin role, session, API, database, Vault dependency, or serverless backend without a new documented product requirement and threat model.
 - The contact form posts directly to Basin. Preserve the third-party processing notice, field limits, sandboxed target, and direct-contact fallback.
-- Use Node `26.13.0` and npm `12.2.1` for local, CI, Netlify, and direct static builds.
+- Use Node `26.13.0` and the independently locked npm `12.2.2` profile for local, CI, Netlify, and direct static builds. Prepare its qualified paired commands with `node scripts/build-toolchain.mjs --print-bin` before the clean app installation. A bundled seed npm may bootstrap the isolated profile; it is not the qualified application builder.
 - Treat `front-end/dist` as the only production artifact. Keep Netlify and the direct host-Nginx behavior aligned.
+- Prepare the signed-source auto-import provider with `npm run prepare:unimport-source` before a clean app installation. Preserve its signed original inputs, upstream dependency floor, independent locked build/runtime graphs, reproducible archive and installed-byte regressions. `docs/signed-source-auto-import-provider.md` defines the source-build contract; the missing registry attestation remains unverified.
 - Do not reintroduce a production Docker path. Preserve the atomic release symlink, automatic rollback, and exact
   IPv4/IPv6 identity checks in `deploy/direct/`.
 - If hosted CI is unavailable, record that limitation and run the equivalent clean local validation; never claim CI passed or bypass branch-protection checks that actually apply.

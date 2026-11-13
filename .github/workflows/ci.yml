@@ -15,7 +15,8 @@ permissions:
 
 env:
   NODE_VERSION: 26.13.0
-  NPM_VERSION: 12.2.1
+  NPM_VERSION: 12.2.2
+  NPM_CONFIG_CACHE: ${{ github.workspace }}/.ai-work/runs/ci/npm-cache
   NUXT_TELEMETRY_DISABLED: "1"
   PUPPETEER_SKIP_DOWNLOAD: "true"
 
@@ -31,10 +32,23 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          package-manager-cache: false
 
-      - name: Use the repository npm version
-        run: npm install --global "npm@${NPM_VERSION}"
+      - name: Restore locked download cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ env.NPM_CONFIG_CACHE }}/_cacache
+          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json') }}
+
+      - name: Prepare independently locked build tools
+        run: |
+          bin="$(node scripts/build-toolchain.mjs --print-bin)"
+          printf '%s\n' "$bin" >> "$GITHUB_PATH"
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-build-toolchain.mjs
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
+
+      - name: Verify and rebuild the signed-source auto-import provider
+        run: bash scripts/prepare-unimport-source.sh
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
@@ -94,10 +108,23 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          package-manager-cache: false
 
-      - name: Use the repository npm version
-        run: npm install --global "npm@${NPM_VERSION}"
+      - name: Restore locked download cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ env.NPM_CONFIG_CACHE }}/_cacache
+          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json') }}
+
+      - name: Prepare independently locked build tools
+        run: |
+          bin="$(node scripts/build-toolchain.mjs --print-bin)"
+          printf '%s\n' "$bin" >> "$GITHUB_PATH"
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-build-toolchain.mjs
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
+
+      - name: Verify and rebuild the signed-source auto-import provider
+        run: bash scripts/prepare-unimport-source.sh
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
@@ -121,10 +148,23 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          package-manager-cache: false
 
-      - name: Use the repository npm version
-        run: npm install --global "npm@${NPM_VERSION}"
+      - name: Restore locked download cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ env.NPM_CONFIG_CACHE }}/_cacache
+          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json') }}
+
+      - name: Prepare independently locked build tools
+        run: |
+          bin="$(node scripts/build-toolchain.mjs --print-bin)"
+          printf '%s\n' "$bin" >> "$GITHUB_PATH"
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-build-toolchain.mjs
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
+
+      - name: Verify and rebuild the signed-source auto-import provider
+        run: bash scripts/prepare-unimport-source.sh
 
       - name: Install locked dependencies
         run: npm ci --include=optional --strict-allow-scripts
@@ -143,10 +183,23 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          package-manager-cache: false
 
-      - name: Use the repository npm version
-        run: npm install --global "npm@${NPM_VERSION}"
+      - name: Restore locked download cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ env.NPM_CONFIG_CACHE }}/_cacache
+          key: locked-npm-${{ runner.os }}-${{ runner.arch }}-26.13.0-${{ hashFiles('package-lock.json', 'build-toolchain/package-lock.json', 'vendor/unimport/build/package-lock.json', 'vendor/unimport/runtime/package-lock.json') }}
+
+      - name: Prepare independently locked build tools
+        run: |
+          bin="$(node scripts/build-toolchain.mjs --print-bin)"
+          printf '%s\n' "$bin" >> "$GITHUB_PATH"
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-build-toolchain.mjs
+          npm_execpath="$bin/../node_modules/npm/bin/npm-cli.js" "$bin/node" scripts/check-toolchain-package.mjs
+
+      - name: Verify and rebuild the signed-source auto-import provider
+        run: bash scripts/prepare-unimport-source.sh
 
       - name: Install ARM64 dependencies
         run: npm ci --include=optional --strict-allow-scripts

@@ -146,7 +146,7 @@ export const useSiteStore = defineStore("site", () => {
 
 		return {
 			...studentContent,
-			support: [`${locationLabel} — ${content.value.hero.location}`, ...studentContent.support]
+			support: [`${locationLabel}: ${content.value.hero.location}`, ...studentContent.support]
 		};
 	});
 

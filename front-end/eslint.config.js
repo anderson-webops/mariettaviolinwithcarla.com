@@ -1,5 +1,3 @@
-import ppFlat from "eslint-config-prettier/flat";
-import prettier from "eslint-plugin-prettier";
 import vuePlugin from "eslint-plugin-vue";
 import globals from "globals";
 import ts from "typescript-eslint";
@@ -10,10 +8,10 @@ import base from "../eslint.config.js"; // shared root config
 export default base
 	/* project-specific additions */
 	.append({
-		languageOptions: { globals: { ...globals.browser } },
-		plugins: { prettier },
+		languageOptions: {
+			globals: { ...globals.browser }
+		},
 		rules: {
-			"prettier/prettier": "error",
 			"vue/multi-word-component-names": "off",
 			"ts/no-explicit-any": "off",
 			"no-undef": "off" // Nuxt auto-imported globals
@@ -28,7 +26,10 @@ export default base
 			languageOptions: {
 				parser: ts.parser,
 				parserOptions: { project: "./tsconfig.eslint.json", sourceType: "module" },
-				globals: { ...globals.browser, ...globals.node }
+				globals: {
+					...globals.browser,
+					...globals.node
+				}
 			}
 		},
 
@@ -52,7 +53,10 @@ export default base
 			files: ["**/*.{js,cjs,mjs}", "*.config.{js,ts}"],
 			languageOptions: {
 				sourceType: "module",
-				globals: { ...globals.node, ...globals.browser }
+				globals: {
+					...globals.node,
+					...globals.browser
+				}
 			}
 		},
 		{
@@ -66,8 +70,12 @@ export default base
 				"test/no-import-node-test": "off"
 			}
 		},
-		{ ignores: [".nuxt/**", "dist/**", "public/vendor/**", "src/layouts/README.md"] }
-	)
-
-	/* keep Prettier conflict-killer last */
-	.append(ppFlat);
+		{
+			ignores: [
+				".nuxt/**",
+				"dist/**",
+				"public/vendor/**",
+				"src/layouts/README.md"
+			]
+		}
+	);

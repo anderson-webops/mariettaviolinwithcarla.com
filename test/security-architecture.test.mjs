@@ -70,7 +70,10 @@ test("retired backend secret verification rejects nested environment files witho
 test("generated analytics must exactly match the reviewed vendored tracker", () => {
 	const reviewedTracker = Buffer.from("reviewed analytics tracker bytes");
 	const matchingTracker = Buffer.from(reviewedTracker);
-	const modifiedTracker = Buffer.concat([reviewedTracker, Buffer.from(";unexpected-build-mutation")]);
+	const modifiedTracker = Buffer.concat([
+		reviewedTracker,
+		Buffer.from(";unexpected-build-mutation")
+	]);
 
 	assert.doesNotThrow(() => assertGeneratedTrackerMatchesSource(reviewedTracker, matchingTracker));
 	assert.throws(

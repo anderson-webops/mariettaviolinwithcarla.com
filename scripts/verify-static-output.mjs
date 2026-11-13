@@ -79,7 +79,12 @@ const sitemap = await readFile(path.join(outputRoot, "sitemap.xml"), "utf8");
 assert.match(sitemap, /https:\/\/mariettaviolinwithcarla\.com\//);
 
 const textFiles = files.filter(filename => /\.(?:html|js|json|xml|txt)$/i.test(filename));
-const forbiddenRuntimeMarkers = ["MONGODB_URI", "ADMIN_SESSION_SECRET", "/accounts/me", "/_dbinfo"];
+const forbiddenRuntimeMarkers = [
+	"MONGODB_URI",
+	"ADMIN_SESSION_SECRET",
+	"/accounts/me",
+	"/_dbinfo"
+];
 for (const filename of textFiles) {
 	const content = await readFile(path.join(outputRoot, filename), "utf8");
 	for (const marker of forbiddenRuntimeMarkers) {

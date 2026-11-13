@@ -1,71 +1,31 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { selectedNpmCli, verifyBuildToolchain } from "./build-toolchain-state.mjs";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const npmCommand = process.platform === "win32" ? "npm.cmd" : process.env.npm_execpath || path.join(path.dirname(process.execPath), "npm");
-const result = spawnSync(npmCommand, ["ls", "--all", "--json"], {
+const npmCommand = selectedNpmCli();
+verifyBuildToolchain(npmCommand);
+const result = spawnSync(process.execPath, [npmCommand, "ls", "--all", "--json"], {
 	cwd: repositoryRoot,
 	encoding: "utf8",
 	maxBuffer: 128 * 1024 * 1024
 });
-
+assert.equal(result.error, undefined);
 assert.ok(result.stdout, `npm ls did not return a dependency graph: ${result.stderr}`);
 const tree = JSON.parse(result.stdout);
-const unexpected = new Set();
-const tolerated = new Set();
+const problems = new Set(tree.problems || []);
 
-function inspectDependency(name, node) {
-	if (node.missing) unexpected.add(`missing ${name}: ${node.missing}`);
-	if (node.extraneous) unexpected.add(`extraneous ${name}`);
-	if (node.invalid) {
-		const sourceMatch = String(node.invalid).match(/^"(.+)" from (node_modules\/.+)$/);
-		const requesterPath = sourceMatch?.[2];
-		if (requesterPath?.endsWith("/@bomb.sh/tab") && (name === "cac" || name === "commander")) {
-			const requester = JSON.parse(
-				readFileSync(path.join(repositoryRoot, requesterPath, "package.json"), "utf8")
-			);
-			const expectedRange = requester.peerDependencies?.[name];
-			const optional = requester.peerDependenciesMeta?.[name]?.optional === true;
-			if (optional && expectedRange === sourceMatch[1]) {
-				tolerated.add(`${name} optional adapter for @bomb.sh/tab`);
-			}
-			else {
-				unexpected.add(`invalid ${name}: ${node.invalid}`);
-			}
-		}
-		else {
-			unexpected.add(`invalid ${name}: ${node.invalid}`);
-		}
+function inspectDependency(name, dependency) {
+	for (const field of ["missing", "extraneous", "invalid"]) {
+		if (dependency[field]) problems.add(`${field} ${name}: ${dependency[field]}`);
 	}
-
-	for (const [dependency, child] of Object.entries(node.dependencies || {})) {
-		inspectDependency(dependency, child);
-	}
+	for (const [childName, child] of Object.entries(dependency.dependencies || {}))
+		inspectDependency(childName, child);
 }
-
 inspectDependency(tree.name || "root", tree);
-
-const topLevelProblems = tree.problems || [];
-for (const problem of topLevelProblems) {
-	if (
-		!/^invalid: (?:cac|commander)@/.test(problem)
-		|| ![...tolerated].some(entry => problem.includes(entry.split(" ")[0]))
-	) {
-		unexpected.add(problem);
-	}
-}
-
-assert.deepEqual([...unexpected], [], `Dependency graph problems:\n${[...unexpected].join("\n")}`);
-if (tolerated.size) {
-	process.stdout.write(
-		`Verified dependency graph; npm's ${tolerated.size} known optional CLI-adapter peer mismatches are non-runtime and explicitly checked.\n`
-	);
-}
-else {
-	assert.equal(result.status, 0, result.stderr);
-	process.stdout.write("Verified dependency graph with no npm problems.\n");
-}
+assert.deepEqual([...problems], [], `Dependency graph problems:\n${[...problems].join("\n")}`);
+assert.equal(result.status, 0, result.stderr);
+process.stdout.write("Verified the complete installed dependency graph with no npm problems.\n");

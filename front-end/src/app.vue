@@ -10,16 +10,16 @@ const structuredData = [
 	{
 		"@context": "https://schema.org",
 		"@type": "MusicSchool",
-		description: appDescription,
-		name: appName,
-		url: siteUrl
+		"description": appDescription,
+		"name": appName,
+		"url": siteUrl
 	},
 	{
 		"@context": "https://schema.org",
 		"@type": "WebSite",
-		description: appDescription,
-		name: appName,
-		url: siteUrl
+		"description": appDescription,
+		"name": appName,
+		"url": siteUrl
 	}
 ];
 

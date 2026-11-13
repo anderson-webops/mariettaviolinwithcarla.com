@@ -11,7 +11,7 @@ test("site store exposes content and normalized color mode default", () => {
 	assert.equal(store.site.name, siteContent.site.name);
 	assert.equal(store.contact.email, siteContent.contact.email);
 	assert.equal(store.contact.phoneHref, "tel:+17705680161");
-	assert.equal(store.students.support[0], `${siteContent.students.locationLabel} — ${siteContent.hero.location}`);
+	assert.equal(store.students.support[0], `${siteContent.students.locationLabel}: ${siteContent.hero.location}`);
 
 	const expectedColor = ["dark", "system"].includes(siteContent.settings.colorModeDefault)
 		? siteContent.settings.colorModeDefault
@@ -29,8 +29,8 @@ test("contact form fields are present and email is required", () => {
 	const store = useSiteStore();
 
 	assert.ok(store.contactForm.fields.length > 0);
-	assert.ok(store.contactForm.fields.some((field) => field.name === "email" && field.required));
-	assert.ok(store.contactForm.fields.every((field) => field.maxLength > 0));
+	assert.ok(store.contactForm.fields.some(field => field.name === "email" && field.required));
+	assert.ok(store.contactForm.fields.every(field => field.maxLength > 0));
 	assert.match(store.contactForm.privacyNote, /Basin/);
 	assert.equal(store.contactForm.submitLabel.length > 0, true);
 });

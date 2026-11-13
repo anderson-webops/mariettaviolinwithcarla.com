@@ -37,10 +37,17 @@ if [[ -n "$(git -C "$candidate" status --porcelain)" ]]; then
 	echo "Candidate checkout must be clean before preparation." >&2
 	exit 1
 fi
-if [[ "$(node --version)" != "v26.13.0" || "$(npm --version)" != "12.2.1" ]]; then
-	echo "Preparation requires Node 26.13.0 and npm 12.2.1." >&2
+if [[ "$(node --version)" != "v26.13.0" ]]; then
+	echo "Preparation requires Node 26.13.0." >&2
 	exit 1
 fi
+
+toolchain_bin="$(node "$candidate/scripts/build-toolchain.mjs" --print-bin)"
+PATH="$toolchain_bin:$PATH"
+export PATH
+export npm_execpath="$toolchain_bin/../node_modules/npm/bin/npm-cli.js"
+export npm_node_execpath="$toolchain_bin/node"
+node "$candidate/scripts/check-build-toolchain.mjs"
 
 SOURCE_COMMIT="$(git -C "$candidate" rev-parse HEAD)"
 SOURCE_TAG="$(git -C "$candidate" describe --tags --exact-match 2>/dev/null || true)"
@@ -57,6 +64,7 @@ cleanup() {
 trap cleanup EXIT
 
 cd -- "$candidate"
+npm run prepare:unimport-source
 npm ci --include=dev --include=optional --strict-allow-scripts
 npm run audit
 npm run audit:production
