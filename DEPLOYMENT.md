@@ -16,6 +16,11 @@ application lock and independent build-profile and source-provider locks.
 Mac preparation discovers Homebrew's GnuPG and Python tools while keeping the
 qualified Node/npm pair first in the executable path.
 
+Vue typechecking uses the supported TypeScript 6 compiler API. TypeScript 7's
+native package exports neither the required `createProgram`, `createSourceFile`
+and `resolveModuleName` APIs nor the legacy compiler entrypoint. Its native API
+requires a compatible Vue caller before replacing this build-time library.
+
 The unprivileged source builder is `deploy/direct/prepare-static-release.sh`.
 It accepts a clean source checkout and a real empty artifact-output directory,
 qualifies the build profile from the selected Node seed, and runs the existing
