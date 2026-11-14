@@ -1,14 +1,43 @@
 import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import path from 'node:path'
+import process from 'node:process'
 import test from 'node:test'
-import { selectedNpmCli } from './build-toolchain-state.mjs'
+import { selectedNpmCli, stableVersionAtLeast } from './build-toolchain-state.mjs'
+import { assertNativeProviderBindings } from './native-lock-contract.mjs'
 
 const root = path.resolve(import.meta.dirname, '..')
 const manifest = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'))
 const frontend = JSON.parse(await readFile(path.join(root, 'front-end/package.json'), 'utf8'))
 const lock = JSON.parse(await readFile(path.join(root, 'package-lock.json'), 'utf8'))
+
+test('the secured build runtime is aligned without adding a production Node service', async () => {
+  const metadata = JSON.parse(await readFile(path.join(root, 'build-toolchain/UPSTREAM.json'), 'utf8'))
+  const payload = JSON.parse(await readFile(path.join(root, 'build-toolchain/PAYLOAD.json'), 'utf8'))
+  const contract = JSON.parse(await readFile(path.join(root, 'deploy/static-artifact.json'), 'utf8'))
+  const node = metadata.node
+  assert.ok(stableVersionAtLeast(node, [26, 13, 1], true))
+  assert.equal(process.version, `v${node}`)
+  assert.equal(manifest.engines.node, `>=${node} <27`)
+  assert.equal(frontend.engines.node, manifest.engines.node)
+  assert.equal(manifest.devEngines.runtime.version, manifest.engines.node)
+  for (const filename of ['.node-version', '.nvmrc'])
+    assert.equal((await readFile(path.join(root, filename), 'utf8')).trim(), node)
+  const workflow = await readFile(path.join(root, '.github/workflows/ci.yml'), 'utf8')
+  assert.ok(workflow.split('\n').includes(`  NODE_VERSION: ${node}`))
+  assert.ok((await readFile(path.join(root, 'netlify.toml'), 'utf8')).includes(`NODE_VERSION = "${node}"`))
+  const preparation = await readFile(path.join(root, 'deploy/direct/prepare-static-release.sh'), 'utf8')
+  assert.ok(preparation.includes(`/opt/node-${node}/bin`))
+  assert.ok(preparation.includes(`"v${node}"`))
+  const digest = createHash('sha256').update(await readFile(path.join(root, 'build-toolchain/package-lock.json'))).digest('hex')
+  assert.equal(metadata.lockSha256, digest)
+  assert.equal(payload.lockSha256, digest)
+  assert.equal(contract.runtime.type, 'static')
+  assert.equal(contract.runtime.applicationProcesses, 0)
+  assert.deepEqual(contract.productionDependencies, [])
+})
 
 test('the static application declares its qualified shared providers and preserves both compiler contracts', () => {
   assert.deepEqual(manifest.workspaces, ['front-end'])
@@ -58,6 +87,7 @@ test('independent signature audits include project-root dependency edges and sin
 })
 
 test('Linux native declarations match actual application engines rather than unrelated installed bindings', () => {
+  assert.equal(assertNativeProviderBindings(frontend, lock), 26)
   for (const [bindingPrefix, provider] of [
     ['@oxfmt/binding-linux-', 'oxfmt'],
     ['@oxc-parser/binding-linux-', 'oxc-parser'],
@@ -73,6 +103,22 @@ test('Linux native declarations match actual application engines rather than unr
       assert.equal(lock.packages[`node_modules/${name}`]?.version, installed.version, name)
     }
   }
+})
+
+test('a stale binding declaration cannot qualify through an unrelated matching lock entry', () => {
+  const stale = structuredClone(frontend)
+  const historical = structuredClone(lock)
+  const name = '@unrs/resolver-binding-linux-arm64-gnu'
+  stale.optionalDependencies[name] = '1.12.2'
+  historical.packages[`front-end/node_modules/${name}`] = { version: '1.12.2' }
+  assert.throws(() => assertNativeProviderBindings(stale, historical), /must match unrs-resolver/u)
+})
+
+test('the selected native provider cannot resolve a mismatched shadowing binding', () => {
+  const shadowed = structuredClone(lock)
+  const name = '@unrs/resolver-binding-linux-arm64-gnu'
+  shadowed.packages[`node_modules/unrs-resolver/node_modules/${name}`] = { version: '1.12.2' }
+  assert.throws(() => assertNativeProviderBindings(frontend, shadowed), /must resolve from unrs-resolver/u)
 })
 
 test('newer upstream tracing and its genuine Glob dependency floor are retained', () => {

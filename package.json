@@ -5,7 +5,7 @@
 	"private": true,
 	"packageManager": "npm@12.2.2",
 	"engines": {
-		"node": ">=26.13.0 <27",
+		"node": ">=26.13.1 <27",
 		"npm": ">=12.2.2 <13"
 	},
 	"description": "Static studio and lesson-request site for Marietta Violin with Carla",
@@ -19,8 +19,7 @@
 		"esbuild@0.28.2": true,
 		"fsevents@2.3.3": true,
 		"puppeteer@25.17.0": false,
-		"simple-git-hooks@2.14.0": true,
-		"unrs-resolver@1.12.2": true
+		"simple-git-hooks@2.14.0": true
 	},
 	"scripts": {
 		"build": "npm run validate:content && npm run verify:analytics && npm run verify:retired-secrets && npm run -w front-end build",
@@ -28,7 +27,7 @@
 		"serve": "node front-end/scripts/preview.mjs",
 		"preview": "node front-end/scripts/preview.mjs",
 		"postinstall": "python3 -B scripts/check-unimport-source.py && node scripts/check-build-toolchain.mjs && node scripts/check-toolchain-package.mjs && node scripts/patch-minimatch-consumers.mjs && simple-git-hooks && npm run -w front-end prepare",
-		"test": "npm run validate:content && npm run verify:analytics && npm run verify:retired-secrets && npm run -w front-end test:unit && node --test test/*.test.mjs vendor/tests/*.test.mjs && npm run test:artifact && npm run test:build-toolchain && npm run test:toolchain-package && node --test scripts/test-devtools-provider.mjs scripts/test-vue-devtools-compat.mjs && npm run test:devtools && npm run test:unimport-source && node --test scripts/test-npm-tool-majors.mjs && npm run verify:shared-build && npm run test:shared-build",
+		"test": "npm run validate:content && npm run verify:analytics && npm run verify:retired-secrets && npm run -w front-end test:unit && node --test test/*.test.mjs vendor/tests/*.test.mjs && npm run test:artifact && npm run test:build-toolchain && npm run test:toolchain-package && node --test scripts/test-devtools-provider.mjs scripts/test-vue-devtools-compat.mjs && npm run test:devtools && npm run test:unimport-source && node --test scripts/test-npm-tool-majors.mjs && npm run verify:shared-build && npm run test:shared-build && npm run test:local-libraries",
 		"test:artifact": "python3 -B -m unittest scripts/test_static_artifact.py -v",
 		"test:e2e": "node scripts/e2e-smoke.mjs",
 		"lint": "npm run lint:root && npm run -w front-end lint",
@@ -54,7 +53,7 @@
 		"toolchain:prepare": "node scripts/build-toolchain.mjs --print-bin",
 		"check:build-toolchain": "node scripts/check-build-toolchain.mjs",
 		"check:toolchain-package": "node scripts/check-toolchain-package.mjs",
-		"test:build-toolchain": "node --test scripts/test-build-toolchain.mjs scripts/test-build-toolchain-cache.mjs",
+		"test:build-toolchain": "node --test --test-concurrency=1 scripts/test-build-toolchain.mjs scripts/test-build-toolchain-cache.mjs",
 		"test:devtools": "node scripts/test-vue-devtools-host.mjs",
 		"test:toolchain-package": "python3 -B -m unittest discover -s scripts -p test_build_toolchain.py -v",
 		"prepare:unimport-source": "bash scripts/prepare-unimport-source.sh",
@@ -64,22 +63,25 @@
 		"audit:unimport-source": "npm audit --prefix vendor/unimport/build --workspaces=false --audit-level=low && npm audit --prefix vendor/unimport/build --workspaces=false --omit=dev --audit-level=low && npm audit signatures --prefix vendor/unimport/build && npm audit --prefix vendor/unimport/runtime --workspaces=false --audit-level=low && npm audit --prefix vendor/unimport/runtime --workspaces=false --omit=dev --audit-level=low && npm audit signatures --prefix vendor/unimport/runtime",
 		"prepare:shared-build-fixtures": "bash scripts/prepare-shared-build-fixtures.sh",
 		"audit:shared-build": "bash scripts/audit-shared-build-fixtures.sh",
-		"verify:shared-build": "python3 -B scripts/package-native-providers.py --check && python3 -B scripts/package-framework-parents.py --check && python3 -B scripts/package-schema-parents.py --check && python3 -B scripts/package-vue-devtools.py --check && python3 -B scripts/package-unhead-compat.py --check && python3 -B scripts/package-rollup-compat.py --check && python3 -B scripts/check-nitro-tool-inputs.py && python3 -B scripts/package-unwasm-compat.py --check && python3 -B scripts/package-jiti-compat.py --check",
+		"verify:shared-build": "npm run verify:local-libraries && python3 -B scripts/package-native-providers.py --check && python3 -B scripts/package-framework-parents.py --check && python3 -B scripts/package-schema-parents.py --check && python3 -B scripts/package-vue-devtools.py --check && python3 -B scripts/package-unhead-compat.py --check && python3 -B scripts/package-rollup-compat.py --check && python3 -B scripts/check-nitro-tool-inputs.py && python3 -B scripts/package-unwasm-compat.py --check && python3 -B scripts/package-jiti-compat.py --check",
 		"test:shared-build": "python3 -B -m unittest discover -s scripts -p test_native_providers.py -v && node --test scripts/test-native-providers.mjs scripts/test-native-provider-types.mjs && python3 -B -m unittest discover -s scripts -p test_framework_parents.py -v && node --test scripts/test-framework-parents.mjs scripts/test-framework-parent-types.mjs && python3 -B -m unittest discover -s scripts -p test_schema_parents.py -v && node --test scripts/test-schema-parents.mjs scripts/test-schema-parent-types.mjs && python3 -B -m unittest discover -s scripts -p test_vue_devtools.py -v && node --test scripts/test-vue-devtools-types.mjs scripts/test-shared-build-contract.mjs && python3 -B -m unittest discover -s scripts -p test_unhead_compat.py -v && python3 -B -m unittest discover -s scripts -p test_rollup_compat.py -v && node --test scripts/test-rollup-compat.mjs && python3 -B -m unittest discover -s scripts -p test_nitro_tool_inputs.py -v && python3 -B -m unittest discover -s scripts -p test_unwasm_compat.py -v && node --test --test-concurrency=2 scripts/test-nitro-tools.mjs scripts/test-nitro-runtime.mjs && python3 -B -m unittest discover -s scripts -p test_reference_local_inputs.py -v && python3 -B -m unittest discover -s scripts -p test_jiti_compat.py -v && node --test scripts/test-jiti-compat.mjs",
-		"test:shared-build-browser": "node scripts/test-native-providers-host.mjs && node scripts/test-framework-parents-browser.mjs && node scripts/test-rollup-browser.mjs && node scripts/test-nitro-tools-browser.mjs"
+		"test:shared-build-browser": "node scripts/test-native-providers-host.mjs && node scripts/test-framework-parents-browser.mjs && node scripts/test-rollup-browser.mjs && node scripts/test-nitro-tools-browser.mjs",
+		"package:local-libraries": "python3 -B scripts/package-local-libraries.py",
+		"verify:local-libraries": "python3 -B scripts/package-local-libraries.py --check --installed",
+		"test:local-libraries": "python3 -B -m unittest discover -s scripts -p test_local_libraries.py -v && node --test scripts/test-local-library-install.mjs"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^10.0.0",
 		"@prettier/plugin-xml": "^3.4.2",
 		"axe-core": "^4.14.0",
-		"braces": "file:vendor/braces",
-		"deepmerge": "file:vendor/deepmerge",
+		"braces": "file:vendor/braces-3.0.4-webops.3.tgz",
+		"deepmerge": "file:vendor/deepmerge-4.3.2-webops.2.tgz",
 		"eslint": "file:vendor/eslint-10.14.0-webops.2.tgz",
 		"eslint-plugin-format": "file:vendor/eslint-plugin-format-2.0.1-webops.2.tgz",
 		"eslint-plugin-vue": "^10.12.0",
 		"globals": "^17.14.0",
 		"lint-staged": "^17.6.0",
-		"listhen": "file:vendor/listhen",
+		"listhen": "file:vendor/listhen-1.10.1-webops.3.tgz",
 		"prettier": "^3.9.10",
 		"puppeteer": "^25.16.0",
 		"simple-git-hooks": "^2.14.0",
@@ -92,7 +94,7 @@
 		"@vitejs/devtools-kit": "0.8.2",
 		"@vitejs/devtools": "0.8.2",
 		"vite-plugin-vue-devtools": "file:vendor/vite-plugin-vue-devtools-9.0.0-rc.3-webops.1.tgz",
-		"unimport": "file:vendor/unimport-7.0.2-webops.2.tgz",
+		"unimport": "file:vendor/unimport-7.0.2-webops.3.tgz",
 		"@unocss/transformer-attributify-jsx": "file:vendor/unocss-transformer-attributify-jsx-66.13.0-webops.1.tgz",
 		"@unocss/vite": "file:vendor/unocss-vite-66.13.0-webops.1.tgz",
 		"@unocss/core": "^66.13.0",
@@ -207,7 +209,7 @@
 	"devEngines": {
 		"runtime": {
 			"name": "node",
-			"version": ">=26.13.0 <27",
+			"version": ">=26.13.1 <27",
 			"onFail": "error"
 		},
 		"packageManager": {

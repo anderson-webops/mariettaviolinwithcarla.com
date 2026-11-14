@@ -1,6 +1,6 @@
 # Shared build compatibility
 
-The application uses Node 26.13.0 and the independent locked npm 12.2.2 profile.
+The application uses Node 26.13.1 and the independent locked npm 12.2.2 profile.
 Its qualified provider family includes Vite 8.3.8, Rolldown 1.3.2,
 Oxfmt 0.78.0, OXC parser 0.158.0, UnoCSS 66.13.0 and the reviewed schema,
 Vue DevTools, Unhead, Rollup and Nitro adapters from the canonical template v2.1.28.

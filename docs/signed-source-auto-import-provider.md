@@ -1,7 +1,7 @@
 # Signed-source auto-import provider
 
 Nuxt keeps its original `unimport ^7.0.2` requirement. The installed provider is
-the compatible `7.0.2+webops.2` build already qualified in the owned canonical
+the compatible `7.0.2+webops.3` build already qualified in the owned canonical
 template. Its original source, signed Git tag and commit, pinned public signer,
 upstream manifest and license remain preserved. The registry's advertised
 7.0.2 attestation returned HTTP 404; this build establishes its own independently

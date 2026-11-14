@@ -7,7 +7,7 @@ GitHub-main publishing workflow remain external invariants.
 
 ## Source qualification
 
-Use Node 26.13.0 and the independently locked npm 12.2.2 build profile.
+Use Node 26.13.1 and the independently locked npm 12.2.2 build profile.
 `node scripts/build-toolchain.mjs --print-bin` prepares and qualifies its paired
 commands. Prepare the signed-source auto-import provider with
 `npm run prepare:unimport-source` before the clean application installation.

@@ -5,7 +5,7 @@ system_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 if [[ "$(uname -s)" == Darwin ]]; then
 	system_path="/opt/homebrew/bin:$system_path"
 fi
-node_bin_dir="${NODE_BIN_DIR:-/opt/node-26.13.0/bin}"
+node_bin_dir="${NODE_BIN_DIR:-/opt/node-26.13.1/bin}"
 if [[ "$node_bin_dir" != /* ]] || [[ ! -x "$node_bin_dir/node" ]] || [[ ! -x "$node_bin_dir/npm" ]]; then
 	echo "NODE_BIN_DIR must be an absolute directory containing executable node and npm binaries." >&2
 	exit 1
@@ -40,8 +40,8 @@ if [[ -n "$(git -C "$candidate" status --porcelain)" ]]; then
 	echo "Candidate checkout must be clean before preparation." >&2
 	exit 1
 fi
-if [[ "$(node --version)" != "v26.13.0" ]]; then
-	echo "Preparation requires Node 26.13.0." >&2
+if [[ "$(node --version)" != "v26.13.1" ]]; then
+	echo "Preparation requires Node 26.13.1." >&2
 	exit 1
 fi
 

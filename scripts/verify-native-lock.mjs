@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { assertNativeProviderBindings } from "./native-lock-contract.mjs";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const lock = JSON.parse(await readFile(path.join(repositoryRoot, "package-lock.json"), "utf8"));
@@ -16,6 +17,7 @@ assert.ok(lock.lockfileVersion >= 3, "package-lock.json must use lockfile versio
 assert.deepEqual(packages[""]?.workspaces, ["front-end"], "The lockfile must contain only the frontend workspace.");
 assert.equal(packages["back-end"], undefined, "The retired backend workspace remains in package-lock.json.");
 assert.ok(expected.length >= 20, "Expected explicit Linux native package coverage.");
+assert.equal(assertNativeProviderBindings(frontendManifest, lock), expected.length);
 
 const missing = [];
 for (const [dependency, expectedVersion] of expected) {
