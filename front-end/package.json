@@ -1,7 +1,7 @@
 {
 	"name": "mariettaviolinwithcarla-front-end",
 	"type": "module",
-	"version": "1.6.7",
+	"version": "1.6.8",
 	"private": true,
 	"packageManager": "npm@12.2.2",
 	"engines": {
@@ -70,6 +70,7 @@
 		"@vitejs/plugin-vue": "^6.0.10",
 		"@vue/compiler-sfc": "^3.5.45",
 		"nuxt": "^4.6.4",
+		"nuxt-explicit-imports": "0.1.0",
 		"rollup": "^4.68.3",
 		"serve": "^14.2.8",
 		"terser": "^5.51.2",

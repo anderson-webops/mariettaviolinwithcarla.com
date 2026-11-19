@@ -1,11 +1,15 @@
 # Signed-source auto-import provider
 
-Nuxt keeps its original `unimport ^7.0.2` requirement. The installed provider is
-the compatible `7.0.2+webops.3` build already qualified in the owned canonical
+Nuxt keeps its original `unimport ^7.0.2` requirement, and
+`nuxt-explicit-imports` keeps its original `unimport ^7.0.3` requirement. Both
+resolve to the compatible `7.0.3+webops.3` build from the owned canonical
 template. Its original source, signed Git tag and commit, pinned public signer,
-upstream manifest and license remain preserved. The registry's advertised
-7.0.2 attestation returned HTTP 404; this build establishes its own independently
-verified source provenance rather than claiming that missing attestation passed.
+upstream manifest and license remain preserved. The installed-byte check
+verifies every consumer against the independently reproduced source archive.
+
+The provider uses the canonical build's exact Picomatch archive. Its scoped
+resolution retains the application's existing Picomatch versions for other
+consumers.
 
 The maintained source preserves public entrypoints and repairs project-relative
 package discovery, optional Acorn resolution and VueUse preset discovery. Its

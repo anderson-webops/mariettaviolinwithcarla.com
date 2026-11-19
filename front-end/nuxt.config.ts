@@ -17,6 +17,7 @@ const viteFsAllow = [srcPath, __dirname, workspaceRoot];
 
 type ExtendedNuxtConfig = NuxtConfig & {
 	colorMode?: Partial<ColorModeOptions>;
+	explicitImports?: { mode: "strict" };
 };
 
 type ColorModePreference = "light" | "dark" | "system";
@@ -35,7 +36,8 @@ export default defineNuxtConfig({
 		"@unocss/nuxt",
 		"@pinia/nuxt",
 		"@nuxtjs/color-mode",
-		"@nuxt/eslint"
+		"@nuxt/eslint",
+		"nuxt-explicit-imports"
 	],
 
 	srcDir: "src",
@@ -113,6 +115,10 @@ export default defineNuxtConfig({
 				sortConfigKeys: true
 			}
 		}
+	},
+
+	explicitImports: {
+		mode: "strict"
 	},
 
 	vite: {

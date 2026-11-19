@@ -1,5 +1,8 @@
 <script setup lang="ts">
 // noinspection ES6PreferShortImport
+import { computed } from "vue";
+import { useHead, useRoute } from "#app";
+import { NuxtLayout, NuxtPage } from "#components";
 import { appDescription, appName } from "@/constants";
 import { serializeJsonLd } from "@/utils/serializeJsonLd";
 

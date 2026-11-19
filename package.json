@@ -1,7 +1,7 @@
 {
 	"name": "mariettaviolinwithcarla-com",
 	"type": "module",
-	"version": "1.6.7",
+	"version": "1.6.8",
 	"private": true,
 	"packageManager": "npm@12.2.2",
 	"engines": {
@@ -94,7 +94,7 @@
 		"@vitejs/devtools-kit": "0.8.2",
 		"@vitejs/devtools": "0.8.2",
 		"vite-plugin-vue-devtools": "file:vendor/vite-plugin-vue-devtools-9.0.0-rc.3-webops.1.tgz",
-		"unimport": "file:vendor/unimport-7.0.2-webops.3.tgz",
+		"unimport": "file:vendor/unimport-7.0.3-webops.3.tgz",
 		"@unocss/transformer-attributify-jsx": "file:vendor/unocss-transformer-attributify-jsx-66.13.0-webops.1.tgz",
 		"@unocss/vite": "file:vendor/unocss-vite-66.13.0-webops.1.tgz",
 		"@unocss/core": "^66.13.0",
@@ -153,6 +153,7 @@
 		},
 		"unplugin": "^3.7.0",
 		"defu": "6.1.7",
+		"picomatch@4.0.7-webops.1": "file:vendor/picomatch-4.0.7-webops.1.tgz",
 		"picomatch@^4": "4.0.7",
 		"anymatch@3.1.3": {
 			"picomatch": "2.3.2"

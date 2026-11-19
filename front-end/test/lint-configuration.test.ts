@@ -27,15 +27,17 @@ test("HTML, XML and embedded CSS use valid language parsers without skipping pro
 		["public/404.html", "<!doctype html><main>Readable prose</main>\n"],
 		["public/sitemap.xml", "<?xml version=\"1.0\"?><root/>\n"],
 		["src/app.vue/0_0.css", "#__nuxt { min-height: 100vh; }\n"]
-	]) {
+	] as const) {
 		const results = await eslint.lintText(content, {
 			filePath: path.join(frontend, filename)
 		});
 		assert.equal(results.length, 1);
-		assert.equal(results[0].fatalErrorCount, 0, JSON.stringify(results[0].messages));
+		const [result] = results;
+		assert.ok(result);
+		assert.equal(result.fatalErrorCount, 0, JSON.stringify(result.messages));
 	}
-	const results = await eslint.lintText(`<main>Readable ${String.fromCharCode(0x2014)} prose</main>\n`, {
+	const [result] = await eslint.lintText(`<main>Readable ${String.fromCharCode(0x2014)} prose</main>\n`, {
 		filePath: path.join(frontend, "public/404.html")
 	});
-	assert.ok(results[0].messages.some(message => message.ruleId === "slop/no-em-dash"));
+	assert.ok(result?.messages.some(message => message.ruleId === "slop/no-em-dash"));
 });

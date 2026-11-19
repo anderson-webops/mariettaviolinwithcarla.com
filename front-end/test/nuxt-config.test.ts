@@ -5,7 +5,7 @@ import path from "node:path";
 import test from "node:test";
 import siteContent from "../src/content/site.json";
 
-test("Nuxt resolves its declared unimport API without a provenance downgrade", () => {
+test("Nuxt and the explicit imports compiler share the signed unimport provider", () => {
 	const frontend = createRequire(path.resolve(import.meta.dirname, "../package.json"));
 	const nuxt = createRequire(frontend.resolve("nuxt/package.json"));
 	const semver = nuxt("semver");
@@ -14,6 +14,11 @@ test("Nuxt resolves its declared unimport API without a provenance downgrade", (
 	assert.equal(metadata.dependencies.unimport, "^7.0.2");
 	assert.ok(semver.satisfies(provider.version, metadata.dependencies.unimport), `${metadata.name} requires ${metadata.dependencies.unimport}, resolved ${provider.version}`);
 	assert.ok(semver.gte(provider.version, "7.0.2"));
+
+	const explicitImports = createRequire(frontend.resolve("nuxt-explicit-imports/package.json"));
+	const explicitImportsManifest = frontend("nuxt-explicit-imports/package.json");
+	assert.ok(semver.satisfies(provider.version, explicitImportsManifest.dependencies.unimport));
+	assert.equal(explicitImports.resolve("unimport"), nuxt.resolve("unimport"));
 });
 
 test("nuxt config points to src and keeps the expected module set", async () => {
@@ -26,9 +31,11 @@ test("nuxt config points to src and keeps the expected module set", async () => 
 			"@nuxt/eslint",
 			"@nuxtjs/color-mode",
 			"@pinia/nuxt",
-			"@unocss/nuxt"
+			"@unocss/nuxt",
+			"nuxt-explicit-imports"
 		].sort()
 	);
+	assert.deepEqual(config.explicitImports, { mode: "strict" });
 	assert.equal(config.experimental?.payloadExtraction, true);
 	assert.deepEqual(config.vite?.build?.modulePreload, { polyfill: false });
 	assert.equal(config.colorMode?.preference, siteContent.settings.colorModeDefault);

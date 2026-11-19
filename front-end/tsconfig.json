@@ -1,21 +1,13 @@
 // front-end/tsconfig.json
 {
-	"extends": "../tsconfig.base.json",
+	"extends": ["./.nuxt/tsconfig.json", "../tsconfig.base.json"],
 	"compilerOptions": {
 		"target": "ESNext",
 		"jsx": "preserve",
 		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"ignoreDeprecations": "6.0",
-		"baseUrl": ".",
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
-		"paths": {
-			"~/*": ["./src/*"],
-			"@/*": ["./src/*"],
-			"#imports": ["./.nuxt/imports"],
-			"#build": ["./.nuxt"],
-			"#build/*": ["./.nuxt/*"]
-		},
 		"resolveJsonModule": true,
 		"types": ["@types/node"],
 		"allowImportingTsExtensions": true,
