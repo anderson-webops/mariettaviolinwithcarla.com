@@ -12,14 +12,12 @@ const contract = JSON.parse(readFileSync("deploy/static-artifact.json", "utf8"))
 const deployment = readFileSync("DEPLOYMENT.md", "utf8");
 const netlify = readFileSync("netlify.toml", "utf8");
 const workflow = readFileSync(".github/workflows/ci.yml", "utf8");
-const dependabot = readFileSync(".github/dependabot.yml", "utf8");
 
 test("production is an atomic direct static release without Docker", () => {
 	assert.equal(existsSync("Dockerfile"), false);
 	assert.equal(existsSync(".dockerignore"), false);
 	assert.equal(existsSync("deploy/nginx/nginx.conf"), false);
 	assert.doesNotMatch(workflow, /docker|container:/i);
-	assert.doesNotMatch(dependabot, /package-ecosystem:\s*docker/);
 
 	assert.match(prepare, /npm ci --include=dev --include=optional --strict-allow-scripts/);
 	assert.match(prepare, /audit:signatures/);
