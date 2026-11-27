@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { assertDevtoolsProviderVersions } from "./devtools-provider.mjs";
 
-for (const version of ["0.8.0", "0.8.1", "0.8.2"]) {
+for (const version of ["0.8.0", "0.8.1", "0.8.2", "0.8.3"]) {
 	test(`the reviewed ${version} host and exact kit pair are accepted`, () => {
 		assertDevtoolsProviderVersions({ version }, { version });
 	});
@@ -18,6 +18,6 @@ test("host and kit patch mismatches are rejected", () => {
 });
 
 test("unreviewed provider patches and APIs are rejected", () => {
-	for (const version of ["0.8.3", "0.9.0", "1.0.0"])
+	for (const version of ["0.8.4", "0.9.0", "1.0.0"])
 		assert.throws(() => assertDevtoolsProviderVersions({ version }, { version }));
 });

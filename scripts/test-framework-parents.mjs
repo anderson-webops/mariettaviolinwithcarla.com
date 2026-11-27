@@ -52,7 +52,7 @@ test('all actual framework consumers bind the qualified providers and complete o
     vite: '8.3.8+webops.1',
     nuxt: '4.6.4+webops.2',
     nitropack: '2.13.6+webops.1',
-    rolldown: '1.3.2',
+    rolldown: '1.3.4',
     c12: '4.0.0-rc.4',
   })) {
     const matches = Object.entries(lock).filter(([filename]) => filename.endsWith(`node_modules/${name}`))

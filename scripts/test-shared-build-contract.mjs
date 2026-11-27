@@ -44,9 +44,9 @@ test('the static application declares its qualified shared providers and preserv
   for (const [name, version] of Object.entries({
     'oxfmt': '0.78.0',
     'oxc-parser': '0.158.0',
-    'rolldown': '1.3.2',
-    '@vitejs/devtools-kit': '0.8.2',
-    '@vitejs/devtools': '0.8.2',
+    'rolldown': '1.3.4',
+    '@vitejs/devtools-kit': '0.8.3',
+    '@vitejs/devtools': '0.8.3',
     'vite': 'file:vendor/vite-8.3.8-webops.1.tgz',
     'nuxt': 'file:vendor/nuxt-4.6.4-webops.2.tgz',
     'typescript-native': 'npm:typescript@7.0.2',
@@ -139,7 +139,7 @@ test('original framework controls retain their own package trees and compatible 
   assert.equal(reference.packages['node_modules/c12'].version, '3.3.4')
   assert.equal(reference.packages['node_modules/@unhead/bundler'].version, '3.4.3')
   assert.equal(reference.packages['node_modules/@vitejs/devtools-kit'].version, '0.7.6')
-  assert.equal(manifest.devDependencies['@vitejs/devtools-kit'], '0.8.2')
+  assert.equal(manifest.devDependencies['@vitejs/devtools-kit'], '0.8.3')
   for (const name of ['braces', 'deepmerge', 'listhen']) {
     assert.notEqual(reference.packages[`node_modules/${name}`].link, true, name)
     assert.ok(original.resolve(name).startsWith(`${directory}/node_modules/`), name)
