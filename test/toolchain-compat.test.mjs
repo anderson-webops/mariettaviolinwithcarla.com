@@ -12,7 +12,8 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 test("CI restores only locked downloads without invoking an unqualified npm during Node setup", () => {
 	const workflow = readFileSync(path.join(root, ".github/workflows/ci.yml"), "utf8");
 	assert.doesNotMatch(workflow, /cache:\s*npm/u);
-	assert.equal((workflow.match(/package-manager-cache: false/gu) || []).length, 4);
+	assert.doesNotMatch(workflow, /actions\/setup-node@/u);
+	assert.equal((workflow.match(/bash scripts\/stage-ci-node\.sh/gu) || []).length, 4);
 	assert.equal((workflow.match(/actions\/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9/gu) || []).length, 4);
 	const keys = [
 		...workflow.matchAll(/hashFiles\(([^)]+)\)/gu)
