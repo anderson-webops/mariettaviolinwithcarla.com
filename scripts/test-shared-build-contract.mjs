@@ -42,8 +42,8 @@ test('the secured build runtime is aligned without adding a production Node serv
 test('the static application declares its qualified shared providers and preserves both compiler contracts', () => {
   assert.deepEqual(manifest.workspaces, ['front-end'])
   for (const [name, version] of Object.entries({
-    'oxfmt': '0.78.0',
-    'oxc-parser': '0.158.0',
+    'oxfmt': '0.80.0',
+    'oxc-parser': '0.160.0',
     'rolldown': '1.3.4',
     '@vitejs/devtools-kit': '0.8.3',
     '@vitejs/devtools': '0.8.3',
